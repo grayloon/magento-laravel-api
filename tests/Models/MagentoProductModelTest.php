@@ -18,11 +18,11 @@ class MagentoProductModelTest extends TestCase
 
     public function test_magento_product_has_many_attributes()
     {
-        factory(MagentoExtAttribute::class, 30)->create([
+        factory(MagentoExtAttribute::class, 2)->create([
             'magento_product_id' => $product = factory(MagentoProduct::class)->create(),
         ]);
 
         $this->assertNotEmpty($product->ExtAttributes()->get());
-        $this->assertCount(30, $product->ExtAttributes()->get());
+        $this->assertCount(2, $product->ExtAttributes()->get());
     }
 }
