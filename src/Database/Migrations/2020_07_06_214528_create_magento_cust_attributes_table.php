@@ -15,8 +15,8 @@ class CreateMagentoCustAttributesTable extends Migration
     {
         Schema::create('magento_cust_attributes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('magento_product_id');
-            $table->bigInteger('magento_cust_attribute_type_id');
+            $table->bigInteger('magento_product_id')->index();
+            $table->bigInteger('magento_cust_attribute_type_id')->index();
             $table->text('attribute');
             $table->timestamps();
         });
