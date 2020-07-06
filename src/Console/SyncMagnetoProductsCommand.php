@@ -2,9 +2,11 @@
 
 namespace Grayloon\Magento\Console;
 
-use App\MagentoProduct;
 use Grayloon\Magento\Magento;
+use Grayloon\Magento\Models\MagentoExtAttribute;
+use Grayloon\Magento\Models\MagentoExtAttributeType;
 use Illuminate\Console\Command;
+use Grayloon\Magento\Models\MagentoProduct;
 
 class SyncMagnetoProductsCommand extends Command
 {
@@ -92,7 +94,7 @@ class SyncMagnetoProductsCommand extends Command
     protected function updateProducts($products)
     {
         foreach ($products as $product) {
-            MagentoProduct::updateOrCreate(['id' => $product['id']], [
+            $magentoProduct = MagentoProduct::updateOrCreate(['id' => $product['id']], [
                 'id'                   => $product['id'],
                 'name'                 => $product['name'],
                 'sku'                  => $product['sku'],
@@ -103,10 +105,17 @@ class SyncMagnetoProductsCommand extends Command
                 'created_at'           => $product['created_at'],
                 'updated_at'           => $product['updated_at'],
                 'weight'               => $product['weight'] ?? 0,
-                'extension_attributes' => $product['extension_attributes'],
-                'custom_attributes'    => $product['custom_attributes'],
                 'synced_at'            => now(),
             ]);
+
+            foreach ($product['extension_attributes'] as $extAttributeKey => $extAttribute) {
+                $attributeType = MagentoExtAttributeType::firstOrCreate(['type' => $extAttributeKey]);
+
+                MagentoExtAttribute::updateOrCreate([
+                    'magento_product_id'            => $magentoProduct->id,
+                    'magento_ext_attribute_type_id' => $attributeType->id,
+                ], ['attribute' => $extAttribute]);
+            }
 
             $this->bar->advance();
          }
