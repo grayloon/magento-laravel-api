@@ -3,6 +3,8 @@
 namespace Grayloon\Magento\Console;
 
 use Grayloon\Magento\Magento;
+use Grayloon\Magento\Models\MagentoCustAttribute;
+use Grayloon\Magento\Models\MagentoCustAttributeType;
 use Grayloon\Magento\Models\MagentoExtAttribute;
 use Grayloon\Magento\Models\MagentoExtAttributeType;
 use Illuminate\Console\Command;
@@ -115,6 +117,19 @@ class SyncMagnetoProductsCommand extends Command
                     'magento_product_id'            => $magentoProduct->id,
                     'magento_ext_attribute_type_id' => $attributeType->id,
                 ], ['attribute' => $extAttribute]);
+            }
+
+            foreach ($product['custom_attributes'] as $custAttribute) {
+                $attributeType = MagentoCustAttributeType::firstOrCreate(['type' => $custAttribute['attribute_code']]);
+                
+                if (is_array($custAttribute['value'])) {
+                    $custAttribute['value'] = json_encode($custAttribute['value']);
+                }
+
+                MagentoCustAttribute::updateOrCreate([
+                    'magento_product_id'             => $magentoProduct->id,
+                    'magento_cust_attribute_type_id' => $attributeType->id,
+                ], ['attribute' => $custAttribute['value']]);
             }
 
             $this->bar->advance();
