@@ -2,6 +2,7 @@
 
 namespace Grayloon\Magento\Models;
 
+use Grayloon\Magento\Tests\MagentoExtAttributeModelTest;
 use Illuminate\Database\Eloquent\Model;
 
 class MagentoProduct extends Model
@@ -26,4 +27,14 @@ class MagentoProduct extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The Magento Product has many Ext Attributes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ExtAttributes()
+    {
+        return $this->hasMany(MagentoExtAttribute::class);
+    }
 }
