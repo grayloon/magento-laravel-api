@@ -65,11 +65,6 @@ class SyncMagnetoProductsCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
-        $products = Magento::api('products')->all($this->pageSize, $this->currentPage);
-
-        $this->totalCount = $products['total_count'];
-        $this->totalPages = ceil($this->totalCount / $this->pageSize) + 1;
     }
 
     /**
@@ -79,6 +74,10 @@ class SyncMagnetoProductsCommand extends Command
      */
     public function handle()
     {
+        $products = Magento::api('products')->all($this->pageSize, $this->currentPage);
+        $this->totalCount = $products['total_count'];
+        $this->totalPages = ceil($this->totalCount / $this->pageSize) + 1;
+
         $this->bar = $this->output->createProgressBar($this->totalCount);
 
         for ($this->currentPage; $this->totalPages > $this->currentPage; $this->currentPage++) {

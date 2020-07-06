@@ -40,6 +40,10 @@ class MagentoServiceProvider extends ServiceProvider
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/magento.php', 'magento');
 
+        $this->commands([
+            Console\SyncMagnetoProductsCommand::class,
+        ]);
+
         // Register the main class to use with the facade
         $this->app->singleton('magento', function () {
             return new Magento;
