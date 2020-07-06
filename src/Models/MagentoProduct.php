@@ -14,19 +14,16 @@ class MagentoProduct extends Model
     public $timestamps = false;
 
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'custom_attributes'    => 'json',
-        'extension_attributes' => 'json',
-    ];
 }

@@ -22,8 +22,6 @@ class CreateMagentoProductsTable extends Migration
             $table->integer('visibility');
             $table->string('type');
             $table->decimal('weight', 15, 4)->default(0.00);
-            $table->text('extension_attributes');
-            $table->text('custom_attributes');
             $table->timestamps();
             $table->timestamp('synced_at')->useCurrent();
         });
