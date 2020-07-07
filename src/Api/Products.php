@@ -9,7 +9,7 @@ class Products extends AbstractApi
      *
      * @param integer $pageSize
      * @param integer $currentPage
-     * 
+     *
      * @return  array
      */
     public function all($pageSize = 50, $currentPage = 1)

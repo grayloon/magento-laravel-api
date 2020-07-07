@@ -2,8 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Grayloon\Magento\Models\MagentoCustAttributeType;
 use Faker\Generator as Faker;
+use Grayloon\Magento\Models\MagentoCustAttributeType;
 
 $factory->define(MagentoCustAttributeType::class, function (Faker $faker) {
     return [

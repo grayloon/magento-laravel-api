@@ -5,3 +5,4 @@ vendor
 coverage
 .phpunit.result.cache
 .DS_Store
+.php_cs.cache

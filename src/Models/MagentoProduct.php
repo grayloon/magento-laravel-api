@@ -2,7 +2,6 @@
 
 namespace Grayloon\Magento\Models;
 
-use Grayloon\Magento\Tests\MagentoExtAttributeModelTest;
 use Illuminate\Database\Eloquent\Model;
 
 class MagentoProduct extends Model

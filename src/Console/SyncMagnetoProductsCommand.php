@@ -3,12 +3,12 @@
 namespace Grayloon\Magento\Console;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Models\MagentoCustAttribute;
-use Grayloon\Magento\Models\MagentoCustAttributeType;
-use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Models\MagentoExtAttributeType;
 use Illuminate\Console\Command;
 use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Models\MagentoExtAttribute;
+use Grayloon\Magento\Models\MagentoCustAttribute;
+use Grayloon\Magento\Models\MagentoExtAttributeType;
+use Grayloon\Magento\Models\MagentoCustAttributeType;
 
 class SyncMagnetoProductsCommand extends Command
 {
@@ -133,6 +133,6 @@ class SyncMagnetoProductsCommand extends Command
             }
 
             $this->bar->advance();
-         }
+        }
     }
 }

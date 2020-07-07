@@ -8,7 +8,7 @@ return [
     |
     | The Base URL to the Magento 2 store. Must define http protocol
     | and domain TLD. The root path of the store and not the API path.
-    | Example: "https://store.com" 
+    | Example: "https://store.com"
     |
     */
     'base_url' => env('MAGENTO_BASE_URL', null),
@@ -18,7 +18,7 @@ return [
     | Magento Access Token
     |--------------------------------------------------------------------------
     |
-    |  The "Access Token" defined from the Magento 2 application. 
+    |  The "Access Token" defined from the Magento 2 application.
     |  Developers can add the "Access Token" in the "Integrations"
     |  section in your Magento 2 administration panel.
     |

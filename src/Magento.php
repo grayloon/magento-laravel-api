@@ -31,7 +31,7 @@ class Magento
      * The API method to be called on the Magento 2 API.
      *
      * @param  string  $name
-     * 
+     *
      * @throws InvalidArgumentException
      * @return mixed
      */

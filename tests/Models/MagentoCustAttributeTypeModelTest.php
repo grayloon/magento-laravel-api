@@ -3,8 +3,6 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Models\MagentoCustAttribute;
-use Grayloon\Magento\Tests\TestCase;
-use Grayloon\Magento\Models\MagentoCustAttributeType;
 
 class MagentoCustAttributeTypeModelTest extends TestCase
 {

@@ -11,6 +11,6 @@ $factory->define(MagentoCustAttribute::class, function (Faker $faker) {
     return [
         'magento_product_id'             => factory(MagentoProduct::class)->create(),
         'magento_cust_attribute_type_id' => factory(MagentoCustAttributeType::class)->create(),
-        'attribute'                     => 'foo',
+        'attribute'                      => 'foo',
     ];
 });

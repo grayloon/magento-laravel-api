@@ -3,8 +3,6 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Models\MagentoExtAttributeType;
-use Grayloon\Magento\Tests\TestCase;
 
 class MagentoExtAttributeModelTest extends TestCase
 {

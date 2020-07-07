@@ -4,7 +4,6 @@ namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Api\Schema;
-use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
 
 class SchemaTest extends TestCase

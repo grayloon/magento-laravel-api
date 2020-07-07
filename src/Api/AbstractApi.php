@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace Grayloon\Magento\Api;
 
 use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
 
-abstract class AbstractApi 
+abstract class AbstractApi
 {
     public $versionIncluded = true;
     

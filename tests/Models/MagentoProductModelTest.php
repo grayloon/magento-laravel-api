@@ -2,10 +2,8 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Tests\TestCase;
 use Grayloon\Magento\Models\MagentoProduct;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Grayloon\Magento\Models\MagentoExtAttribute;
 
 class MagentoProductModelTest extends TestCase
 {

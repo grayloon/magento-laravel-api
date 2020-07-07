@@ -2,9 +2,9 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Grayloon\Magento\MagentoServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
