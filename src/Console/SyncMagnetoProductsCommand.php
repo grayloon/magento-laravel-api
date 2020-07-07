@@ -2,6 +2,7 @@
 
 namespace Grayloon\Magento\Console;
 
+use Grayloon\Magento\Jobs\SyncMagentoProducts;
 use Grayloon\Magento\Magento;
 use Illuminate\Console\Command;
 use Grayloon\Magento\Models\MagentoProduct;
@@ -78,61 +79,8 @@ class SyncMagnetoProductsCommand extends Command
      */
     public function handle()
     {
-        $products = Magento::api('products')->all($this->pageSize, $this->currentPage);
-        $this->totalCount = $products['total_count'];
-        $this->totalPages = ceil($this->totalCount / $this->pageSize) + 1;
+        SyncMagentoProducts::dispatch();
 
-        $this->bar = $this->output->createProgressBar($this->totalCount);
-
-        for ($this->currentPage; $this->totalPages > $this->currentPage; $this->currentPage++) {
-            $products = Magento::api('products')->all($this->pageSize, $this->currentPage);
-
-            $this->updateProducts($products['items']);
-        }
-
-        $this->bar->finish();
-    }
-
-    protected function updateProducts($products)
-    {
-        foreach ($products as $product) {
-            $magentoProduct = MagentoProduct::updateOrCreate(['id' => $product['id']], [
-                'id'                   => $product['id'],
-                'name'                 => $product['name'],
-                'sku'                  => $product['sku'],
-                'price'                => $product['price'] ?? 0,
-                'status'               => $product['status'],
-                'visibility'           => $product['visibility'],
-                'type'                 => $product['type_id'],
-                'created_at'           => $product['created_at'],
-                'updated_at'           => $product['updated_at'],
-                'weight'               => $product['weight'] ?? 0,
-                'synced_at'            => now(),
-            ]);
-
-            foreach ($product['extension_attributes'] as $extAttributeKey => $extAttribute) {
-                $attributeType = MagentoExtAttributeType::firstOrCreate(['type' => $extAttributeKey]);
-
-                MagentoExtAttribute::updateOrCreate([
-                    'magento_product_id'            => $magentoProduct->id,
-                    'magento_ext_attribute_type_id' => $attributeType->id,
-                ], ['attribute' => $extAttribute]);
-            }
-
-            foreach ($product['custom_attributes'] as $custAttribute) {
-                $attributeType = MagentoCustAttributeType::firstOrCreate(['type' => $custAttribute['attribute_code']]);
-                
-                if (is_array($custAttribute['value'])) {
-                    $custAttribute['value'] = json_encode($custAttribute['value']);
-                }
-
-                MagentoCustAttribute::updateOrCreate([
-                    'magento_product_id'             => $magentoProduct->id,
-                    'magento_cust_attribute_type_id' => $attributeType->id,
-                ], ['attribute' => $custAttribute['value']]);
-            }
-
-            $this->bar->advance();
-        }
+        $this->info('Successfully launched job to import magento products.');
     }
 }
