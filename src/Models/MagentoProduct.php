@@ -36,4 +36,14 @@ class MagentoProduct extends Model
     {
         return $this->hasMany(MagentoExtAttribute::class);
     }
+
+    /**
+     * The Magento Product has many Custom Attributes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function CustAttributes()
+    {
+        return $this->hasMany(MagentoCustAttribute::class);
+    }
 }
