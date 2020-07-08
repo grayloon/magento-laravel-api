@@ -2,12 +2,10 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Magento;
-use Grayloon\Magento\Models\MagentoProduct;
-use Grayloon\Magento\Support\MagentoProducts;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
-
+use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Support\MagentoProducts;
 
 class MagentoProductsTest extends TestCase
 {
