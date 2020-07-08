@@ -19,4 +19,16 @@ class Products extends AbstractApi
             'searchCriteria[currentPage]' => $currentPage,
         ]);
     }
+
+    /**
+     * Get info about product by product SKU
+     *
+     * @param string $sku
+     *
+     * @return array
+     */
+    public function show($sku)
+    {
+        return $this->get('/products/' . $sku);
+    }
 }

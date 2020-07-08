@@ -4,6 +4,8 @@ namespace Grayloon\Magento\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Bus;
+use Grayloon\Magento\Jobs\SyncMagentoProduct;
 
 class MagentoProductController extends Controller
 {
@@ -17,7 +19,7 @@ class MagentoProductController extends Controller
      */
     public function update(Request $request, $sku)
     {
-        // Sync Magento Product
+        Bus::dispatch(new SyncMagentoProduct($sku));
 
         return response()->json(['success' => 'success'], 200);
     }

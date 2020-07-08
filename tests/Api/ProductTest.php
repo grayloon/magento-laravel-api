@@ -23,4 +23,13 @@ class ProductTest extends TestCase
 
         $this->assertNull($magento->api('products')->all());
     }
+
+    public function test_can_call_magento_api_products_show()
+    {
+        Http::fake();
+
+        $magento = new Magento();
+
+        $this->assertNull($magento->api('products')->show('foo'));
+    }
 }

@@ -24,7 +24,7 @@ class MagentoProducts extends PaginatableMagentoService
     }
 
     /**
-     * Updates Magento Products data from the API.
+     * Updates products from the Magento API.
      *
      * @param  array  $products
      * @return void
@@ -36,25 +36,38 @@ class MagentoProducts extends PaginatableMagentoService
         }
         
         foreach ($products as $apiProduct) {
-            $product = MagentoProduct::updateOrCreate(['id' => $apiProduct['id']], [
-                'id'         => $apiProduct['id'],
-                'name'       => $apiProduct['name'],
-                'sku'        => $apiProduct['sku'],
-                'price'      => $apiProduct['price'] ?? 0,
-                'status'     => $apiProduct['status'],
-                'visibility' => $apiProduct['visibility'],
-                'type'       => $apiProduct['type_id'],
-                'created_at' => $apiProduct['created_at'],
-                'updated_at' => $apiProduct['updated_at'],
-                'weight'     => $apiProduct['weight'] ?? 0,
-                'synced_at'  => now(),
-            ]);
-
-            $this->syncExtAttributes($apiProduct['extension_attributes'], $product);
-            $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
+            $this->updateProduct($apiProduct);
         }
 
         return $this;
+    }
+
+    /**
+     * Updates a product from the Magento API.
+     *
+     * @param  array  $products
+     * @return void
+     */
+    public function updateProduct($apiProduct)
+    {
+        $product = MagentoProduct::updateOrCreate(['id' => $apiProduct['id']], [
+            'id'         => $apiProduct['id'],
+            'name'       => $apiProduct['name'],
+            'sku'        => $apiProduct['sku'],
+            'price'      => $apiProduct['price'] ?? 0,
+            'status'     => $apiProduct['status'],
+            'visibility' => $apiProduct['visibility'],
+            'type'       => $apiProduct['type_id'],
+            'created_at' => $apiProduct['created_at'],
+            'updated_at' => $apiProduct['updated_at'],
+            'weight'     => $apiProduct['weight'] ?? 0,
+            'synced_at'  => now(),
+        ]);
+
+        $this->syncExtAttributes($apiProduct['extension_attributes'], $product);
+        $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
+
+        return $product;
     }
 
     /**
