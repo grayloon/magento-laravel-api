@@ -61,6 +61,8 @@ Magento::api('schema')->show();
 
 ## Jobs
 
+> In order use these queue jobs, you must have registered the migrations from the installation section noted above.
+
 This package has many pre-built queue jobs to sync your Magento products to your Laravel application. Feel free to leverage these jobs or create your own.
 
 Updates all products from the Magento API:
@@ -74,6 +76,8 @@ Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoProduct::class, $sku);
 ```
 
 ## API / Webhooks
+
+> In order use these api routes, you must have registered the migrations from the installation section noted above.
 
 This package has included routes to automatically update Magento information from the API. These can be utilized with Magento Webhooks to keep your items in sync.
 
