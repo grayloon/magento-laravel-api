@@ -64,12 +64,12 @@ Magento::api('schema')->show();
 This package has many pre-built queue jobs to sync your Magento products to your Laravel application. Feel free to leverage these jobs or create your own.
 
 Updates all products from the Magento API:
-```
+```php
 Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoProducts::class);
 ```
 
 Updates a specified product from the Magento API:
-```
+```php
 Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoProduct::class, $sku);
 ```
 
