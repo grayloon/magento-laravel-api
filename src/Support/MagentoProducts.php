@@ -64,8 +64,9 @@ class MagentoProducts extends PaginatableMagentoService
      * @param  \Grayloon\Magento\Models\MagentoProduct\ $product
      * @return void
      */
-    protected function syncExtAttributes($attributes, $product) {
-        foreach($attributes as $key => $attribute) {
+    protected function syncExtAttributes($attributes, $product)
+    {
+        foreach ($attributes as $key => $attribute) {
             $type = MagentoExtAttributeType::firstOrCreate(['type' => $key]);
 
             MagentoExtAttribute::updateOrCreate([
@@ -84,8 +85,9 @@ class MagentoProducts extends PaginatableMagentoService
      * @param  \Grayloon\Magento\Models\MagentoProduct\ $product
      * @return void
      */
-    protected function syncCustomAttributes($attributes, $product) {
-        foreach($attributes as $attribute) {
+    protected function syncCustomAttributes($attributes, $product)
+    {
+        foreach ($attributes as $attribute) {
             $type = MagentoCustAttributeType::firstOrCreate(['type' => $attribute['attribute_code']]);
 
             if (is_array($attribute['value'])) {

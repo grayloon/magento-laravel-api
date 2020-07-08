@@ -6,13 +6,8 @@ use Grayloon\Magento\Magento;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Grayloon\Magento\Models\MagentoProduct;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Models\MagentoCustAttribute;
-use Grayloon\Magento\Models\MagentoExtAttributeType;
-use Grayloon\Magento\Models\MagentoCustAttributeType;
 use Grayloon\Magento\Support\MagentoProducts;
 
 class SyncMagentoProductsBatch implements ShouldQueue

@@ -2,14 +2,8 @@
 
 namespace Grayloon\Magento\Console;
 
-use Grayloon\Magento\Jobs\SyncMagentoProducts;
-use Grayloon\Magento\Magento;
 use Illuminate\Console\Command;
-use Grayloon\Magento\Models\MagentoProduct;
-use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Models\MagentoCustAttribute;
-use Grayloon\Magento\Models\MagentoExtAttributeType;
-use Grayloon\Magento\Models\MagentoCustAttributeType;
+use Grayloon\Magento\Jobs\SyncMagentoProducts;
 
 class SyncMagnetoProductsCommand extends Command
 {
