@@ -22,6 +22,7 @@ class CreateMagentoCategoriesTable extends Migration
             $table->string('path');
             $table->tinyInteger('include_in_menu');
             $table->timestamps();
+            $table->timestamp('synced_at')->useCurrent();
         });
     }
 

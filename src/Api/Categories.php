@@ -14,7 +14,7 @@ class Categories extends AbstractApi
      */
     public function all($pageSize = 50, $currentPage = 1)
     {
-        return $this->get('/categories/ list', [
+        return $this->get('/categories/list', [
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
         ]);
