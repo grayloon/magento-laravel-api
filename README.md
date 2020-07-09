@@ -42,10 +42,27 @@ $products = Magento::api('products')->all(); // array
 
 ### Available Methods:
 
+#### Categories
+
+Get a list of all categories.
+```php
+Magento::api('categories')-->all($pageSize = 50, $currentPage = 1);
+```
+
+Get a count of all categories.
+```php
+Magento::api('categories')->count(); 
+```
+
 #### Products
 Get a list of products:
 ```php
 Magento::api('products')->all($pageSize = 50, $currentPage = 1); 
+```
+
+Get a count of all products.
+```php
+Magento::api('products')->count(); 
 ```
 
 Get info about a product by the product SKU:
@@ -75,6 +92,12 @@ Updates a specified product from the Magento API:
 Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoProduct::class, $sku);
 ```
 
+Updates all categories from the Magento API:
+```php
+Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoCategories::class);
+```
+
+
 ## API / Webhooks
 
 > In order use these api routes, you must have registered the migrations from the installation section noted above.
@@ -98,6 +121,10 @@ Launch a job to import all products from the Magento 2 REST API:
 php artisan magento:sync-products
 ```
 
+Launch a job to import all categories from the Magento 2 REST API:
+```bash
+php artisan magento:sync-categories
+```
 
 ## Testing
 
