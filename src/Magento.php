@@ -21,6 +21,13 @@ class Magento
      */
     public $token;
 
+    /**
+     * Determines if the API Version is included in the request.
+     *
+     * @var boolean
+     */
+    public $versionIncluded = true;
+
     public function __construct($baseUrl = null, $token = null)
     {
         $this->baseUrl = $baseUrl ?: config('magento.base_url');

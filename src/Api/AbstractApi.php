@@ -6,9 +6,7 @@ use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
 
 abstract class AbstractApi
-{
-    public $versionIncluded = true;
-    
+{   
     /**
      * The Magento Client instance.
      *
@@ -36,8 +34,8 @@ abstract class AbstractApi
     {
         $baseApi = config('magento.base_path');
 
-        if ($this->versionIncluded) {
-            $baseApi = $baseApi . '/' . config('magento.version');
+        if ($this->magento->versionIncluded) {
+            $baseApi .= '/' . config('magento.version');
         }
         
         return Http::withOptions([

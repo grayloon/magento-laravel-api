@@ -11,7 +11,7 @@ class Schema extends AbstractApi
      */
     public function show()
     {
-        $this->versionIncluded = false;
+        $this->magento->versionIncluded = false;
         
         return $this->get('/schema');
     }
