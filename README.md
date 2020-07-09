@@ -44,12 +44,12 @@ $products = Magento::api('products')->all(); // array
 
 #### Categories
 
-Get a list of all categories.
+Get a list of all categories:
 ```php
 Magento::api('categories')-->all($pageSize = 50, $currentPage = 1);
 ```
 
-Get a count of all categories.
+Get a count of all categories:
 ```php
 Magento::api('categories')->count(); 
 ```
@@ -60,7 +60,7 @@ Get a list of products:
 Magento::api('products')->all($pageSize = 50, $currentPage = 1); 
 ```
 
-Get a count of all products.
+Get a count of all products:
 ```php
 Magento::api('products')->count(); 
 ```
@@ -71,7 +71,7 @@ Magento::api('products')->show($sku);
 ```
 
 #### Schema
-Get a schema blueprint of the Magento 2 REST Api:
+Get a schema blueprint of the Magento 2 REST API:
 ```php
 Magento::api('schema')->show(); 
 ```
