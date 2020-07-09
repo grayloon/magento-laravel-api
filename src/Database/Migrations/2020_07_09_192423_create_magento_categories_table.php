@@ -17,6 +17,7 @@ class CreateMagentoCategoriesTable extends Migration
             $table->id();
             $table->bigInteger('parent_id')->nullable();
             $table->string('name');
+            $table->tinyInteger('is_active')->default(0);
             $table->bigInteger('position');
             $table->bigInteger('level');
             $table->string('path');

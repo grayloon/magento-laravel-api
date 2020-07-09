@@ -31,6 +31,7 @@ class MagentoCategoriesTest extends TestCase
                 'id'         => '1',
                 "parent_id"  => 0,
                 'name'       => 'Root Catalog',
+                'is_active'  => true,
                 "position"   => 0,
                 "level"      => 0,
                 "children"   => "2",

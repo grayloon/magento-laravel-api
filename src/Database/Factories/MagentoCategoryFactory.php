@@ -8,6 +8,7 @@ use Grayloon\Magento\Models\MagentoCategory;
 $factory->define(MagentoCategory::class, function (Faker $faker) {
     return [
         'name'            => $faker->catchPhrase,
+        'is_active'       => true,
         'position'        => random_int(1, 100),
         'level'           => random_int(1, 100),
         'path'            => '1/1',

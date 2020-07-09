@@ -50,6 +50,7 @@ class MagentoCategories extends PaginatableMagentoService
             'name'            => $apiCategory['name'],
             'parent_id'       => ($apiCategory['parent_id'] == 0) ? null : $apiCategory['parent_id'], // don't allow a parent ID of 0.
             'position'        => $apiCategory['position'],
+            'is_active'       => $apiCategory['is_active'] ?? false,
             'level'           => $apiCategory['level'],
             'created_at'      => $apiCategory['created_at'],
             'updated_at'      => $apiCategory['updated_at'],

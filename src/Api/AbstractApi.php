@@ -6,7 +6,7 @@ use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
 
 abstract class AbstractApi
-{   
+{
     /**
      * The Magento Client instance.
      *
