@@ -68,6 +68,7 @@ class MagentoServiceProvider extends ServiceProvider
 
         $this->commands([
             Console\SyncMagnetoProductsCommand::class,
+            Console\SyncMagnetoCategoriesCommand::class,
         ]);
 
         // Register the main class to use with the facade
