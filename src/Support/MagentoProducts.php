@@ -5,9 +5,7 @@ namespace Grayloon\Magento\Support;
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Models\MagentoCustAttribute;
 use Grayloon\Magento\Models\MagentoExtAttributeType;
-use Grayloon\Magento\Models\MagentoCustAttributeType;
 
 class MagentoProducts extends PaginatableMagentoService
 {
@@ -101,16 +99,13 @@ class MagentoProducts extends PaginatableMagentoService
     protected function syncCustomAttributes($attributes, $product)
     {
         foreach ($attributes as $attribute) {
-            $type = MagentoCustAttributeType::firstOrCreate(['type' => $attribute['attribute_code']]);
-
             if (is_array($attribute['value'])) {
                 $attribute['value'] = json_encode($attribute['value']);
             }
 
-            MagentoCustAttribute::updateOrCreate([
-                'magento_product_id'             => $product->id,
-                'magento_cust_attribute_type_id' => $type->id,
-            ], ['attribute' => $attribute['value']]);
+            $product->customAttributes()->updateOrCreate(['attribute_type' => $attribute['attribute_code']], [
+                'value' => $attribute['value'],
+            ]);
         }
 
         return $this;

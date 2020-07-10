@@ -35,6 +35,14 @@ class MagentoProduct extends Model
     protected $dates = ['created_at', 'updated_at', 'synced_at'];
 
     /**
+     * Get all of the magento product custom attributes.
+     */
+    public function customAttributes()
+    {
+        return $this->morphMany(MagentoCustomAttribute::class, 'attributable');
+    }
+
+    /**
      * The Magento Product has many Ext Attributes.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -42,15 +50,5 @@ class MagentoProduct extends Model
     public function ExtAttributes()
     {
         return $this->hasMany(MagentoExtAttribute::class);
-    }
-
-    /**
-     * The Magento Product has many Custom Attributes.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function CustAttributes()
-    {
-        return $this->hasMany(MagentoCustAttribute::class);
     }
 }

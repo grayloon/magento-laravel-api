@@ -54,15 +54,15 @@ class MagentoProductsTest extends TestCase
 
         $magentoProducts->updateProducts($products);
 
-        $product = MagentoProduct::with('ExtAttributes', 'ExtAttributes.Type', 'CustAttributes', 'CustAttributes.Type')->first();
+        $product = MagentoProduct::first();
 
         $this->assertNotEmpty($product);
         $this->assertEquals('Dunder Mifflin Paper', $product->name);
         $this->assertNotEmpty($product->ExtAttributes());
         $this->assertEquals([1], $product->ExtAttributes()->first()->attribute);
         $this->assertEquals('website_id', $product->ExtAttributes()->first()->Type()->first()->type);
-        $this->assertNotEmpty($product->CustAttributes());
-        $this->assertEquals('Dwight Schrute', $product->CustAttributes()->first()->attribute);
-        $this->assertEquals('salesman', $product->CustAttributes()->first()->Type()->first()->type);
+        $this->assertNotEmpty($product->customAttributes()->get());
+        $this->assertEquals('Dwight Schrute', $product->customAttributes()->first()->value);
+        $this->assertEquals('salesman', $product->customAttributes()->first()->attribute_type);
     }
 }
