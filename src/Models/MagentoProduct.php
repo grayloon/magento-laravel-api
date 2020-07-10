@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Grayloon\Magento\Models\MagentoCategory;
 
 class MagentoProduct extends Model
 {

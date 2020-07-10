@@ -2,8 +2,6 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Models\MagentoProduct;
-use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoProductCategory;
 
 class MagentoProductCategoryModelTest extends TestCase
