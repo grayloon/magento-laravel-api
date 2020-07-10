@@ -14,7 +14,9 @@ class MagentoCustomAttribute extends Model
     protected $guarded = [];
 
     /**
-     * Get the owning attributable model.
+     * The attributing relational model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function attributable()
     {

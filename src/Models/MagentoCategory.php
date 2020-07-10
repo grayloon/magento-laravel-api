@@ -18,8 +18,18 @@ class MagentoCategory extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function ParentCategory()
+    public function parent()
     {
         return $this->belongsTo($this, 'parent_id');
+    }
+
+    /**
+     * The Magento Category custom attributes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function customAttributes()
+    {
+        return $this->morphMany(MagentoCustomAttribute::class, 'attributable');
     }
 }

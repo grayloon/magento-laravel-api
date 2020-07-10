@@ -35,7 +35,9 @@ class MagentoProduct extends Model
     protected $dates = ['created_at', 'updated_at', 'synced_at'];
 
     /**
-     * Get all of the magento product custom attributes.
+     * The Magento Product custom attributes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function customAttributes()
     {

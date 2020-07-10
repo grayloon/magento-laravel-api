@@ -46,7 +46,7 @@ class MagentoCategories extends PaginatableMagentoService
      */
     public function updateCategory($apiCategory)
     {
-        return MagentoCategory::updateOrCreate(['id' => $apiCategory['id']], [
+        $category = MagentoCategory::updateOrCreate(['id' => $apiCategory['id']], [
             'name'            => $apiCategory['name'],
             'parent_id'       => ($apiCategory['parent_id'] == 0) ? null : $apiCategory['parent_id'], // don't allow a parent ID of 0.
             'position'        => $apiCategory['position'],
@@ -58,5 +58,31 @@ class MagentoCategories extends PaginatableMagentoService
             'include_in_menu' => $apiCategory['include_in_menu'],
             'synced_at'       => now(),
         ]);
+
+        $this->syncCustomAttributes($apiCategory['custom_attributes'], $category);
+
+        return $category;
+    }
+
+    /**
+     * Sync the Magento Custom attributes with the Category.
+     *
+     * @param  array  $attributes
+     * @param  \Grayloon\Magento\Models\MagentoCategory\ $category
+     * @return void
+     */
+    protected function syncCustomAttributes($attributes, $category)
+    {
+        foreach ($attributes as $attribute) {
+            if (is_array($attribute['value'])) {
+                $attribute['value'] = json_encode($attribute['value']);
+            }
+
+            $category->customAttributes()->updateOrCreate(['attribute_type' => $attribute['attribute_code']], [
+                'value' => $attribute['value'],
+            ]);
+        }
+
+        return $this;
     }
 }

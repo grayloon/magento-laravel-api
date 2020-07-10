@@ -60,5 +60,8 @@ class MagentoCategoriesTest extends TestCase
         $this->assertNotEmpty($category);
         $this->assertEquals('Root Catalog', $category->name);
         $this->assertNull($category->parent_id);
+        $this->assertEquals(2, $category->customAttributes()->count());
+        $this->assertEquals('path', $category->customAttributes()->first()->attribute_type);
+        $this->assertEquals('1', $category->customAttributes()->first()->value);
     }
 }
