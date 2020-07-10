@@ -6,9 +6,9 @@
 <p align="center">
 <a href="https://github.com/grayloon/magento-laravel-api/actions"><img src="https://github.com/grayloon/magento-laravel-api/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/grayloon/laravel-magento-api"><img src="https://img.shields.io/packagist/v/grayloon/laravel-magento-api.svg?style=flat" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/grayloon/magento-laravel-api"><img src="https://github.styleci.io/repos/277585119/shield?branch=master" alt="Style CI"></a>
-<a href="https://packagist.org/packages/grayloon/magento-laravel-api"><img src="https://img.shields.io/packagist/dt/grayloon/magento-laravel-api.svg?style=flat" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/grayloon/magento-laravel-api"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License"></a>
+<a href="https://packagist.org/packages/grayloon/laravel-magento-api"><img src="https://github.styleci.io/repos/277585119/shield?branch=master" alt="Style CI"></a>
+<a href="https://packagist.org/packages/grayloon/magento-laravel-api"><img src="https://img.shields.io/packagist/dt/grayloon/laravel-magento-api?style=flat" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/grayloon/laravel-magento-api"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License"></a>
 </p>
 
 # Laravel - Magento API
