@@ -2,9 +2,9 @@
 
 Magento 2 REST API wrapper to export Magento data for consumption in your Laravel application. This package is a work in progress - do not attempt to use in production.
 
-[![Build Status](https://github.com/grayloon/magento-laravel-api/workflows/tests/badge.svg)](https://github.com/grayloon/magento-laravel-api/actions)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/grayloon/magento-laravel-api.svg?style=flat-square)](https://packagist.org/packages/grayloon/magento-laravel-api)
-[![Total Downloads](https://img.shields.io/packagist/dt/grayloon/magento-laravel-api.svg?style=flat-square)](https://packagist.org/packages/grayloon/magento-laravel-api)
+[![Build Status](https://github.com/grayloon/laravel-magento-api/workflows/tests/badge.svg)](https://github.com/grayloon/laravel-magento-api/actions)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/grayloon/laravel-magento-api.svg?style=flat-square)](https://packagist.org/packages/grayloon/laravel-magento-api)
+[![Total Downloads](https://img.shields.io/packagist/dt/grayloon/laravel-magento-api.svg?style=flat-square)](https://packagist.org/packages/grayloon/laravel-magento-api)
 
 ## Installation
 
