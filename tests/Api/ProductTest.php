@@ -2,8 +2,8 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Magento;
 use Grayloon\Magento\Api\Products;
+use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
 
 class ProductTest extends TestCase

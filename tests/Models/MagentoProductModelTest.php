@@ -2,9 +2,9 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
+use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductCategory;
 
 class MagentoProductModelTest extends TestCase
@@ -15,7 +15,7 @@ class MagentoProductModelTest extends TestCase
 
         $this->assertNotEmpty($product);
     }
-    
+
     public function test_can_get_custom_attributes_on_magento_product()
     {
         $product = factory(MagentoProduct::class)->create();

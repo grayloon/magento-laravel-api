@@ -12,7 +12,7 @@ class Schema extends AbstractApi
     public function show()
     {
         $this->magento->versionIncluded = false;
-        
+
         return $this->get('/schema');
     }
 }

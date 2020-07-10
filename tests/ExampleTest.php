@@ -2,8 +2,8 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Orchestra\Testbench\TestCase;
 use Grayloon\Magento\MagentoServiceProvider;
+use Orchestra\Testbench\TestCase;
 
 class ExampleTest extends TestCase
 {
@@ -11,7 +11,7 @@ class ExampleTest extends TestCase
     {
         return [MagentoServiceProvider::class];
     }
-    
+
     /** @test */
     public function true_is_true()
     {

@@ -2,10 +2,10 @@
 
 namespace Grayloon\Magento\Http\Controllers;
 
+use Grayloon\Magento\Jobs\SyncMagentoProduct;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Bus;
-use Grayloon\Magento\Jobs\SyncMagentoProduct;
 
 class MagentoProductController extends Controller
 {

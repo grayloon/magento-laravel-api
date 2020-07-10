@@ -20,7 +20,6 @@ class MagentoProductCategory extends Model
      */
     public $timestamps = false;
 
-
     /**
      * The Magento Category ID belongs to the Magento Category.
      *

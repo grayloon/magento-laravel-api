@@ -7,8 +7,8 @@ class Categories extends AbstractApi
     /**
      * The list of categories.
      *
-     * @param integer $pageSize
-     * @param integer $currentPage
+     * @param int $pageSize
+     * @param int $currentPage
      *
      * @return  array
      */

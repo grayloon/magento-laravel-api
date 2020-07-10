@@ -24,7 +24,7 @@ class Magento
     /**
      * Determines if the API Version is included in the request.
      *
-     * @var boolean
+     * @var bool
      */
     public $versionIncluded = true;
 
@@ -44,10 +44,10 @@ class Magento
      */
     public static function api($name)
     {
-        if (! class_exists($name = "\Grayloon\Magento\Api\\". Str::ucfirst($name))) {
+        if (! class_exists($name = "\Grayloon\Magento\Api\\".Str::ucfirst($name))) {
             throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
 
-        return new $name(new Magento);
+        return new $name(new self);
     }
 }

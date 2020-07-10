@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 class TestCase extends OrchestraTestCase
 {
     use RefreshDatabase;
-    
+
     /**
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
@@ -41,9 +41,9 @@ class TestCase extends OrchestraTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->loadFactoriesUsing($this->app, __DIR__.'/../src/Database/Factories');
-        $this->loadMigrationsFrom(__DIR__ . '/../src/Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../src/Database/Migrations');
     }
 
     protected function getPackageProviders($app)

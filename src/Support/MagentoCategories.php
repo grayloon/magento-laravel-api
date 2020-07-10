@@ -10,12 +10,12 @@ class MagentoCategories extends PaginatableMagentoService
     /**
      * The amount of total categories.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
         $categories = Magento::api('categories')->all($this->pageSize, $this->currentPage);
-       
+
         return $categories['total_count'];
     }
 
@@ -30,7 +30,7 @@ class MagentoCategories extends PaginatableMagentoService
         if (empty($categories)) {
             return;
         }
-        
+
         foreach ($categories as $apiCategory) {
             $this->updateCategory($apiCategory);
         }

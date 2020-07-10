@@ -35,14 +35,14 @@ abstract class AbstractApi
         $baseApi = config('magento.base_path');
 
         if ($this->magento->versionIncluded) {
-            $baseApi .= '/' . config('magento.version');
+            $baseApi .= '/'.config('magento.version');
         }
-        
+
         return Http::withOptions([
-                'verify' => false, // temp remove SSL checks.
-            ])
+            'verify' => false, // temp remove SSL checks.
+        ])
             ->withToken($this->magento->token)
-            ->get($this->magento->baseUrl . $baseApi . $path, $parameters)
+            ->get($this->magento->baseUrl.$baseApi.$path, $parameters)
             ->json();
     }
 }

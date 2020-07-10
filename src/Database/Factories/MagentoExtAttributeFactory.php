@@ -3,9 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoExtAttribute;
 use Grayloon\Magento\Models\MagentoExtAttributeType;
+use Grayloon\Magento\Models\MagentoProduct;
 
 $factory->define(MagentoExtAttribute::class, function (Faker $faker) {
     return [
