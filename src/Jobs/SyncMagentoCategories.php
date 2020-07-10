@@ -2,12 +2,12 @@
 
 namespace Grayloon\Magento\Jobs;
 
+use Grayloon\Magento\Support\MagentoCategories;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Grayloon\Magento\Support\MagentoCategories;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class SyncMagentoCategories implements ShouldQueue
 {

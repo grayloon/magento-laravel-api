@@ -2,11 +2,11 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
+use Grayloon\Magento\Models\MagentoProduct;
 
-class MagentoCustomAttributeTypeModelTest extends TestCase
+class MagentoCustomAttributeModelTest extends TestCase
 {
     public function test_can_create_magento_custom_attribute()
     {

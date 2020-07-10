@@ -3,21 +3,21 @@
 namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoExtAttribute;
 use Grayloon\Magento\Models\MagentoExtAttributeType;
+use Grayloon\Magento\Models\MagentoProduct;
 
 class MagentoProducts extends PaginatableMagentoService
 {
     /**
      * The amount of total products.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
         $products = Magento::api('products')->all($this->pageSize, $this->currentPage);
-       
+
         return $products['total_count'];
     }
 
@@ -32,7 +32,7 @@ class MagentoProducts extends PaginatableMagentoService
         if (empty($products)) {
             return;
         }
-        
+
         foreach ($products as $apiProduct) {
             $this->updateProduct($apiProduct);
         }

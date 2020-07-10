@@ -3,12 +3,12 @@
 namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
+use Grayloon\Magento\Support\MagentoProducts;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Grayloon\Magento\Support\MagentoProducts;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class SyncMagentoProductsBatch implements ShouldQueue
 {
@@ -16,7 +16,7 @@ class SyncMagentoProductsBatch implements ShouldQueue
 
     public $pageSize;
     public $requestedPage;
-    
+
     /**
      * Create a new job instance.
      *

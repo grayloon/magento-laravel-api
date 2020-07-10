@@ -2,8 +2,8 @@
 
 namespace Grayloon\Magento\Console;
 
-use Illuminate\Console\Command;
 use Grayloon\Magento\Jobs\SyncMagentoCategories;
+use Illuminate\Console\Command;
 
 class SyncMagnetoCategoriesCommand extends Command
 {

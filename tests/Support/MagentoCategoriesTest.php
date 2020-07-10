@@ -2,10 +2,10 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Tests\TestCase;
-use Illuminate\Support\Facades\Http;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Support\MagentoCategories;
+use Grayloon\Magento\Tests\TestCase;
+use Illuminate\Support\Facades\Http;
 
 class MagentoCategoriesTest extends TestCase
 {
@@ -29,28 +29,28 @@ class MagentoCategoriesTest extends TestCase
         $categories = [
             [
                 'id'         => '1',
-                "parent_id"  => 0,
+                'parent_id'  => 0,
                 'name'       => 'Root Catalog',
                 'is_active'  => true,
-                "position"   => 0,
-                "level"      => 0,
-                "children"   => "2",
-                "created_at" => "2014-04-04 14:17:29",
-                "updated_at" => "2014-04-04 14:17:29",
-                "path"       => "1",
-                "available_sort_by" => [],
-                "include_in_menu" =>  true,
-                "custom_attributes" => [
+                'position'   => 0,
+                'level'      => 0,
+                'children'   => '2',
+                'created_at' => '2014-04-04 14:17:29',
+                'updated_at' => '2014-04-04 14:17:29',
+                'path'       => '1',
+                'available_sort_by' => [],
+                'include_in_menu' =>  true,
+                'custom_attributes' => [
                     [
-                        "attribute_code" => "path",
-                        "value" => "1",
+                        'attribute_code' => 'path',
+                        'value' => '1',
                     ],
                     [
-                        "attribute_code" => "children_count",
-                        "value" => "124",
+                        'attribute_code' => 'children_count',
+                        'value' => '124',
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         (new MagentoCategories())->updateCategories($categories);

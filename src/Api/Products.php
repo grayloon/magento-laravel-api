@@ -7,8 +7,8 @@ class Products extends AbstractApi
     /**
      * The list of Products.
      *
-     * @param integer $pageSize
-     * @param integer $currentPage
+     * @param int $pageSize
+     * @param int $currentPage
      *
      * @return  array
      */
@@ -21,7 +21,7 @@ class Products extends AbstractApi
     }
 
     /**
-     * Get info about product by product SKU
+     * Get info about product by product SKU.
      *
      * @param string $sku
      *
@@ -29,6 +29,6 @@ class Products extends AbstractApi
      */
     public function show($sku)
     {
-        return $this->get('/products/' . $sku);
+        return $this->get('/products/'.$sku);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Tests\TestCase;
-use Illuminate\Support\Facades\Http;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Support\MagentoProducts;
+use Grayloon\Magento\Tests\TestCase;
+use Illuminate\Support\Facades\Http;
 
 class MagentoProductsTest extends TestCase
 {
@@ -32,8 +32,8 @@ class MagentoProductsTest extends TestCase
                 'name'       => 'Dunder Mifflin Paper',
                 'sku'        => 'DFPC001',
                 'price'      => 19.99,
-                'status'     => "1",
-                'visibility' => "1",
+                'status'     => '1',
+                'visibility' => '1',
                 'type_id'    => 'simple',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -46,8 +46,8 @@ class MagentoProductsTest extends TestCase
                         'attribute_code' => 'salesman',
                         'value'          => 'Dwight Schrute',
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         $magentoProducts = new MagentoProducts();

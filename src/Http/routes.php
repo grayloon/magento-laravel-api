@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Grayloon\Magento\Http\Controllers\MagentoProductController;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'api', 'middleware' => 'api'], function () {
     Route::group(['prefix' => 'laravel-magento-api'], function () {
