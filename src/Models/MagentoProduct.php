@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Grayloon\Magento\Models\MagentoCategory;
 
 class MagentoProduct extends Model
 {
@@ -52,5 +53,15 @@ class MagentoProduct extends Model
     public function ExtAttributes()
     {
         return $this->hasMany(MagentoExtAttribute::class);
+    }
+
+    /**
+     * The categories assigned to the product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function categories()
+    {
+        return $this->hasManyThrough(MagentoCategory::class, MagentoProductCategory::class, 'magento_product_id', 'id');
     }
 }

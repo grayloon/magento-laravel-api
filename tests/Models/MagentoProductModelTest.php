@@ -2,8 +2,10 @@
 
 namespace Grayloon\Magento\Tests;
 
+use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
+use Grayloon\Magento\Models\MagentoProductCategory;
 
 class MagentoProductModelTest extends TestCase
 {
@@ -63,5 +65,33 @@ class MagentoProductModelTest extends TestCase
 
         $this->assertEquals(1, $product->customAttributes()->count());
         $this->assertEquals('baz', $attribute->value);
+    }
+
+    public function test_magento_product_can_get_single_category()
+    {
+        $product = factory(MagentoProduct::class)->create();
+
+        $category = factory(MagentoProductCategory::class)->create([
+            'magento_product_id' => $product->id,
+        ]);
+
+        $categories = $product->categories()->get();
+        $this->assertNotEmpty($categories);
+        $this->assertEquals(1, $categories->count());
+        $this->assertInstanceOf(MagentoCategory::class, $categories->first());
+        $this->assertEquals($category->magento_category_id, $categories->first()->id);
+    }
+
+    public function test_magento_product_can_get_categories()
+    {
+        $product = factory(MagentoProduct::class)->create();
+
+        factory(MagentoProductCategory::class, 10)->create([
+            'magento_product_id' => $product->id,
+        ]);
+
+        $categories = $product->categories()->get();
+        $this->assertNotEmpty($categories);
+        $this->assertEquals(10, $categories->count());
     }
 }
