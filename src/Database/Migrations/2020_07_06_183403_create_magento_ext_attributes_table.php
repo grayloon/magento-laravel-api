@@ -13,7 +13,7 @@ class CreateMagentoExtAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('magento_ext_attributes', function (Blueprint $table) {
+        Schema::create('magento_extension_attributes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('magento_product_id')->index();
             $table->bigInteger('magento_ext_attribute_type_id')->index();

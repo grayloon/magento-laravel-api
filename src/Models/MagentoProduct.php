@@ -49,9 +49,9 @@ class MagentoProduct extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function ExtAttributes()
+    public function extensionAttributes()
     {
-        return $this->hasMany(MagentoExtAttribute::class);
+        return $this->hasMany(MagentoExtensionAttribute::class);
     }
 
     /**

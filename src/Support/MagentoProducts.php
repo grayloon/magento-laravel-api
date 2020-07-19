@@ -3,8 +3,8 @@
 namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Models\MagentoExtAttribute;
-use Grayloon\Magento\Models\MagentoExtAttributeType;
+use Grayloon\Magento\Models\MagentoExtensionAttribute;
+use Grayloon\Magento\Models\MagentoExtensionAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
 
 class MagentoProducts extends PaginatableMagentoService
@@ -62,7 +62,7 @@ class MagentoProducts extends PaginatableMagentoService
             'synced_at'  => now(),
         ]);
 
-        $this->syncExtAttributes($apiProduct['extension_attributes'], $product);
+        $this->syncExtensionAttributes($apiProduct['extension_attributes'], $product);
         $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
 
         return $product;
@@ -75,12 +75,12 @@ class MagentoProducts extends PaginatableMagentoService
      * @param  \Grayloon\Magento\Models\MagentoProduct\ $product
      * @return void
      */
-    protected function syncExtAttributes($attributes, $product)
+    protected function syncExtensionAttributes($attributes, $product)
     {
         foreach ($attributes as $key => $attribute) {
-            $type = MagentoExtAttributeType::firstOrCreate(['type' => $key]);
+            $type = MagentoExtensionAttributeType::firstOrCreate(['type' => $key]);
 
-            MagentoExtAttribute::updateOrCreate([
+            MagentoExtensionAttribute::updateOrCreate([
                 'magento_product_id'            => $product->id,
                 'magento_ext_attribute_type_id' => $type->id,
             ], ['attribute' => $attribute]);

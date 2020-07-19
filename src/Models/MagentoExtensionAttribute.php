@@ -4,7 +4,7 @@ namespace Grayloon\Magento\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MagentoExtAttribute extends Model
+class MagentoExtensionAttribute extends Model
 {
     /**
      * The attributes that aren't mass assignable.
@@ -27,8 +27,8 @@ class MagentoExtAttribute extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function Type()
+    public function type()
     {
-        return $this->belongsTo(MagentoExtAttributeType::class, 'magento_ext_attribute_type_id');
+        return $this->belongsTo(MagentoExtensionAttributeType::class, 'magento_ext_attribute_type_id');
     }
 }
