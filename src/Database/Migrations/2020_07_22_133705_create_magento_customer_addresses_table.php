@@ -25,8 +25,8 @@ class CreateMagentoCustomerAddressesTable extends Migration
             $table->string('city')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->tinyInteger('default_billing')->default(0);
-            $table->tinyInteger('default_shipping')->default(0);
+            $table->tinyInteger('default_billing')->default(1);
+            $table->tinyInteger('default_shipping')->default(1);
         });
     }
 
