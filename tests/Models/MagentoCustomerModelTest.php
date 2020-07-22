@@ -4,6 +4,7 @@ namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomer;
+use Grayloon\Magento\Models\MagentoCustomerAddress;
 
 class MagentoCustomerModelTest extends TestCase
 {
@@ -47,5 +48,17 @@ class MagentoCustomerModelTest extends TestCase
 
         $this->assertEquals(1, $customer->customAttributes()->count());
         $this->assertEquals('baz', $attribute->value);
+    }
+
+    public function test_magento_customer_has_many_addresses()
+    {
+        $customer = factory(MagentoCustomer::class)->create();
+
+        factory(MagentoCustomerAddress::class, 5)->create([
+            'customer_id' => $customer->id,
+        ]);
+
+        $this->assertEquals(5, $customer->addresses()->count());
+        $this->assertInstanceOf(MagentoCustomerAddress::class, $customer->addresses()->first());
     }
 }

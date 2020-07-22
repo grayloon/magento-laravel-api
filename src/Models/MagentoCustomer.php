@@ -43,4 +43,14 @@ class MagentoCustomer extends Model
     {
         return $this->morphMany(MagentoCustomAttribute::class, 'attributable');
     }
+
+    /**
+     * The Magento Addresses that belong to the customer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addresses()
+    {
+        return $this->hasMany(MagentoCustomerAddress::class, 'customer_id');
+    }
 }
