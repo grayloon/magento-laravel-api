@@ -16,8 +16,8 @@ class CreateMagentoCustomersTable extends Migration
         Schema::create('magento_customers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id')->index();
-            $table->bigInteger('default_billing_id');
-            $table->bigInteger('default_address_id');
+            $table->bigInteger('default_billing_id')->nullable();
+            $table->bigInteger('default_address_id')->nullable();
             $table->timestamps();
             $table->string('email')->index();
             $table->string('first_name');

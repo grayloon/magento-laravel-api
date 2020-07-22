@@ -9,8 +9,6 @@ $factory->define(MagentoCustomer::class, function (Faker $faker) {
     return [
         'id'                 => rand(1, 10000),
         'group_id'           => rand(1, 10000),
-        'default_billing_id' => 1,
-        'default_address_id' => 1,
         'email'              => $faker->safeEmail,
         'first_name'         => $faker->firstName,
         'last_name'          => $faker->lastName,

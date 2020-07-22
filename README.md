@@ -66,7 +66,7 @@ Magento::api('categories')->count();
 
 #### Customers
 
-Get a list of all customers:
+Get a list of customers:
 ```php
 Magento::api('customers')->all($pageSize = 50, $currentPage = 1);
 ```
@@ -133,14 +133,19 @@ Fire the `SyncMagentoProduct($sku)` job to update a specified product SKU:
 
 > In order use these commands, you must have registered the migrations from the installation section noted above.
 
-Launch a job to import all products from the Magento 2 REST API:
-```bash
-php artisan magento:sync-products
-```
-
 Launch a job to import all categories from the Magento 2 REST API:
 ```bash
 php artisan magento:sync-categories
+```
+
+Launch a job to import all customers from the Magento 2 REST API:
+```bash
+php artisan magento:sync-customers
+```
+
+Launch a job to import all products from the Magento 2 REST API:
+```bash
+php artisan magento:sync-products
 ```
 
 ## Testing
