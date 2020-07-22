@@ -43,17 +43,17 @@ class MagentoCustomersTest extends TestCase
                         'customer_id' => 1,
                         'region' => [
                             'region_code' => 'PA',
-                            'region'      => "Pennsylvania",
+                            'region'      => 'Pennsylvania',
                             'region_id'   => 1,
                         ],
                         'region_id' => 1,
                         'country_id' => 'US',
                         'street' => [
-                            '100 Beetfarm Lake'
+                            '100 Beetfarm Lake',
                         ],
                         'telephone' => '888 888-8888',
                         'city'      => 'Scranton',
-                        'firstname' => "Dwight",
+                        'firstname' => 'Dwight',
                         'lastname'  => 'Schrute',
                     ],
                 ],
