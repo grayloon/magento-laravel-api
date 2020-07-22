@@ -5,7 +5,7 @@ namespace Grayloon\Magento\Tests;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomerAddress;
 
-class MagentoCustomerAddressModelTest extends TestCase
+class MagnetoCustomerAddressModelTest extends TestCase
 {
     public function test_can_create_magento_customer_address()
     {
