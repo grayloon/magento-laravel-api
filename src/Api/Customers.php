@@ -5,7 +5,7 @@ namespace Grayloon\Magento\Api;
 class Customers extends AbstractApi
 {
     /**
-     * The list of customers
+     * The list of customers.
      *
      * @param int $pageSize
      * @param int $currentPage
