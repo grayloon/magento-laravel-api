@@ -28,7 +28,7 @@ abstract class AbstractApi
     {
         $this->magento = $magento;
 
-        $this->apiRequest = $this->magento->baseUrl . config('magento.base_path');
+        $this->apiRequest = $this->magento->baseUrl.config('magento.base_path');
 
         if ($this->magento->versionIncluded) {
             $this->apiRequest .= '/'.config('magento.version');
@@ -46,7 +46,7 @@ abstract class AbstractApi
     protected function get($path, $parameters = [])
     {
         return Http::withToken($this->magento->token)
-            ->get($this->apiRequest . $path, $parameters)
+            ->get($this->apiRequest.$path, $parameters)
             ->json();
     }
 
@@ -61,7 +61,7 @@ abstract class AbstractApi
     protected function post($path, $parameters = [])
     {
         return Http::withToken($this->magento->token)
-            ->post($this->apiRequest . $path, $parameters)
+            ->post($this->apiRequest.$path, $parameters)
             ->json();
     }
 }

@@ -17,7 +17,7 @@ class AbstractApiTest extends TestCase
     public function test_adds_provided_base_url_to_api_request()
     {
         $api = new FakeApiClass((new Magento('example.com')));
-        
+
         $this->assertEquals('example.com/rest/all/V1', $api->apiRequest);
     }
 }
