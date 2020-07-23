@@ -71,6 +71,18 @@ Get a list of customers:
 Magento::api('customers')->all($pageSize = 50, $currentPage = 1);
 ```
 
+#### Integration (Tokens)
+
+Generate a customer token:
+```php
+Magento::api('integration')->customerToken($username, $password);
+```
+
+Generate an admin token:
+```php
+Magento::api('integration')->adminToken($username, $password);
+```
+
 #### Products
 Get a list of products:
 ```php
