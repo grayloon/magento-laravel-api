@@ -15,11 +15,24 @@ abstract class AbstractApi
     public $magento;
 
     /**
+     * The API request URI.
+     *
+     * @var string
+     */
+    public $apiRequest;
+
+    /**
      * @param \Grayloon\Magento\Magento  $magento
      */
     public function __construct(Magento $magento)
     {
         $this->magento = $magento;
+
+        $this->apiRequest = $this->magento->baseUrl . config('magento.base_path');
+
+        if ($this->magento->versionIncluded) {
+            $this->apiRequest .= '/'.config('magento.version');
+        }
     }
 
     /**
@@ -32,17 +45,23 @@ abstract class AbstractApi
      */
     protected function get($path, $parameters = [])
     {
-        $baseApi = config('magento.base_path');
+        return Http::withToken($this->magento->token)
+            ->get($this->apiRequest . $path, $parameters)
+            ->json();
+    }
 
-        if ($this->magento->versionIncluded) {
-            $baseApi .= '/'.config('magento.version');
-        }
-
-        return Http::withOptions([
-            'verify' => false, // temp remove SSL checks.
-        ])
-            ->withToken($this->magento->token)
-            ->get($this->magento->baseUrl.$baseApi.$path, $parameters)
+    /**
+     * Send a POST request with query parameters.
+     *
+     * @param  string  $path
+     * @param  string  $parameters
+     *
+     * @return mixed
+     */
+    protected function post($path, $parameters = [])
+    {
+        return Http::withToken($this->magento->token)
+            ->post($this->apiRequest . $path, $parameters)
             ->json();
     }
 }
