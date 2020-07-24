@@ -15,10 +15,10 @@ class CreateMagentoCategoriesTable extends Migration
     {
         Schema::create('magento_categories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('parent_id')->nullable();
+            $table->bigInteger('parent_id')->index()->nullable();
             $table->string('name');
             $table->tinyInteger('is_active')->default(0);
-            $table->bigInteger('position');
+            $table->bigInteger('position')->index();
             $table->bigInteger('level');
             $table->string('path');
             $table->tinyInteger('include_in_menu');
