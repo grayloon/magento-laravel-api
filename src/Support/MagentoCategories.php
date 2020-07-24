@@ -79,7 +79,7 @@ class MagentoCategories extends PaginatableMagentoService
             }
         }
 
-        return; // return null if we don't find a value.
+        // return null if we don't find a value.
     }
 
     /**
