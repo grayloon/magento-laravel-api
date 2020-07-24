@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class MagentoCategory extends Model
 {
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -28,5 +21,15 @@ class MagentoCategory extends Model
     public function parent()
     {
         return $this->belongsTo($this, 'parent_id');
+    }
+
+    /**
+     * The Magento Category custom attributes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function customAttributes()
+    {
+        return $this->morphMany(MagentoCustomAttribute::class, 'attributable');
     }
 }

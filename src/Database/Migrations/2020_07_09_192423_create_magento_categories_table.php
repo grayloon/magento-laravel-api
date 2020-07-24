@@ -17,10 +17,12 @@ class CreateMagentoCategoriesTable extends Migration
             $table->id();
             $table->bigInteger('parent_id')->index()->nullable();
             $table->string('name');
-            $table->text('slug')->nullable();
             $table->tinyInteger('is_active')->default(0);
             $table->bigInteger('position')->index();
             $table->bigInteger('level');
+            $table->string('path');
+            $table->tinyInteger('include_in_menu');
+            $table->timestamps();
             $table->timestamp('synced_at')->useCurrent();
         });
     }

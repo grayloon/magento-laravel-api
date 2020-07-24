@@ -2,69 +2,85 @@
 
 namespace Grayloon\Magento\Support;
 
-use Grayloon\Magento\Jobs\ResolveMagentoCategory;
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoCategory;
-use Illuminate\Support\Str;
 
-class MagentoCategories
+class MagentoCategories extends PaginatableMagentoService
 {
+    /**
+     * The amount of total categories.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $categories = Magento::api('categories')->all($this->pageSize, $this->currentPage);
+
+        return $categories['total_count'];
+    }
+
+    /**
+     * Updates categories from the Magento API.
+     *
+     * @param  array  $categories
+     * @return void
+     */
+    public function updateCategories($categories)
+    {
+        if (empty($categories)) {
+            return;
+        }
+
+        foreach ($categories as $apiCategory) {
+            $this->updateCategory($apiCategory);
+        }
+
+        return $this;
+    }
+
     /**
      * Updates a category from the Magento API.
      *
      * @param  array  $apiCategory
-     * @param  string  $parentSlug
      * @return \Grayloon\Magento\Models\MagentoCategory\
      */
     public function updateCategory($apiCategory)
     {
         $category = MagentoCategory::updateOrCreate(['id' => $apiCategory['id']], [
-            'name'      => $apiCategory['name'],
-            'slug'      => $this->resolveSlug($apiCategory),
-            'parent_id' => $apiCategory['parent_id'],
-            'position'  => $apiCategory['position'],
-            'is_active' => $apiCategory['is_active'] ?? false,
-            'level'     => $apiCategory['level'],
-            'synced_at' => now(),
+            'name'            => $apiCategory['name'],
+            'parent_id'       => ($apiCategory['parent_id'] == 0) ? null : $apiCategory['parent_id'], // don't allow a parent ID of 0.
+            'position'        => $apiCategory['position'],
+            'is_active'       => $apiCategory['is_active'] ?? false,
+            'level'           => $apiCategory['level'],
+            'created_at'      => $apiCategory['created_at'],
+            'updated_at'      => $apiCategory['updated_at'],
+            'path'            => $apiCategory['path'],
+            'include_in_menu' => $apiCategory['include_in_menu'],
+            'synced_at'       => now(),
         ]);
 
-        $this->resolveChildCategories($category, $apiCategory['children_data']);
+        $this->syncCustomAttributes($apiCategory['custom_attributes'], $category);
 
         return $category;
     }
 
     /**
-     * Resolve the URI based on the parent categories.
+     * Sync the Magento Custom attributes with the Category.
      *
-     * @param  array  $apiCategory
-     *
-     * @return string
-     */
-    protected function resolveSlug($apiCategory)
-    {
-        return (isset($apiCategory['parent_slug']))
-            ? $apiCategory['parent_slug'].'/'.Str::slug($apiCategory['name'])
-            : Str::slug($apiCategory['name']);
-    }
-
-    /**
-     * If children categories are present, dispatch a job to resolve the children elements.
-     *
-     * @param  Grayloon\Magento\Models\MagentoCategory  $category
-     * @param  array  $children
+     * @param  array  $attributes
+     * @param  \Grayloon\Magento\Models\MagentoCategory\ $category
      * @return void
      */
-    protected function resolveChildCategories($category, $children)
+    protected function syncCustomAttributes($attributes, $category)
     {
-        if (! empty($children)) {
-            foreach ($children as $child) {
-                ResolveMagentoCategory::dispatch(
-                    array_merge(
-                        $child,
-                        ['parent_slug' => $category->slug]
-                    )
-                );
+        foreach ($attributes as $attribute) {
+            if (is_array($attribute['value'])) {
+                $attribute['value'] = json_encode($attribute['value']);
             }
+
+            $category->customAttributes()->updateOrCreate(['attribute_type' => $attribute['attribute_code']], [
+                'value' => $attribute['value'],
+            ]);
         }
 
         return $this;

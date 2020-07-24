@@ -56,7 +56,12 @@ $products = Magento::api('products')->all(); // array
 
 Get a list of all categories:
 ```php
-Magento::api('categories')->all($rootCategoryId = null, $depth = null);
+Magento::api('categories')->all($pageSize = 50, $currentPage = 1);
+```
+
+Get a count of all categories:
+```php
+Magento::api('categories')->count(); 
 ```
 
 #### Customers

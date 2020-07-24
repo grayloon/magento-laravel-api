@@ -23,4 +23,20 @@ class MagentoCategoryModelTest extends TestCase
         $this->assertEquals($category->parent()->first()->id, $parent->id);
         $this->assertNotEquals($category->parent()->first()->id, $category->id);
     }
+
+    public function test_can_add_custom_attributes_to_magento_category()
+    {
+        $category = factory(MagentoCategory::class)->create();
+
+        $attribute = $category->customAttributes()->updateOrCreate([
+            'attribute_type' => 'foo',
+            'value'          => 'bar',
+        ]);
+
+        $this->assertNotEmpty($attribute);
+        $this->assertEquals('foo', $attribute->attribute_type);
+        $this->assertEquals('bar', $attribute->value);
+        $this->assertEquals(MagentoCategory::class, $attribute->attributable_type);
+        $this->assertEquals($category->id, $attribute->attributable_id);
+    }
 }

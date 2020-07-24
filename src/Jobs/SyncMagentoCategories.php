@@ -2,7 +2,7 @@
 
 namespace Grayloon\Magento\Jobs;
 
-use Grayloon\Magento\Magento;
+use Grayloon\Magento\Support\MagentoCategories;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -20,14 +20,11 @@ class SyncMagentoCategories implements ShouldQueue
      */
     public function handle()
     {
-        $rootCategory = Magento::api('categories')->all(config('magento.default_category'));
+        $categories = new MagentoCategories();
+        $totalPages = ceil(($categories->count() / 50) + 1);
 
-        if (empty($rootCategory['children_data'])) {
-            return;
-        }
-
-        foreach ($rootCategory['children_data'] as $category) {
-            ResolveMagentoCategory::dispatch($category);
+        for ($currentPage = 1; $totalPages > $currentPage; $currentPage++) {
+            SyncMagentoCategoriesBatch::dispatch(50, $currentPage);
         }
     }
 }
