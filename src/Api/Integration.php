@@ -14,8 +14,8 @@ class Integration extends AbstractApi
     public function customerToken($username, $password)
     {
         return $this->post('/integration/customer/token', [
-                'username' => $username,
-                'password' => $password,
+            'username' => $username,
+            'password' => $password,
         ]);
     }
 
