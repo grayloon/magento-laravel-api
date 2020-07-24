@@ -2,7 +2,6 @@
 
 namespace Grayloon\Magento\Jobs;
 
-use Grayloon\Magento\Magento;
 use Grayloon\Magento\Support\MagentoCategories;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,22 +9,20 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SyncMagentoCategoriesBatch implements ShouldQueue
+class ResolveMagentoCategory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $pageSize;
-    public $requestedPage;
+    public $category;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($pageSize, $requestedPage)
+    public function __construct($category)
     {
-        $this->pageSize = $pageSize;
-        $this->requestedPage = $requestedPage;
+        $this->category = $category;
     }
 
     /**
@@ -35,8 +32,6 @@ class SyncMagentoCategoriesBatch implements ShouldQueue
      */
     public function handle()
     {
-        $categories = Magento::api('categories')->all($this->pageSize, $this->requestedPage);
-
-        (new MagentoCategories)->updateCategories($categories['items']);
+        return (new MagentoCategories)->updateCategory($this->category);
     }
 }
