@@ -48,16 +48,4 @@ return [
     |
     */
     'version' => env('MAGENTO_API_VERSION', 'V1'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Magento Root Category ID
-    |--------------------------------------------------------------------------
-    |
-    |  The highest level root category ID for your application
-    |  This is used in category API calls. By default, we will
-    |  start at the root category.
-    |
-    */
-    'default_category' => env('MAGENTO_DEFAULT_CATEGORY', 0),
 ];

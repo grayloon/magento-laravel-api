@@ -5,18 +5,18 @@ namespace Grayloon\Magento\Api;
 class Categories extends AbstractApi
 {
     /**
-     * Retrieve list of categories.
+     * The list of categories.
      *
-     * @param int $rootCategoryId
-     * @param int $depth
+     * @param int $pageSize
+     * @param int $currentPage
      *
-     * @return array
+     * @return  array
      */
-    public function all($rootCategoryId = null, $depth = null)
+    public function all($pageSize = 50, $currentPage = 1)
     {
-        return $this->get('/categories', [
-            'rootCategoryId' => $rootCategoryId,
-            'depth'          => $depth,
+        return $this->get('/categories/list', [
+            'searchCriteria[pageSize]'    => $pageSize,
+            'searchCriteria[currentPage]' => $currentPage,
         ]);
     }
 }

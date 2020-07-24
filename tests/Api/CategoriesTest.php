@@ -15,7 +15,7 @@ class CategoriesTest extends TestCase
         $this->assertInstanceOf(Categories::class, $magento->api('categories'));
     }
 
-    public function test_can_call_magento_api_categories_all()
+    public function test_can_call_magento_api_products_all()
     {
         Http::fake();
 
