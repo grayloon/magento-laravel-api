@@ -48,6 +48,7 @@ class MagentoCategories extends PaginatableMagentoService
     {
         $category = MagentoCategory::updateOrCreate(['id' => $apiCategory['id']], [
             'name'            => $apiCategory['name'],
+            'slug'            => $this->findAttributeByKey('url_path', $apiCategory['custom_attributes']),
             'parent_id'       => ($apiCategory['parent_id'] == 0) ? null : $apiCategory['parent_id'], // don't allow a parent ID of 0.
             'position'        => $apiCategory['position'],
             'is_active'       => $apiCategory['is_active'] ?? false,
@@ -62,6 +63,23 @@ class MagentoCategories extends PaginatableMagentoService
         $this->syncCustomAttributes($apiCategory['custom_attributes'], $category);
 
         return $category;
+    }
+
+    /**
+     * Get a value from the provided custom attributes.
+     *
+     * @param  array  $apiCategory
+     * @return string
+     */
+    protected function findAttributeByKey($key, $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            if ($attribute['attribute_code'] === $key) {
+                return $attribute['value'];
+            }
+        }
+
+        return; // return null if we don't find a value.
     }
 
     /**

@@ -46,6 +46,10 @@ class MagentoCategoriesTest extends TestCase
                         'value' => '1',
                     ],
                     [
+                        'attribute_code' => 'url_path',
+                        'value' => 'foo/bar',
+                    ],
+                    [
                         'attribute_code' => 'children_count',
                         'value' => '124',
                     ],
@@ -60,8 +64,46 @@ class MagentoCategoriesTest extends TestCase
         $this->assertNotEmpty($category);
         $this->assertEquals('Root Catalog', $category->name);
         $this->assertNull($category->parent_id);
-        $this->assertEquals(2, $category->customAttributes()->count());
+        $this->assertEquals(3, $category->customAttributes()->count());
         $this->assertEquals('path', $category->customAttributes()->first()->attribute_type);
         $this->assertEquals('1', $category->customAttributes()->first()->value);
+        $this->assertEquals('foo/bar', $category->slug);
+    }
+
+    public function test_root_category_has_nullable_slug()
+    {
+        $categories = [
+            [
+                'id'         => '1',
+                'parent_id'  => 0,
+                'name'       => 'Root Catalog',
+                'is_active'  => true,
+                'position'   => 0,
+                'level'      => 0,
+                'children'   => '2',
+                'created_at' => '2014-04-04 14:17:29',
+                'updated_at' => '2014-04-04 14:17:29',
+                'path'       => '1',
+                'available_sort_by' => [],
+                'include_in_menu' =>  true,
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'path',
+                        'value' => '1',
+                    ],
+                    [
+                        'attribute_code' => 'children_count',
+                        'value' => '124',
+                    ],
+                ],
+            ],
+        ];
+
+        (new MagentoCategories())->updateCategories($categories);
+
+        $category = MagentoCategory::first();
+
+        $this->assertNotEmpty($category);
+        $this->assertNull($category->slug);
     }
 }
