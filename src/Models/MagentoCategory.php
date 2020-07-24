@@ -12,7 +12,7 @@ class MagentoCategory extends Model
      * @var bool
      */
     public $timestamps = false;
-    
+
     /**
      * The attributes that aren't mass assignable.
      *

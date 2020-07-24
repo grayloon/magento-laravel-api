@@ -32,7 +32,7 @@ class MagentoCategories
 
         return $category;
     }
-    
+
     /**
      * Resolve the URI based on the parent categories.
      *
@@ -43,7 +43,7 @@ class MagentoCategories
     protected function resolveSlug($apiCategory)
     {
         return (isset($apiCategory['parent_slug']))
-            ? $apiCategory['parent_slug'] .'/'. Str::slug($apiCategory['name'])
+            ? $apiCategory['parent_slug'].'/'.Str::slug($apiCategory['name'])
             : Str::slug($apiCategory['name']);
     }
 
