@@ -47,7 +47,8 @@ Example:
 ```php
 use Grayloon\Magento\Magento;
 
-$response = Magento::api('products')->all();
+$magento = new Magento();
+$response = $magento->api('products')->all();
 
 $response->body() : string;
 $response->json() : array|mixed;
@@ -65,53 +66,53 @@ $response->clientError() : bool;
 
 Get a list of all categories:
 ```php
-Magento::api('categories')->all($pageSize = 50, $currentPage = 1);
+$magento->api('categories')->all($pageSize = 50, $currentPage = 1);
 ```
 
 Get a count of all categories:
 ```php
-Magento::api('categories')->count(); 
+$magento->api('categories')->count(); 
 ```
 
 #### Customers
 
 Get a list of customers:
 ```php
-Magento::api('customers')->all($pageSize = 50, $currentPage = 1);
+$magento->api('customers')->all($pageSize = 50, $currentPage = 1);
 ```
 
 #### Integration (Tokens)
 
 Generate a customer token:
 ```php
-Magento::api('integration')->customerToken($username, $password);
+$magento->api('integration')->customerToken($username, $password);
 ```
 
 Generate an admin token:
 ```php
-Magento::api('integration')->adminToken($username, $password);
+$magento->api('integration')->adminToken($username, $password);
 ```
 
 #### Products
 Get a list of products:
 ```php
-Magento::api('products')->all($pageSize = 50, $currentPage = 1); 
+$magento->api('products')->all($pageSize = 50, $currentPage = 1); 
 ```
 
 Get a count of all products:
 ```php
-Magento::api('products')->count(); 
+$magento->api('products')->count(); 
 ```
 
 Get info about a product by the product SKU:
 ```php
-Magento::api('products')->show($sku);
+$magento->api('products')->show($sku);
 ```
 
 #### Schema
 Get a schema blueprint of the Magento 2 REST API:
 ```php
-Magento::api('schema')->show(); 
+$magento->api('schema')->show(); 
 ```
 
 ## Jobs

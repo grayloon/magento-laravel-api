@@ -66,12 +66,12 @@ class Magento
      * @throws InvalidArgumentException
      * @return mixed
      */
-    public static function api($name)
+    public function api($name)
     {
         if (! class_exists($name = "\Grayloon\Magento\Api\\".Str::ucfirst($name))) {
             throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
 
-        return new $name(new self);
+        return new $name($this);
     }
 }
