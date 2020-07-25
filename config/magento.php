@@ -27,15 +27,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Magento Base Path
+    | Magento Base API Path
     |--------------------------------------------------------------------------
     |
     |  The Magento 2 REST API Base Path. By default, this
-    |  is assigned as '/rest/all'. Developers should only
+    |  is assigned as 'rest'. Developers should only
     |  update this setting if the path has changed.
     |
     */
-    'base_path' => env('MAGENTO_BASE_PATH', '/rest/all'),
+    'base_path' => env('MAGENTO_BASE_PATH', 'rest'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Magento Store Code
+    |--------------------------------------------------------------------------
+    |
+    |  The Magento 2 REST API Store Code By default, this
+    |  is assigned to 'all' specifying all magento stores
+    |  on requests. Developers may update this to specify
+    |  the API around a specific code.
+    |
+    */
+    'store_code' => env('MAGENTO_STORE_CODE', 'all'),
 
     /*
     |--------------------------------------------------------------------------

@@ -15,7 +15,7 @@ abstract class AbstractApi
     public $magento;
 
     /**
-     * The API request URI.
+     * The API request Uri builder.
      *
      * @var string
      */
@@ -27,12 +27,25 @@ abstract class AbstractApi
     public function __construct(Magento $magento)
     {
         $this->magento = $magento;
+        $this->apiRequest = $this->constructRequest();
+    }
 
-        $this->apiRequest = $this->magento->baseUrl.config('magento.base_path');
+    /**
+     * The initial API request before the builder.
+     *
+     * @return string
+     */
+    protected function constructRequest()
+    {
+        $request = $this->magento->baseUrl;
+        $request .= '/'.$this->magento->basePath;
+        $request .= '/'.$this->magento->storeCode;
 
         if ($this->magento->versionIncluded) {
-            $this->apiRequest .= '/'.config('magento.version');
+            $request .= '/'.$this->magento->version;
         }
+
+        return $request;
     }
 
     /**
