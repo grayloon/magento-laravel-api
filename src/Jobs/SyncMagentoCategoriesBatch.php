@@ -35,7 +35,9 @@ class SyncMagentoCategoriesBatch implements ShouldQueue
      */
     public function handle()
     {
-        $categories = Magento::api('categories')->all($this->pageSize, $this->requestedPage);
+        $categories = Magento::api('categories')
+            ->all($this->pageSize, $this->requestedPage)
+            ->json();
 
         (new MagentoCategories)->updateCategories($categories['items']);
     }

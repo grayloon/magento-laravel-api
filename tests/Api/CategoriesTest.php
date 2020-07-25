@@ -21,6 +21,8 @@ class CategoriesTest extends TestCase
 
         $magento = new Magento();
 
-        $this->assertNull($magento->api('categories')->all());
+        $api = $magento->api('categories')->all();
+
+        $this->assertTrue($api->ok());
     }
 }

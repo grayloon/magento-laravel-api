@@ -14,7 +14,9 @@ class MagentoCustomers extends PaginatableMagentoService
      */
     public function count()
     {
-        $customers = Magento::api('customers')->all($this->pageSize, $this->currentPage);
+        $customers = Magento::api('customers')
+            ->all($this->pageSize, $this->currentPage)
+            ->json();
 
         return $customers['total_count'];
     }

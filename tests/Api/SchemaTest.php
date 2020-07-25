@@ -20,7 +20,8 @@ class SchemaTest extends TestCase
         Http::fake();
 
         $magento = new Magento();
+        $api = $magento->api('schema')->show();
 
-        $this->assertNull($magento->api('schema')->show());
+        $this->assertTrue($api->ok());
     }
 }

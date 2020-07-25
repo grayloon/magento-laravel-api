@@ -20,8 +20,9 @@ class CustomersTest extends TestCase
         Http::fake();
 
         $magento = new Magento();
+        $api = $magento->api('customers')->all();
 
-        $this->assertNull($magento->api('customers')->all());
+        $this->assertTrue($api->ok());
     }
 
     public function test_can_call_magento_api_customers_all_with_filter()
@@ -29,10 +30,11 @@ class CustomersTest extends TestCase
         Http::fake();
 
         $magento = new Magento();
-
-        $this->assertNull($magento->api('customers')->all(1, 1, [
+        $api = $magento->api('customers')->all(1, 1, [
             'searchCriteria[filterGroups][0][filters][0][field]' => 'email',
             'searchCriteria[filterGroups][0][filters][0][value]' => 'foo@bar.com',
-        ]));
+        ]);
+
+        $this->assertTrue($api->ok());
     }
 }

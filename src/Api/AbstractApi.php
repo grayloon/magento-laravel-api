@@ -59,8 +59,7 @@ abstract class AbstractApi
     protected function get($path, $parameters = [])
     {
         return Http::withToken($this->magento->token)
-            ->get($this->apiRequest.$path, $parameters)
-            ->json();
+            ->get($this->apiRequest.$path, $parameters);
     }
 
     /**
@@ -74,7 +73,6 @@ abstract class AbstractApi
     protected function post($path, $parameters = [])
     {
         return Http::withToken($this->magento->token)
-            ->post($this->apiRequest.$path, $parameters)
-            ->json();
+            ->post($this->apiRequest.$path, $parameters);
     }
 }

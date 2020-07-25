@@ -20,8 +20,9 @@ class IntegrationTest extends TestCase
         Http::fake();
 
         $magento = new Magento();
+        $api = $magento->api('integration')->customerToken('foo@bar.com', 'secret');
 
-        $this->assertNull($magento->api('integration')->customerToken('foo@bar.com', 'secret'));
+        $this->assertTrue($api->ok());
     }
 
     public function test_can_call_magento_api_integration_admin_token()
@@ -29,7 +30,8 @@ class IntegrationTest extends TestCase
         Http::fake();
 
         $magento = new Magento();
+        $api = $magento->api('integration')->adminToken('admin', 'secret');
 
-        $this->assertNull($magento->api('integration')->adminToken('admin', 'secret'));
+        $this->assertTrue($api->ok());
     }
 }

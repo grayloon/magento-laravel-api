@@ -16,7 +16,9 @@ class MagentoProducts extends PaginatableMagentoService
      */
     public function count()
     {
-        $products = Magento::api('products')->all($this->pageSize, $this->currentPage);
+        $products = Magento::api('products')
+            ->all($this->pageSize, $this->currentPage)
+            ->json();
 
         return $products['total_count'];
     }

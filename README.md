@@ -47,7 +47,16 @@ Example:
 ```php
 use Grayloon\Magento\Magento;
 
-$products = Magento::api('products')->all(); // array
+$response = Magento::api('products')->all();
+
+$response->body() : string;
+$response->json() : array|mixed;
+$response->status() : int;
+$response->ok() : bool;
+$response->successful() : bool;
+$response->failed() : bool;
+$response->serverError() : bool;
+$response->clientError() : bool;
 ```
 
 ### Available Methods:
