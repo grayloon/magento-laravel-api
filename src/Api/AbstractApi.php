@@ -26,7 +26,7 @@ abstract class AbstractApi
         $this->magento = $magento;
         $this->apiRequest = $this->constructRequest();
     }
-    
+
     /**
      * The initial API request before the builder.
      *
