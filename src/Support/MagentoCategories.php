@@ -14,7 +14,7 @@ class MagentoCategories extends PaginatableMagentoService
      */
     public function count()
     {
-        $categories = (new Magento)->api('categories')
+        $categories = (new Magento())->api('categories')
             ->all($this->pageSize, $this->currentPage)
             ->json();
 

@@ -35,7 +35,7 @@ class SyncMagentoCustomersBatch implements ShouldQueue
      */
     public function handle()
     {
-        $customers = (new Magento)->api('customers')
+        $customers = (new Magento())->api('customers')
             ->all($this->pageSize, $this->requestedPage)
             ->json();
 

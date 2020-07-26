@@ -74,7 +74,7 @@ class MagentoServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('magento', function () {
-            return new Magento;
+            return new Magento();
         });
     }
 }

@@ -64,7 +64,7 @@ class Magento
      * @param  string  $name
      *
      * @throws InvalidArgumentException
-     * @return mixed
+     * @return \Grayloon\Magento\Api\AbstractApi
      */
     public function api($name)
     {

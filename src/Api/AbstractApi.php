@@ -54,7 +54,7 @@ abstract class AbstractApi
      * @param  string  $path
      * @param  string  $parameters
      *
-     * @return mixed
+     * @return \Illuminate\Http\Client\Response
      */
     protected function get($path, $parameters = [])
     {
@@ -68,7 +68,7 @@ abstract class AbstractApi
      * @param  string  $path
      * @param  string  $parameters
      *
-     * @return mixed
+     * @return \Illuminate\Http\Client\Response
      */
     protected function post($path, $parameters = [])
     {

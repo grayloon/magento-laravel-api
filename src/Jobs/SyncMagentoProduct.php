@@ -38,7 +38,7 @@ class SyncMagentoProduct implements ShouldQueue
      */
     public function handle()
     {
-        $product = (new Magento)->api('products')
+        $product = (new Magento())->api('products')
             ->show($this->sku)
             ->json();
 
