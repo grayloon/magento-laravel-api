@@ -39,6 +39,6 @@ class SyncMagentoCustomersBatch implements ShouldQueue
             ->all($this->pageSize, $this->requestedPage)
             ->json();
 
-        (new MagentoCustomers)->updateCustomers($customers['items']);
+        (new MagentoCustomers())->updateCustomers($customers['items']);
     }
 }

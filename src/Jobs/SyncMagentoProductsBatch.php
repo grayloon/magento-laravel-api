@@ -39,6 +39,6 @@ class SyncMagentoProductsBatch implements ShouldQueue
             ->all($this->pageSize, $this->requestedPage)
             ->json();
 
-        (new MagentoProducts)->updateProducts($products['items']);
+        (new MagentoProducts())->updateProducts($products['items']);
     }
 }

@@ -68,7 +68,9 @@ class Magento
      */
     public function api($name)
     {
-        if (! class_exists($name = "\Grayloon\Magento\Api\\".Str::ucfirst($name))) {
+        $apiMethodExists = class_exists($name = "\Grayloon\Magento\Api\\".Str::ucfirst($name));
+
+        if (! $apiMethodExists) {
             throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
 

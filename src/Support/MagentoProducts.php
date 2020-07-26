@@ -31,7 +31,7 @@ class MagentoProducts extends PaginatableMagentoService
      */
     public function updateProducts($products)
     {
-        if (empty($products)) {
+        if (! $products) {
             return;
         }
 

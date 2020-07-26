@@ -42,6 +42,6 @@ class SyncMagentoProduct implements ShouldQueue
             ->show($this->sku)
             ->json();
 
-        (new MagentoProducts)->updateProduct($product);
+        (new MagentoProducts())->updateProduct($product);
     }
 }

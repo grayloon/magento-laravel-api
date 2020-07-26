@@ -22,16 +22,6 @@ class SyncMagnetoProductsCommand extends Command
     protected $description = 'Imports the product data from the Magneto 2 API';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int

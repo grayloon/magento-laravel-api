@@ -21,15 +21,12 @@ abstract class AbstractApi
      */
     public $apiRequest;
 
-    /**
-     * @param \Grayloon\Magento\Magento  $magento
-     */
     public function __construct(Magento $magento)
     {
         $this->magento = $magento;
         $this->apiRequest = $this->constructRequest();
     }
-
+    
     /**
      * The initial API request before the builder.
      *

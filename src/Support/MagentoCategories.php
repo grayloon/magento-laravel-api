@@ -29,7 +29,7 @@ class MagentoCategories extends PaginatableMagentoService
      */
     public function updateCategories($categories)
     {
-        if (empty($categories)) {
+        if (! $categories) {
             return;
         }
 
@@ -51,7 +51,7 @@ class MagentoCategories extends PaginatableMagentoService
         $category = MagentoCategory::updateOrCreate(['id' => $apiCategory['id']], [
             'name'            => $apiCategory['name'],
             'slug'            => $this->findAttributeByKey('url_path', $apiCategory['custom_attributes']),
-            'parent_id'       => ($apiCategory['parent_id'] == 0) ? null : $apiCategory['parent_id'], // don't allow a parent ID of 0.
+            'parent_id'       => $apiCategory['parent_id'] == 0 ? null : $apiCategory['parent_id'], // don't allow a parent ID of 0.
             'position'        => $apiCategory['position'],
             'is_active'       => $apiCategory['is_active'] ?? false,
             'level'           => $apiCategory['level'],

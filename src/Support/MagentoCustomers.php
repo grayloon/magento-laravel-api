@@ -29,7 +29,7 @@ class MagentoCustomers extends PaginatableMagentoService
      */
     public function updateCustomers($customers)
     {
-        if (empty($customers)) {
+        if (! $customers) {
             return;
         }
 
@@ -77,7 +77,7 @@ class MagentoCustomers extends PaginatableMagentoService
      */
     protected function syncCustomAttributes($attributes, $customer)
     {
-        if (empty($attributes)) {
+        if (! $attributes) {
             return;
         }
 
@@ -103,7 +103,7 @@ class MagentoCustomers extends PaginatableMagentoService
      */
     protected function syncCustomerAddresses($addresses, $customer)
     {
-        if (empty($addresses)) {
+        if (! $addresses) {
             return;
         }
 

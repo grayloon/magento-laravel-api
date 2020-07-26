@@ -39,6 +39,6 @@ class SyncMagentoCategoriesBatch implements ShouldQueue
             ->all($this->pageSize, $this->requestedPage)
             ->json();
 
-        (new MagentoCategories)->updateCategories($categories['items']);
+        (new MagentoCategories())->updateCategories($categories['items']);
     }
 }
