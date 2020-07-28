@@ -47,7 +47,7 @@ class MagentoProductsTest extends TestCase
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'category_ids',
-                        'value'          => ["1"]
+                        'value'          => ["1"],
                     ],
                 ],
             ],

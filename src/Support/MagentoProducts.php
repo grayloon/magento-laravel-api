@@ -105,7 +105,7 @@ class MagentoProducts extends PaginatableMagentoService
             if ($attribute['attribute_code'] === 'category_ids') {
                 $this->syncProductCategories($attribute['value'], $product);
             }
-            
+
             if (is_array($attribute['value'])) {
                 $attribute['value'] = json_encode($attribute['value']);
             }
