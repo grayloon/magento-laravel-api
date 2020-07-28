@@ -3,6 +3,8 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Models\MagentoCategory;
+use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Models\MagentoProductCategory;
 
 class MagentoCategoryModelTest extends TestCase
 {
@@ -38,5 +40,21 @@ class MagentoCategoryModelTest extends TestCase
         $this->assertEquals('bar', $attribute->value);
         $this->assertEquals(MagentoCategory::class, $attribute->attributable_type);
         $this->assertEquals($category->id, $attribute->attributable_id);
+    }
+
+    public function test_magento_category_can_get_single_product()
+    {
+        factory(MagentoCategory::class)->create(); // create non-assigned category.
+        factory(MagentoProduct::class)->create(); // create non-assigned category.
+
+        $category = factory(MagentoCategory::class)->create();
+        factory(MagentoProductCategory::class)->create([
+            'magento_category_id' => $category->id,
+        ]);
+
+        $products = $category->products()->get();
+        $this->assertNotEmpty($products);
+        $this->assertEquals(1, $products->count());
+        $this->assertInstanceOf(MagentoProduct::class, $products->first());
     }
 }

@@ -32,4 +32,14 @@ class MagentoCategory extends Model
     {
         return $this->morphMany(MagentoCustomAttribute::class, 'attributable');
     }
+
+    /**
+     * The products assigned to the category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function products()
+    {
+        return $this->hasManyThrough(MagentoProduct::class, MagentoProductCategory::class, 'magento_category_id', 'id', 'id', 'magento_product_id');
+    }
 }

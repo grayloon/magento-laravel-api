@@ -6,6 +6,7 @@ use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoExtensionAttribute;
 use Grayloon\Magento\Models\MagentoExtensionAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Models\MagentoProductCategory;
 
 class MagentoProducts extends PaginatableMagentoService
 {
@@ -101,12 +102,39 @@ class MagentoProducts extends PaginatableMagentoService
     protected function syncCustomAttributes($attributes, $product)
     {
         foreach ($attributes as $attribute) {
+            if ($attribute['attribute_code'] === 'category_ids') {
+                $this->syncProductCategories($attribute['value'], $product);
+            }
+            
             if (is_array($attribute['value'])) {
                 $attribute['value'] = json_encode($attribute['value']);
             }
 
             $product->customAttributes()->updateOrCreate(['attribute_type' => $attribute['attribute_code']], [
                 'value' => $attribute['value'],
+            ]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Assign the Product Category IDs that belong to the product.
+     *
+     * @param  array  $categoryIds
+     * @param  \Grayloon\Magento\Models\MagentoProduct\ $product
+     * @return void
+     */
+    protected function syncProductCategories($categoryIds, $product)
+    {
+        if (! $categoryIds) {
+            return;
+        }
+
+        foreach ($categoryIds as $categoryId) {
+            MagentoProductCategory::updateOrCreate([
+                'magento_product_id'  => $product->id,
+                'magento_category_id' => $categoryId,
             ]);
         }
 

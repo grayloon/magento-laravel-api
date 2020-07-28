@@ -2,6 +2,7 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
+use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Support\MagentoProducts;
 use Grayloon\Magento\Tests\TestCase;
@@ -24,8 +25,10 @@ class MagentoProductsTest extends TestCase
         $this->assertEquals(1, $count);
     }
 
-    public function test_can_create_magento_product()
+    public function test_magento_product_adds_associated_category()
     {
+        $category = factory(MagentoCategory::class)->create();
+
         $products = [
             [
                 'id'         => '1',
@@ -43,8 +46,8 @@ class MagentoProductsTest extends TestCase
                 ],
                 'custom_attributes' => [
                     [
-                        'attribute_code' => 'salesman',
-                        'value'          => 'Dwight Schrute',
+                        'attribute_code' => 'category_ids',
+                        'value'          => ["1"]
                     ],
                 ],
             ],
@@ -55,14 +58,11 @@ class MagentoProductsTest extends TestCase
         $magentoProducts->updateProducts($products);
 
         $product = MagentoProduct::first();
+        $productCategories = $product->categories()->get();
 
         $this->assertNotEmpty($product);
-        $this->assertEquals('Dunder Mifflin Paper', $product->name);
-        $this->assertNotEmpty($product->extensionAttributes());
-        $this->assertEquals([1], $product->extensionAttributes()->first()->attribute);
-        $this->assertEquals('website_id', $product->extensionAttributes()->first()->Type()->first()->type);
-        $this->assertNotEmpty($product->customAttributes()->get());
-        $this->assertEquals('Dwight Schrute', $product->customAttributes()->first()->value);
-        $this->assertEquals('salesman', $product->customAttributes()->first()->attribute_type);
+        $this->assertNotEmpty($productCategories);
+        $this->assertCount(1, $productCategories);
+        $this->assertSame($category->id, $productCategories->first()->id);
     }
 }
