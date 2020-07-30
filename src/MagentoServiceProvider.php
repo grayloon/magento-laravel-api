@@ -55,6 +55,10 @@ class MagentoServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/magento.php' => config_path('magento.php'),
             ], 'magento-config');
+
+            $this->publishes([
+                __DIR__.'/Database/Factories' => database_path('factories'),
+            ], 'magento-factories');
         }
     }
 
