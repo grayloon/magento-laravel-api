@@ -13,5 +13,6 @@ $factory->define(MagentoCategory::class, function (Faker $faker) {
         'level'           => random_int(1, 100),
         'path'            => '1/1',
         'include_in_menu' => true,
+        'slug'            => $faker->slug,
     ];
 });
