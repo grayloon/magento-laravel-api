@@ -71,7 +71,7 @@ class MagentoProductsTest extends TestCase
     public function test_magento_product_launches_job_to_download_product_image()
     {
         Queue::fake();
-        
+
         factory(MagentoCategory::class)->create();
 
         $products = [
@@ -108,7 +108,7 @@ class MagentoProductsTest extends TestCase
     public function test_magento_product_does_not_job_on_invalid_image_download()
     {
         Queue::fake();
-        
+
         factory(MagentoCategory::class)->create();
 
         $products = [
@@ -145,7 +145,7 @@ class MagentoProductsTest extends TestCase
     public function test_magento_product_download_image_is_correctly_constructed()
     {
         Queue::fake();
-        
+
         factory(MagentoCategory::class)->create();
 
         $products = [
