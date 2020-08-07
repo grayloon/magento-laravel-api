@@ -43,7 +43,7 @@ class DownloadMagentoProductImage implements ShouldQueue
     {
         $this->uri = $uri;
         $this->directory = $this->directory ?: '/pub/media/catalog/product';
-        $this->fullUrl = config('magento.base_url') . $this->directory . $this->uri;
+        $this->fullUrl = config('magento.base_url').$this->directory.$this->uri;
     }
 
     /**
@@ -55,7 +55,7 @@ class DownloadMagentoProductImage implements ShouldQueue
     {
         $contents = file_get_contents($this->fullUrl);
         $name = substr($this->fullUrl, strrpos($this->fullUrl, '/') + 1);
-        
+
         Storage::put('product/'.$name, $contents);
     }
 }

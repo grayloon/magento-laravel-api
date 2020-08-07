@@ -106,7 +106,7 @@ class MagentoProducts extends PaginatableMagentoService
             if ($attribute['attribute_code'] === 'category_ids') {
                 $this->syncProductCategories($attribute['value'], $product);
             }
-            
+
             if ($this->isImageType($attribute['attribute_code'])) {
                 $this->downloadImage($attribute['value']);
             }
@@ -127,7 +127,7 @@ class MagentoProducts extends PaginatableMagentoService
      * Determine if the Custom Attribute type is an image.
      *
      * @param  string  $attribute_type
-     * @return boolean
+     * @return bool
      */
     protected function isImageType($attribute_type)
     {
@@ -137,7 +137,7 @@ class MagentoProducts extends PaginatableMagentoService
             'small_image',
         ];
 
-        return ((in_array($attribute_type, $types)));
+        return in_array($attribute_type, $types);
     }
 
     /**
