@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Models\MagentoCategory;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductCategory;
 
@@ -31,8 +32,9 @@ class MagentoCategoryModelTest extends TestCase
         $category = factory(MagentoCategory::class)->create();
 
         $attribute = $category->customAttributes()->updateOrCreate([
-            'attribute_type' => 'foo',
-            'value'          => 'bar',
+            'attribute_type'    => 'foo',
+            'attribute_type_id' => factory(MagentoCustomAttributeType::class)->create(),
+            'value'             => 'bar',
         ]);
 
         $this->assertNotEmpty($attribute);

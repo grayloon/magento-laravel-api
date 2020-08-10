@@ -22,4 +22,14 @@ class MagentoCustomAttribute extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * The 'attribute_type_id" belongs to the Custom Attribute Type.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(MagentoCustomAttributeType::class, 'attribute_type_id');
+    }
 }

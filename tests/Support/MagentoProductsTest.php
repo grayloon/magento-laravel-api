@@ -4,6 +4,8 @@ namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
 use Grayloon\Magento\Models\MagentoCategory;
+use Grayloon\Magento\Models\MagentoCustomAttribute;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Support\MagentoProducts;
 use Grayloon\Magento\Tests\TestCase;
@@ -27,9 +29,179 @@ class MagentoProductsTest extends TestCase
         $this->assertEquals(1, $count);
     }
 
+    public function test_magento_product_adds_attribute_type()
+    {
+        Http::fake(function ($request) {
+            return Http::response([
+                'options' => [
+                    [
+                        'label' => 'New York',
+                        'value' => '1',
+                    ],
+                    [
+                        'label' => 'Los Angeles',
+                        'value' => '2',
+                    ],
+                ],
+                'default_frontend_label' => 'Warehouse',
+            ], 200);
+        });
+
+        factory(MagentoCategory::class)->create();
+
+        $products = [
+            [
+                'id'         => '1',
+                'name'       => 'Dunder Mifflin Paper',
+                'sku'        => 'DFPC001',
+                'price'      => 19.99,
+                'status'     => '1',
+                'visibility' => '1',
+                'type_id'    => 'simple',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'weight'     => 10.00,
+                'extension_attributes' => [
+                    'website_id' => [1],
+                ],
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'warehouse_id',
+                        'value'          => '1',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoProducts = new MagentoProducts();
+
+        $magentoProducts->updateProducts($products);
+
+        $product = MagentoProduct::with('customAttributes', 'customAttributes.type')->first();
+
+        $this->assertNotEmpty($product->customAttributes->first());
+        $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
+        $this->assertEquals('New York', $product->customAttributes->first()->value);
+        $this->assertInstanceOf(MagentoCustomAttributeType::class, $product->customAttributes->first()->type()->first());
+        $this->assertEquals('Warehouse', $product->customAttributes->first()->type()->first()->display_name);
+        $this->assertEquals('warehouse_id', $product->customAttributes->first()->type()->first()->name);
+    }
+
+    public function test_magento_product_unknown_attribute_type_value_resolves_as_raw_value()
+    {
+        Http::fake(function ($request) {
+            return Http::response([
+                'options' => [
+                    [
+                        'label' => 'New York',
+                        'value' => '1',
+                    ],
+                    [
+                        'label' => 'Los Angeles',
+                        'value' => '2',
+                    ],
+                ],
+                'default_frontend_label' => 'Warehouse',
+            ], 200);
+        });
+
+        factory(MagentoCategory::class)->create();
+
+        $products = [
+            [
+                'id'         => '1',
+                'name'       => 'Dunder Mifflin Paper',
+                'sku'        => 'DFPC001',
+                'price'      => 19.99,
+                'status'     => '1',
+                'visibility' => '1',
+                'type_id'    => 'simple',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'weight'     => 10.00,
+                'extension_attributes' => [
+                    'website_id' => [1],
+                ],
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'warehouse_id',
+                        'value'          => 'Unknown',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoProducts = new MagentoProducts();
+
+        $magentoProducts->updateProducts($products);
+
+        $product = MagentoProduct::with('customAttributes')->first();
+
+        $this->assertNotEmpty($product->customAttributes->first());
+        $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
+        $this->assertEquals('Unknown', $product->customAttributes->first()->value);
+    }
+
+    public function test_magento_product_existing_attribute_uses_existing_values()
+    {
+        factory(MagentoCategory::class)->create();
+        $type = factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'warehouse_id',
+            'display_name' => 'Warehouse',
+            'options' => [
+                [
+                    'label' => 'New York',
+                    'value' => '1',
+                ],
+                [
+                    'label' => 'Los Angeles',
+                    'value' => '2',
+                ],
+            ],
+        ]);
+
+        $products = [
+            [
+                'id'         => '1',
+                'name'       => 'Dunder Mifflin Paper',
+                'sku'        => 'DFPC001',
+                'price'      => 19.99,
+                'status'     => '1',
+                'visibility' => '1',
+                'type_id'    => 'simple',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'weight'     => 10.00,
+                'extension_attributes' => [
+                    'website_id' => [1],
+                ],
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'warehouse_id',
+                        'value'          => '1',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoProducts = new MagentoProducts();
+
+        $magentoProducts->updateProducts($products);
+
+        $product = MagentoProduct::with('customAttributes')->first();
+
+        $this->assertNotEmpty($product->customAttributes->first());
+        $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
+        $this->assertEquals(1, $product->customAttributes->count());
+        $this->assertEquals('New York', $product->customAttributes->first()->value);
+    }
+
     public function test_magento_product_adds_associated_category()
     {
         $category = factory(MagentoCategory::class)->create();
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'category_ids',
+        ]);
 
         $products = [
             [
@@ -73,6 +245,9 @@ class MagentoProductsTest extends TestCase
         Queue::fake();
 
         factory(MagentoCategory::class)->create();
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'image',
+        ]);
 
         $products = [
             [
@@ -110,6 +285,9 @@ class MagentoProductsTest extends TestCase
         Queue::fake();
 
         factory(MagentoCategory::class)->create();
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'image',
+        ]);
 
         $products = [
             [
@@ -147,6 +325,9 @@ class MagentoProductsTest extends TestCase
         Queue::fake();
 
         factory(MagentoCategory::class)->create();
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'image',
+        ]);
 
         $products = [
             [
@@ -185,6 +366,9 @@ class MagentoProductsTest extends TestCase
     public function test_magento_product_applies_slug_from_url_key()
     {
         $category = factory(MagentoCategory::class)->create();
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'url_key',
+        ]);
 
         $products = [
             [

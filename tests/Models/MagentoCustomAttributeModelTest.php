@@ -4,6 +4,7 @@ namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
 
 class MagentoCustomAttributeModelTest extends TestCase
@@ -35,5 +36,19 @@ class MagentoCustomAttributeModelTest extends TestCase
 
         $this->assertNotEmpty($attribute);
         $this->assertEquals(MagentoCategory::class, $attribute->attributable_type);
+    }
+
+    public function test_custom_attribute_type_id_belongs_to_attribute_type_relationship()
+    {
+        $type = factory(MagentoCustomAttributeType::class)->create();
+        $attribute = factory(MagentoCustomAttribute::class)->create([
+            'attribute_type' => $type->id,
+        ]);
+
+        $query = MagentoCustomAttribute::with('type')->first();
+
+        $this->assertNotEmpty($attribute);
+        $this->assertEquals($attribute->attribute_type, $type->id);
+        $this->assertInstanceOf(MagentoCustomAttributeType::class, $query->type()->first());
     }
 }
