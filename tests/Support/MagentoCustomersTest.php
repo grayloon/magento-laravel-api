@@ -2,11 +2,11 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Tests\TestCase;
-use Illuminate\Support\Facades\Http;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoCustomer;
 use Grayloon\Magento\Support\MagentoCustomers;
-use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Tests\TestCase;
+use Illuminate\Support\Facades\Http;
 
 class MagentoCustomersTest extends TestCase
 {

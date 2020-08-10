@@ -3,8 +3,8 @@
 namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Models\MagentoCustomer;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Models\MagentoCustomer;
 
 class MagentoCustomers extends PaginatableMagentoService
 {

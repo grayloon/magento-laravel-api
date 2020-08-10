@@ -2,11 +2,11 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
+use Grayloon\Magento\Models\MagentoCategory;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Support\MagentoCategories;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
-use Grayloon\Magento\Models\MagentoCategory;
-use Grayloon\Magento\Support\MagentoCategories;
-use Grayloon\Magento\Models\MagentoCustomAttributeType;
 
 class MagentoCategoriesTest extends TestCase
 {
