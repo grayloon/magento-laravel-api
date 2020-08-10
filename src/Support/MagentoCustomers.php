@@ -4,6 +4,7 @@ namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoCustomer;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 
 class MagentoCustomers extends PaginatableMagentoService
 {
@@ -82,16 +83,68 @@ class MagentoCustomers extends PaginatableMagentoService
         }
 
         foreach ($attributes as $attribute) {
-            if (is_array($attribute['value'])) {
-                $attribute['value'] = json_encode($attribute['value']);
-            }
+            $type = $this->resolveCustomAttributeType($attribute['attribute_code']);
+            $value = $this->resolveCustomAttributeValue($type, $attribute['value']);
 
-            $customer->customAttributes()->updateOrCreate(['attribute_type' => $attribute['attribute_code']], [
-                'value' => $attribute['value'] ?? '',
-            ]);
+            $customer
+                ->customAttributes()
+                ->updateOrCreate(['attribute_type_id' => $type->id], [
+                    'attribute_type' => $attribute['attribute_code'],
+                    'value'          => $value,
+                ]);
         }
 
         return $this;
+    }
+
+    /**
+     * Resolve the Custom Attribute Type by the Attribute Code.
+     *
+     * @param  string  $attributeCode
+     * @return \Grayloon\Magento\Models\MagentoCustomAttributeType
+     */
+    protected function resolveCustomAttributeType($attributeCode)
+    {
+        $type = MagentoCustomAttributeType::where('name', $attributeCode)
+            ->first();
+
+        if (! $type) {
+            $api = (new Magento())->api('productAttributes')
+                ->show($attributeCode)
+                ->json();
+
+            $type = MagentoCustomAttributeType::create([
+                'name'         => $attributeCode,
+                'display_name' => $api['default_frontend_label'] ?? $attributeCode,
+                'options'      => $api['options'] ?? [],
+            ]);
+        }
+
+        return $type;
+    }
+
+    /**
+     * Resolve the Custom Attribute Value by the provided options.
+     *
+     * @param  \Grayloon\Magento\Models\MagentoCustomAttributeType  $type
+     * @param  string  $value;
+     * @return string|null
+     */
+    protected function resolveCustomAttributeValue($type, $value)
+    {
+        if ($type->options) {
+            foreach ($type->options as $option) {
+                if ($option['value'] == $value) {
+                    return $option['label'];
+                }
+            }
+        }
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        return $value;
     }
 
     /**
