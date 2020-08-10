@@ -14,5 +14,6 @@ $factory->define(MagentoProduct::class, function (Faker $faker) {
         'status'     => 1,
         'visibility' => 1,
         'type'       => 'simple',
+        'slug'       => $faker->slug,
     ];
 });
