@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMagentoCustomAttributesTable extends Migration
+class CreateMagentoCustomAttributeTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateMagentoCustomAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('magento_custom_attributes', function (Blueprint $table) {
+        Schema::create('magento_custom_attribute_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('attribute_type')->index();
-            $table->text('value');
-            $table->bigInteger('attributable_id')->index();
-            $table->string('attributable_type')->index();
+            $table->string('name')->index();
+            $table->text('display_name');
+            $table->text('options')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateMagentoCustomAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('magento_custom_attributes');
+        Schema::dropIfExists('magento_custom_attribute_options');
     }
 }

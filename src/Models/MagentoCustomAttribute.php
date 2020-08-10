@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 
 class MagentoCustomAttribute extends Model
 {
@@ -21,5 +22,15 @@ class MagentoCustomAttribute extends Model
     public function attributable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * The 'attribute_type" belongs to the Custom Attribute Type.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(MagentoCustomAttributeType::class, 'attribute_type');
     }
 }
