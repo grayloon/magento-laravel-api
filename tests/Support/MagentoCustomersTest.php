@@ -89,13 +89,13 @@ class MagentoCustomersTest extends TestCase
             return Http::response([
                 'options' => [
                     [
-                        "label" => 'Yes',
+                        'label' => 'Yes',
                         'value' => '1',
                     ],
                     [
                         'label' => 'No',
                         'value' => '0',
-                    ]
+                    ],
                 ],
                 'default_frontend_label' => 'Rewards Member',
             ], 200);

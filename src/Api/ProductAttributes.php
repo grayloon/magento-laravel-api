@@ -12,6 +12,6 @@ class ProductAttributes extends AbstractApi
      */
     public function show($attribute)
     {
-        return $this->get('/products/attributes/'. $attribute);
+        return $this->get('/products/attributes/'.$attribute);
     }
 }

@@ -108,7 +108,6 @@ class MagentoProducts extends PaginatableMagentoService
             $type = $this->resolveCustomAttributeType($attribute['attribute_code']);
             $value = $this->resolveCustomAttributeValue($type, $attribute['value']);
 
-
             $product
                 ->customAttributes()
                 ->updateOrCreate(['attribute_type_id' => $type->id], [
