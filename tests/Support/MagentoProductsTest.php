@@ -35,13 +35,13 @@ class MagentoProductsTest extends TestCase
             return Http::response([
                 'options' => [
                     [
-                        "label" => 'New York',
+                        'label' => 'New York',
                         'value' => '1',
                     ],
                     [
                         'label' => 'Los Angeles',
                         'value' => '2',
-                    ]
+                    ],
                 ],
                 'default_frontend_label' => 'Warehouse',
             ], 200);
@@ -67,7 +67,7 @@ class MagentoProductsTest extends TestCase
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
-                        'value'          => "1",
+                        'value'          => '1',
                     ],
                 ],
             ],
@@ -93,13 +93,13 @@ class MagentoProductsTest extends TestCase
             return Http::response([
                 'options' => [
                     [
-                        "label" => 'New York',
+                        'label' => 'New York',
                         'value' => '1',
                     ],
                     [
                         'label' => 'Los Angeles',
                         'value' => '2',
-                    ]
+                    ],
                 ],
                 'default_frontend_label' => 'Warehouse',
             ], 200);
@@ -125,7 +125,7 @@ class MagentoProductsTest extends TestCase
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
-                        'value'          => "Unknown",
+                        'value'          => 'Unknown',
                     ],
                 ],
             ],
@@ -147,10 +147,10 @@ class MagentoProductsTest extends TestCase
         factory(MagentoCategory::class)->create();
         $type = factory(MagentoCustomAttributeType::class)->create([
             'name' => 'warehouse_id',
-            'display_name' => "Warehouse",
+            'display_name' => 'Warehouse',
             'options' => [
                 [
-                    "label" => 'New York',
+                    'label' => 'New York',
                     'value' => '1',
                 ],
                 [
@@ -178,7 +178,7 @@ class MagentoProductsTest extends TestCase
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
-                        'value'          => "1",
+                        'value'          => '1',
                     ],
                 ],
             ],

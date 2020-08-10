@@ -121,13 +121,13 @@ class MagentoCategoriesTest extends TestCase
             return Http::response([
                 'options' => [
                     [
-                        "label" => 'New York',
+                        'label' => 'New York',
                         'value' => '1',
                     ],
                     [
                         'label' => 'Los Angeles',
                         'value' => '2',
-                    ]
+                    ],
                 ],
                 'default_frontend_label' => 'Warehouse',
             ], 200);
@@ -135,7 +135,7 @@ class MagentoCategoriesTest extends TestCase
 
         factory(MagentoCustomAttributeType::class)->create(['name' => 'path']);
         factory(MagentoCustomAttributeType::class)->create(['name' => 'children_count']);
-        
+
         $categories = [
             [
                 'id'         => '1',
@@ -167,7 +167,6 @@ class MagentoCategoriesTest extends TestCase
             ],
         ];
 
-
         (new MagentoCategories())->updateCategories($categories);
 
         $category = MagentoCategory::first();
@@ -182,13 +181,13 @@ class MagentoCategoriesTest extends TestCase
             return Http::response([
                 'options' => [
                     [
-                        "label" => 'New York',
+                        'label' => 'New York',
                         'value' => '1',
                     ],
                     [
                         'label' => 'Los Angeles',
                         'value' => '2',
-                    ]
+                    ],
                 ],
                 'default_frontend_label' => 'Warehouse',
             ], 200);
@@ -196,7 +195,7 @@ class MagentoCategoriesTest extends TestCase
 
         factory(MagentoCustomAttributeType::class)->create(['name' => 'path']);
         factory(MagentoCustomAttributeType::class)->create(['name' => 'children_count']);
-        
+
         $categories = [
             [
                 'id'         => '1',
@@ -227,7 +226,6 @@ class MagentoCategoriesTest extends TestCase
                 ],
             ],
         ];
-
 
         (new MagentoCategories())->updateCategories($categories);
 
