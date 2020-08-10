@@ -181,4 +181,41 @@ class MagentoProductsTest extends TestCase
         Queue::assertPushed(fn (DownloadMagentoProductImage $downloadJob) => $downloadJob->directory === '/pub/media/catalog/product');
         Queue::assertPushed(fn (DownloadMagentoProductImage $downloadJob) => $downloadJob->fullUrl === '/pub/media/catalog/product/foo.jpg');
     }
+
+    public function test_magento_product_applies_slug_from_url_key()
+    {
+        $category = factory(MagentoCategory::class)->create();
+
+        $products = [
+            [
+                'id'         => '1',
+                'name'       => 'Dunder Mifflin Paper',
+                'sku'        => 'DFPC001',
+                'price'      => 19.99,
+                'status'     => '1',
+                'visibility' => '1',
+                'type_id'    => 'simple',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'weight'     => 10.00,
+                'extension_attributes' => [
+                    'website_id' => [1],
+                ],
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'url_key',
+                        'value'          => 'dunder-mifflin-paper',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoProducts = new MagentoProducts();
+
+        $magentoProducts->updateProducts($products);
+
+        $product = MagentoProduct::first();
+        $this->assertNotNull($product);
+        $this->assertEquals('dunder-mifflin-paper', $product->slug);
+    }
 }

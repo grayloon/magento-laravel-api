@@ -107,6 +107,12 @@ class MagentoProducts extends PaginatableMagentoService
                 $this->syncProductCategories($attribute['value'], $product);
             }
 
+            if ($attribute['attribute_code'] === 'url_key') {
+                $product->update([
+                    'slug' => $attribute['value'],
+                ]);
+            }
+
             if ($this->isImageType($attribute['attribute_code'])) {
                 $this->downloadImage($attribute['value']);
             }
