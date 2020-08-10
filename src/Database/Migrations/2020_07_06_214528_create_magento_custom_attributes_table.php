@@ -15,7 +15,8 @@ class CreateMagentoCustomAttributesTable extends Migration
     {
         Schema::create('magento_custom_attributes', function (Blueprint $table) {
             $table->id();
-            $table->integer('attribute_type')->index();
+            $table->string('attribute_type')->index();
+            $table->integer('attribute_type_id')->index();
             $table->text('value');
             $table->bigInteger('attributable_id')->index();
             $table->string('attributable_type')->index();

@@ -24,12 +24,12 @@ class MagentoCustomAttribute extends Model
     }
 
     /**
-     * The 'attribute_type" belongs to the Custom Attribute Type.
+     * The 'attribute_type_id" belongs to the Custom Attribute Type.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function type()
     {
-        return $this->belongsTo(MagentoCustomAttributeType::class, 'attribute_type');
+        return $this->belongsTo(MagentoCustomAttributeType::class, 'attribute_type_id');
     }
 }
