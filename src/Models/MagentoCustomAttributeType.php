@@ -12,4 +12,13 @@ class MagentoCustomAttributeType extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'options' => 'array',
+    ];
 }

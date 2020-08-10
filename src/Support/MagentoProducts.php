@@ -4,6 +4,7 @@ namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
 use Grayloon\Magento\Magento;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoExtensionAttribute;
 use Grayloon\Magento\Models\MagentoExtensionAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
@@ -103,27 +104,16 @@ class MagentoProducts extends PaginatableMagentoService
     protected function syncCustomAttributes($attributes, $product)
     {
         foreach ($attributes as $attribute) {
-            if ($attribute['attribute_code'] === 'category_ids') {
-                $this->syncProductCategories($attribute['value'], $product);
-            }
+            $this->applyConditionalRules($attribute, $product);
+            $type = $this->resolveCustomAttributeType($attribute['attribute_code']);
+            $value = $this->resolveCustomAttributeValue($type, $attribute['value']);
 
-            if ($attribute['attribute_code'] === 'url_key') {
-                $product->update([
-                    'slug' => $attribute['value'],
+
+            $product
+                ->customAttributes()
+                ->updateOrCreate(['attribute_type' => $type->id], [
+                    'value' => $value,
                 ]);
-            }
-
-            if ($this->isImageType($attribute['attribute_code'])) {
-                $this->downloadImage($attribute['value']);
-            }
-
-            if (is_array($attribute['value'])) {
-                $attribute['value'] = json_encode($attribute['value']);
-            }
-
-            $product->customAttributes()->updateOrCreate(['attribute_type' => $attribute['attribute_code']], [
-                'value' => $attribute['value'],
-            ]);
         }
 
         return $this;
@@ -182,5 +172,81 @@ class MagentoProducts extends PaginatableMagentoService
         }
 
         return $this;
+    }
+
+    /**
+     * Check if Custom Attributes have applied rules to be applied.
+     *
+     * @param  array  $attribute
+     * @param  \Grayloon\Magento\Models\MagentoProduct $product
+     * @return void
+     */
+    protected function applyConditionalRules($attribute, $product)
+    {
+        if ($attribute['attribute_code'] === 'category_ids') {
+            $this->syncProductCategories($attribute['value'], $product);
+        }
+
+        if ($attribute['attribute_code'] === 'url_key') {
+            $product->update([
+                'slug' => $attribute['value'],
+            ]);
+        }
+
+        if ($this->isImageType($attribute['attribute_code'])) {
+            $this->downloadImage($attribute['value']);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Resolve the Custom Attribute Type by the Attribute Code.
+     *
+     * @param  string  $attributeCode
+     * @return \Grayloon\Magento\Models\MagentoCustomAttributeType
+     */
+    protected function resolveCustomAttributeType($attributeCode)
+    {
+        $type = MagentoCustomAttributeType::where('name', $attributeCode)
+            ->first();
+
+        if (! $type) {
+            $api = (new Magento())->api('productAttributes')
+                ->show($attributeCode)
+                ->json();
+
+            $type = MagentoCustomAttributeType::create([
+                'name'         => $attributeCode,
+                'display_name' => $api['default_frontend_label'] ?? $attributeCode,
+                'options'      => $api['options'] ?? [],
+            ]);
+        }
+
+        return $type;
+    }
+
+    /**
+     * Resolve the Custom Attribute Value by the provided options.
+     *
+     * @param  \Grayloon\Magento\Models\MagentoCustomAttributeType  $type
+     * @param  string  $value;
+     * @return string|null
+     */
+    protected function resolveCustomAttributeValue($type, $value)
+    {
+        if ($type->options) {
+            foreach ($type->options as $option) {
+                if ($option['value'] == $value) {
+                    return $option['label'];
+                }
+            }
+        }
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        return $value;
     }
 }
