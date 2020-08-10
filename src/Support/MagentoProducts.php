@@ -113,7 +113,7 @@ class MagentoProducts extends PaginatableMagentoService
                 ->customAttributes()
                 ->updateOrCreate(['attribute_type_id' => $type->id], [
                     'attribute_type' => $attribute['attribute_code'],
-                    'value' => $value,
+                    'value'          => $value,
                 ]);
         }
 
