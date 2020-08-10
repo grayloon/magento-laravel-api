@@ -69,11 +69,6 @@ Get a list of all categories:
 $magento->api('categories')->all($pageSize = 50, $currentPage = 1);
 ```
 
-Get a count of all categories:
-```php
-$magento->api('categories')->count(); 
-```
-
 #### Customers
 
 Get a list of customers:
@@ -99,14 +94,15 @@ Get a list of products:
 $magento->api('products')->all($pageSize = 50, $currentPage = 1); 
 ```
 
-Get a count of all products:
-```php
-$magento->api('products')->count(); 
-```
-
 Get info about a product by the product SKU:
 ```php
 $magento->api('products')->show($sku);
+```
+
+#### Product Attributes
+Retrieve specific product attribute information:
+```php
+$magento->api('productAttributes')->show($attributeCode)
 ```
 
 #### Schema
