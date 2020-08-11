@@ -2,10 +2,10 @@
 
 namespace Grayloon\Magento\Support;
 
-use Illuminate\Support\Str;
-use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
+use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Illuminate\Support\Str;
 
 trait HasCustomAttributes
 {
@@ -63,8 +63,8 @@ trait HasCustomAttributes
     {
         MagentoCustomAttribute::where('attribute_type_id', $type->id)
             ->get()
-            ->each(fn($attribute) => $attribute->update([
-                'value' => $this->resolveCustomAttributeValue($type, $attribute->value)
+            ->each(fn ($attribute) => $attribute->update([
+                'value' => $this->resolveCustomAttributeValue($type, $attribute->value),
             ]));
 
         return $this;

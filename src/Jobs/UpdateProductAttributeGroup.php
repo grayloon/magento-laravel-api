@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Support\HasCustomAttributes;
 use Illuminate\Bus\Queueable;
