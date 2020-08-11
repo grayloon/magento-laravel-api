@@ -83,7 +83,7 @@ class MagentoProduct extends Model
      *
      * @return null|string
      */
-    public function productImage($key)
+    public function productImage()
     {
         $attribute = $this->customAttributes->where('attribute_type', 'image')->first();
 
