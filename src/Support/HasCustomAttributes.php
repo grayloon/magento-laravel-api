@@ -56,7 +56,7 @@ trait HasCustomAttributes
     /**
      * Mass updates all Custom Attribute values from the resolved options.
      *
-     * @param [type] $type
+     * @param \Grayloon\Magento\Models\MagentoCustomAttributeType  $type
      * @return void
      */
     protected function updateCustomAttributeTypeValues($type)
