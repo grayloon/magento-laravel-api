@@ -8,6 +8,8 @@ use Grayloon\Magento\Models\MagentoCustomer;
 
 class MagentoCustomers extends PaginatableMagentoService
 {
+    use HasCustomAttributes;
+    
     /**
      * The amount of total customers.
      *
@@ -95,56 +97,6 @@ class MagentoCustomers extends PaginatableMagentoService
         }
 
         return $this;
-    }
-
-    /**
-     * Resolve the Custom Attribute Type by the Attribute Code.
-     *
-     * @param  string  $attributeCode
-     * @return \Grayloon\Magento\Models\MagentoCustomAttributeType
-     */
-    protected function resolveCustomAttributeType($attributeCode)
-    {
-        $type = MagentoCustomAttributeType::where('name', $attributeCode)
-            ->first();
-
-        if (! $type) {
-            $api = (new Magento())->api('productAttributes')
-                ->show($attributeCode)
-                ->json();
-
-            $type = MagentoCustomAttributeType::create([
-                'name'         => $attributeCode,
-                'display_name' => $api['default_frontend_label'] ?? $attributeCode,
-                'options'      => $api['options'] ?? [],
-            ]);
-        }
-
-        return $type;
-    }
-
-    /**
-     * Resolve the Custom Attribute Value by the provided options.
-     *
-     * @param  \Grayloon\Magento\Models\MagentoCustomAttributeType  $type
-     * @param  string  $value;
-     * @return string|null
-     */
-    protected function resolveCustomAttributeValue($type, $value)
-    {
-        if ($type->options) {
-            foreach ($type->options as $option) {
-                if ($option['value'] == $value) {
-                    return $option['label'];
-                }
-            }
-        }
-
-        if (is_array($value)) {
-            $value = json_encode($value);
-        }
-
-        return $value;
     }
 
     /**
