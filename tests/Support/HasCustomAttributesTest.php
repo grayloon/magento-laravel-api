@@ -13,7 +13,7 @@ class HasCustomAttributesTest extends TestCase
     public function test_resolves_new_custom_attribute_type()
     {
         Queue::fake();
-        
+
         $newType = (new FakeSupportingClass)->exposedResolveCustomAttributeType('foo_bar');
 
         $this->assertNotEmpty($newType);
@@ -30,7 +30,7 @@ class HasCustomAttributesTest extends TestCase
         $existing = factory(MagentoCustomAttributeType::class)->create([
             'name' => 'foo_bar',
         ]);
-        
+
         $type = (new FakeSupportingClass)->exposedResolveCustomAttributeType('foo_bar');
 
         $this->assertNotEmpty($type);
@@ -44,7 +44,7 @@ class HasCustomAttributesTest extends TestCase
         $type = factory(MagentoCustomAttributeType::class)->create([
             'name' => 'foo_bar',
         ]);
-        
+
         $value = (new FakeSupportingClass)->exposedResolveCustomAttributeValue($type, 'foo');
 
         $this->assertEquals('foo', $value);
@@ -65,7 +65,7 @@ class HasCustomAttributesTest extends TestCase
                 ],
             ],
         ]);
-        
+
         $value = (new FakeSupportingClass)->exposedResolveCustomAttributeValue($type, '1');
 
         $this->assertEquals('New York', $value);
@@ -86,7 +86,7 @@ class HasCustomAttributesTest extends TestCase
                 ],
             ],
         ]);
-        
+
         $value = (new FakeSupportingClass)->exposedResolveCustomAttributeValue($type, 'Unknown');
 
         $this->assertEquals('Unknown', $value);

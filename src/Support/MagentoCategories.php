@@ -8,7 +8,7 @@ use Grayloon\Magento\Models\MagentoCategory;
 class MagentoCategories extends PaginatableMagentoService
 {
     use HasCustomAttributes;
-    
+
     /**
      * The amount of total categories.
      *

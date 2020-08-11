@@ -12,7 +12,7 @@ use Grayloon\Magento\Models\MagentoProductCategory;
 class MagentoProducts extends PaginatableMagentoService
 {
     use HasCustomAttributes;
-    
+
     /**
      * The amount of total products.
      *

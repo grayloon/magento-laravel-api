@@ -9,7 +9,6 @@ use Grayloon\Magento\Support\MagentoCategories;
 use Grayloon\Magento\Tests\TestCase;
 use function GuzzleHttp\Promise\queue;
 use Illuminate\Support\Facades\Http;
-
 use Illuminate\Support\Facades\Queue;
 
 class MagentoCategoriesTest extends TestCase
@@ -32,7 +31,7 @@ class MagentoCategoriesTest extends TestCase
     public function test_can_create_magento_category()
     {
         Queue::fake();
-        
+
         $categories = [
             [
                 'id'         => '1',

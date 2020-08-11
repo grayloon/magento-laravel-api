@@ -20,7 +20,7 @@ class UpdateProductAttributeGroup implements ShouldQueue
      * @var \Grayloon\Magento\Models\MagentoCustomAttributeType
      */
     public $type;
-    
+
     /**
      * Create a new job instance.
      *
