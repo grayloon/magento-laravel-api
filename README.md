@@ -13,8 +13,7 @@
 
 # Laravel - Magento API
 
-A Magento 2 API Object Oriented wrapper for a Laravel application. Also includes an optional opinionated storage system for 
-consuming Magento 2 data in your Laravel application.
+A Magento 2 API Object Oriented wrapper for a Laravel application. This package also includes an optional opinionated storage system for consuming Magento 2 data in your Laravel application. 
 
 ## Installation
 
@@ -34,6 +33,8 @@ If you are wanting to store the data from the Magento API and want to use our op
 ```bash
 php artisan vendor:publish --provider="Grayloon\Magento\MagentoServiceProvider" --tag="migrations"
 ```
+
+> more configuration options are available in the [Manual Configuration Options](#manual-configuration-options) section.
 
 Configure your Magento 2 API endpoint and token in your `.env` file:
 ```
@@ -109,6 +110,31 @@ $magento->api('productAttributes')->show($attributeCode)
 Get a schema blueprint of the Magento 2 REST API:
 ```php
 $magento->api('schema')->show(); 
+```
+
+## Manual Configuration Options
+
+This package features additional configuration options which uses the Magento 2 default settings. You are more than welcome to change any of the values as you need fit in your application:
+
+### Base API Path
+
+The Magento 2 REST API Base Path. By default, this is assigned as 'rest'. Developers should only update this setting if the path has changed:
+```
+MAGENTO_BASE_PATH='rest'
+```
+
+### Magento Store Code
+
+The Magento 2 REST API Store Code By default, this is assigned to 'all' specifying all magento stores on requests. Developers may update this to specify the API around a specific store code.
+```
+MAGENTO_STORE_CODE='all'
+```
+
+### Magento API Version
+
+The Magento 2 REST API Version. By default, Magento 2 sets this to 'V1'. Developers should only update this setting if the version has changed.
+```
+MAGENTO_API_VERSION='V1'
 ```
 
 ## Jobs

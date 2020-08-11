@@ -45,7 +45,7 @@ return [
     |  The Magento 2 REST API Store Code By default, this
     |  is assigned to 'all' specifying all magento stores
     |  on requests. Developers may update this to specify
-    |  the API around a specific code.
+    |  the API around a specific store code.
     |
     */
     'store_code' => env('MAGENTO_STORE_CODE', 'all'),
@@ -56,7 +56,7 @@ return [
     |--------------------------------------------------------------------------
     |
     |  The Magento 2 REST API Version. By default, Magento 2
-    |  sets this to 'v1'. Developers should only update this
+    |  sets this to 'V1'. Developers should only update this
     |  setting if the version has changed.
     |
     */
