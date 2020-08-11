@@ -96,4 +96,32 @@ class MagentoProductModelTest extends TestCase
         $this->assertNotEmpty($categories);
         $this->assertEquals(10, $categories->count());
     }
+
+    public function test_custom_attribute_value_helper_returns_value_of_custom_attribute()
+    {
+        $product = factory(MagentoProduct::class)->create();
+
+        factory(MagentoCustomAttribute::class)->create([
+            'attributable_type'   => MagentoProduct::class,
+            'attributable_id'     => $product->id,
+            'attribute_type'      => 'foo',
+            'value'               => 'bar',
+        ]);
+
+        $product = $product->with('customAttributes')->first();
+
+        $this->assertEquals(1, $product->customAttributes()->count());
+        $this->assertEquals('bar', $product->customAttributeValue('foo'));
+    }
+
+
+    public function test_custom_attribute_value_helper_returns_null_of_invalid_custom_attribute()
+    {
+        $product = factory(MagentoProduct::class)->create();
+
+        $product = $product->with('customAttributes')->first();
+
+        $this->assertEquals(0, $product->customAttributes()->count());
+        $this->assertNull($product->customAttributeValue('foo'));
+    }
 }

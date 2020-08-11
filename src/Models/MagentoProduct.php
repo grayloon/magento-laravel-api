@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class MagentoProduct extends Model
 {
@@ -62,5 +63,34 @@ class MagentoProduct extends Model
     public function categories()
     {
         return $this->hasManyThrough(MagentoCategory::class, MagentoProductCategory::class, 'magento_product_id', 'id');
+    }
+
+    /**
+     * Helper to quickly get a value from a custom attribute.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function customAttributeValue($key)
+    {
+        $attribute = $this->customAttributes->where('attribute_type', $key)->first();
+
+        return $attribute ? $attribute->value : null;
+    }
+
+    /**
+     * Helper to easily get the product image.
+     *
+     * @return null|string
+     */
+    public function productImage($key)
+    {
+        $attribute = $this->customAttributes->where('attribute_type', 'image')->first();
+
+        if (Storage::exists('public/product/'. $attribute->value)) {
+            return 'product/'. $attribute->value;
+        }
+
+        return null;
     }
 }
