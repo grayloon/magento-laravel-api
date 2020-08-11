@@ -8,7 +8,7 @@ use Grayloon\Magento\Models\MagentoCustomer;
 class MagentoCustomers extends PaginatableMagentoService
 {
     use HasCustomAttributes;
-    
+
     /**
      * The amount of total customers.
      *

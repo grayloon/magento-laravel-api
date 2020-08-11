@@ -177,8 +177,8 @@ class MagentoProductsTest extends TestCase
                 [
                     'label' => 'Los Angeles',
                     'value' => '2',
-                ]
-            ]
+                ],
+            ],
         ]);
         factory(MagentoCategory::class)->create();
 
