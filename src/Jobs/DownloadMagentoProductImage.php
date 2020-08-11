@@ -56,6 +56,6 @@ class DownloadMagentoProductImage implements ShouldQueue
         $contents = file_get_contents($this->fullUrl);
         $name = substr($this->fullUrl, strrpos($this->fullUrl, '/') + 1);
 
-        Storage::put('product/'.$name, $contents);
+        Storage::put('public/product/'.$this->uri, $contents);
     }
 }
