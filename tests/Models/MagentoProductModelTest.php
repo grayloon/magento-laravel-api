@@ -114,7 +114,6 @@ class MagentoProductModelTest extends TestCase
         $this->assertEquals('bar', $product->customAttributeValue('foo'));
     }
 
-
     public function test_custom_attribute_value_helper_returns_null_of_invalid_custom_attribute()
     {
         $product = factory(MagentoProduct::class)->create();
