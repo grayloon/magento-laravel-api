@@ -87,7 +87,7 @@ class MagentoProduct extends Model
     {
         $attribute = $this->customAttributes->where('attribute_type', 'image')->first();
 
-        if (Storage::exists('public/product/'. $attribute->value)) {
+        if ($attribute && Storage::exists('public/product/'. $attribute->value)) {
             return 'product/'. $attribute->value;
         }
 
