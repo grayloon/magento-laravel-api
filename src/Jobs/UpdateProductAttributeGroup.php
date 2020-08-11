@@ -3,7 +3,9 @@
 namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
+use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Support\HasCustomAttributes;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 
 class UpdateProductAttributeGroup implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasCustomAttributes;
 
     /**
      * The Magento Custom Attribute Type.
@@ -46,5 +48,7 @@ class UpdateProductAttributeGroup implements ShouldQueue
             'display_name' => $api['default_frontend_label'] ?? $this->type->display_name,
             'options'      => $api['options'] ?? [],
         ]);
+
+        $this->updateCustomAttributeTypeValues($this->type);
     }
 }

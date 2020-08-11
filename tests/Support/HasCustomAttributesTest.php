@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
+use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Support\HasCustomAttributes;
 use Grayloon\Magento\Tests\TestCase;
@@ -91,6 +92,84 @@ class HasCustomAttributesTest extends TestCase
 
         $this->assertEquals('Unknown', $value);
     }
+
+    public function test_updates_attribute_value_based_on_options()
+    {
+        $type = factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'foo_bar',
+            'options' => [
+                [
+                    'label' => 'New York',
+                    'value' => '1',
+                ],
+                [
+                    'label' => 'Los Angeles',
+                    'value' => '2',
+                ],
+            ],
+        ]);
+
+        $attribute = factory(MagentoCustomAttribute::class)->create([
+            'attribute_type_id' => $type->id,
+            'value' => '1',
+        ]);
+
+        (new FakeSupportingClass)->exposedUpdateCustomAttributeTypeValues($type);
+
+        $this->assertEquals('New York', $attribute->fresh()->value);
+    }
+
+    public function test_updates_multiple_attribute_value_based_on_options()
+    {
+        $type = factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'foo_bar',
+            'options' => [
+                [
+                    'label' => 'New York',
+                    'value' => '1',
+                ],
+                [
+                    'label' => 'Los Angeles',
+                    'value' => '2',
+                ],
+            ],
+        ]);
+
+        $attributes = factory(MagentoCustomAttribute::class, 10)->create([
+            'attribute_type_id' => $type->id,
+            'value' => '1',
+        ]);
+
+        (new FakeSupportingClass)->exposedUpdateCustomAttributeTypeValues($type);
+
+        $this->assertEquals(10, $attributes->fresh()->where('value', 'New York')->count());
+    }
+
+    public function test_missing_option_keeps_raw_attribute_value()
+    {
+        $type = factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'foo_bar',
+            'options' => [
+                [
+                    'label' => 'New York',
+                    'value' => '1',
+                ],
+                [
+                    'label' => 'Los Angeles',
+                    'value' => '2',
+                ],
+            ],
+        ]);
+
+        $attribute = factory(MagentoCustomAttribute::class)->create([
+            'attribute_type_id' => $type->id,
+            'value' => 'Unknown',
+        ]);
+
+        (new FakeSupportingClass)->exposedUpdateCustomAttributeTypeValues($type);
+
+        $this->assertEquals('Unknown', $attribute->fresh()->value);
+    }
 }
 
 class FakeSupportingClass
@@ -105,5 +184,10 @@ class FakeSupportingClass
     public function exposedResolveCustomAttributeValue($type, $value)
     {
         return $this->resolveCustomAttributeValue($type, $value);
+    }
+
+    public function exposedUpdateCustomAttributeTypeValues($type)
+    {
+        return $this->updateCustomAttributeTypeValues($type);
     }
 }
