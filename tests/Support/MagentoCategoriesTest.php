@@ -3,14 +3,14 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
-use Grayloon\Magento\Tests\TestCase;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Queue;
 use Grayloon\Magento\Models\MagentoCategory;
-use Grayloon\Magento\Support\MagentoCategories;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
-
+use Grayloon\Magento\Support\MagentoCategories;
+use Grayloon\Magento\Tests\TestCase;
 use function GuzzleHttp\Promise\queue;
+use Illuminate\Support\Facades\Http;
+
+use Illuminate\Support\Facades\Queue;
 
 class MagentoCategoriesTest extends TestCase
 {

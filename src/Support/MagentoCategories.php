@@ -4,7 +4,6 @@ namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoCategory;
-use Grayloon\Magento\Models\MagentoCustomAttributeType;
 
 class MagentoCategories extends PaginatableMagentoService
 {

@@ -2,11 +2,11 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Tests\TestCase;
-use Illuminate\Support\Facades\Queue;
-use Grayloon\Magento\Support\HasCustomAttributes;
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Support\HasCustomAttributes;
+use Grayloon\Magento\Tests\TestCase;
+use Illuminate\Support\Facades\Queue;
 
 class HasCustomAttributesTest extends TestCase
 {
@@ -93,7 +93,7 @@ class HasCustomAttributesTest extends TestCase
     }
 }
 
-class FakeSupportingClass 
+class FakeSupportingClass
 {
     use HasCustomAttributes;
 

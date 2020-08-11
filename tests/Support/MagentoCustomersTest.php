@@ -3,12 +3,12 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
+use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Models\MagentoCustomer;
+use Grayloon\Magento\Support\MagentoCustomers;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
-use Grayloon\Magento\Models\MagentoCustomer;
-use Grayloon\Magento\Support\MagentoCustomers;
-use Grayloon\Magento\Models\MagentoCustomAttributeType;
 
 class MagentoCustomersTest extends TestCase
 {
