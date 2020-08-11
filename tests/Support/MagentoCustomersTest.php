@@ -2,11 +2,13 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
+use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoCustomer;
 use Grayloon\Magento\Support\MagentoCustomers;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 
 class MagentoCustomersTest extends TestCase
 {
@@ -85,21 +87,7 @@ class MagentoCustomersTest extends TestCase
 
     public function test_can_apply_new_custom_attribute_type_to_customer()
     {
-        Http::fake(function ($request) {
-            return Http::response([
-                'options' => [
-                    [
-                        'label' => 'Yes',
-                        'value' => '1',
-                    ],
-                    [
-                        'label' => 'No',
-                        'value' => '0',
-                    ],
-                ],
-                'default_frontend_label' => 'Rewards Member',
-            ], 200);
-        });
+        Queue::fake();
 
         $customers = [
             [
@@ -151,5 +139,6 @@ class MagentoCustomersTest extends TestCase
         $this->assertEquals('rewards_member', $customer->customAttributes()->first()->attribute_type);
         $this->assertInstanceOf(MagentoCustomAttributeType::class, $customer->customAttributes()->first()->type()->first());
         $this->assertEquals('Rewards Member', $customer->customAttributes()->first()->type()->first()->display_name);
+        Queue::assertPushed(UpdateProductAttributeGroup::class);
     }
 }

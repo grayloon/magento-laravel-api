@@ -2,11 +2,14 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
+use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Support\MagentoCategories;
 use Grayloon\Magento\Tests\TestCase;
+use function GuzzleHttp\Promise\queue;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 
 class MagentoCategoriesTest extends TestCase
 {
@@ -27,6 +30,8 @@ class MagentoCategoriesTest extends TestCase
 
     public function test_can_create_magento_category()
     {
+        Queue::fake();
+
         $categories = [
             [
                 'id'         => '1',
@@ -73,6 +78,7 @@ class MagentoCategoriesTest extends TestCase
         $this->assertEquals('path', $category->customAttributes()->first()->attribute_type);
         $this->assertEquals('1', $category->customAttributes()->first()->value);
         $this->assertEquals('foo/bar', $category->slug);
+        Queue::assertNothingPushed();
     }
 
     public function test_root_category_has_nullable_slug()
@@ -117,21 +123,7 @@ class MagentoCategoriesTest extends TestCase
 
     public function test_can_apply_new_custom_attribute_type_to_category()
     {
-        Http::fake(function ($request) {
-            return Http::response([
-                'options' => [
-                    [
-                        'label' => 'New York',
-                        'value' => '1',
-                    ],
-                    [
-                        'label' => 'Los Angeles',
-                        'value' => '2',
-                    ],
-                ],
-                'default_frontend_label' => 'Warehouse',
-            ], 200);
-        });
+        Queue::fake();
 
         factory(MagentoCustomAttributeType::class)->create(['name' => 'path']);
         factory(MagentoCustomAttributeType::class)->create(['name' => 'children_count']);
@@ -172,26 +164,13 @@ class MagentoCategoriesTest extends TestCase
         $category = MagentoCategory::first();
 
         $this->assertEquals(3, $category->customAttributes()->count());
-        $this->assertEquals('New York', $category->customAttributes()->where('attribute_type', 'warehouse_id')->first()->value);
+        $this->assertEquals('1', $category->customAttributes()->where('attribute_type', 'warehouse_id')->first()->value);
+        Queue::assertPushed(UpdateProductAttributeGroup::class);
     }
 
     public function test_can_apply_raw_value_attribute_if_unknown_type_option_in_category()
     {
-        Http::fake(function ($request) {
-            return Http::response([
-                'options' => [
-                    [
-                        'label' => 'New York',
-                        'value' => '1',
-                    ],
-                    [
-                        'label' => 'Los Angeles',
-                        'value' => '2',
-                    ],
-                ],
-                'default_frontend_label' => 'Warehouse',
-            ], 200);
-        });
+        Queue::fake();
 
         factory(MagentoCustomAttributeType::class)->create(['name' => 'path']);
         factory(MagentoCustomAttributeType::class)->create(['name' => 'children_count']);
@@ -233,5 +212,6 @@ class MagentoCategoriesTest extends TestCase
 
         $this->assertEquals(3, $category->customAttributes()->count());
         $this->assertEquals('Unknown', $category->customAttributes()->where('attribute_type', 'warehouse_id')->first()->value);
+        Queue::assertPushed(UpdateProductAttributeGroup::class);
     }
 }
