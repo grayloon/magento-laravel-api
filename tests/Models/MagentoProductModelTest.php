@@ -101,13 +101,13 @@ class MagentoProductModelTest extends TestCase
     {
         $product = factory(MagentoProduct::class)->create();
         $category = factory(MagentoCategory::class)->create();
-        factory(MagentoProductCategory::class)->create([
+        $passThrough = factory(MagentoProductCategory::class)->create([
             'id' => 1000,
             'magento_product_id' => $product->id,
             'magento_category_id' => $category->id,
         ]);
 
-        $query = MagentoProduct::with('categories')->first();
+        $query = MagentoProduct::whereHas('categories', fn($categoryQuery) => $categoryQuery->where('is_active', 1))->first();
 
         $this->assertEquals(1, $query->categories->count());
     }
