@@ -97,6 +97,21 @@ class MagentoProductModelTest extends TestCase
         $this->assertEquals(10, $categories->count());
     }
 
+    public function test_magento_product_can_pass_through_categories()
+    {
+        $product = factory(MagentoProduct::class)->create();
+        $category = factory(MagentoCategory::class)->create();
+        factory(MagentoProductCategory::class)->create([
+            'id' => 1000,
+            'magento_product_id' => $product->id,
+            'magento_category_id' => $category->id,
+        ]);
+
+        $query = MagentoProduct::with('categories')->first();
+
+        $this->assertEquals(1, $query->categories->count());
+    }
+
     public function test_custom_attribute_value_helper_returns_value_of_custom_attribute()
     {
         $product = factory(MagentoProduct::class)->create();

@@ -62,7 +62,7 @@ class MagentoProduct extends Model
      */
     public function categories()
     {
-        return $this->hasManyThrough(MagentoCategory::class, MagentoProductCategory::class, 'magento_product_id', 'id');
+        return $this->hasManyThrough(MagentoCategory::class, MagentoProductCategory::class, 'magento_product_id', 'id', 'id', 'magento_category_id');
     }
 
     /**
