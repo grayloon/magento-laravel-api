@@ -107,7 +107,7 @@ class MagentoProductModelTest extends TestCase
             'magento_category_id' => $category->id,
         ]);
 
-        $query = MagentoProduct::whereHas('categories', fn($categoryQuery) => $categoryQuery->where('is_active', 1))->first();
+        $query = MagentoProduct::whereHas('categories', fn ($categoryQuery) => $categoryQuery->where('is_active', 1))->first();
 
         $this->assertEquals(1, $query->categories->count());
     }
