@@ -200,6 +200,11 @@ Launch a job to import all products from the Magento 2 REST API:
 php artisan magento:sync-products
 ```
 
+Launch a job to import all product link types from the Magento 2 REST API:
+```bash
+php artisan magento:sync-product-link-types
+```
+
 ## Testing
 
 ``` bash
