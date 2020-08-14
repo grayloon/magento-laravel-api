@@ -70,29 +70,21 @@ class MagentoProductLinkTypesSupportTest extends TestCase
 
     public function test_existing_product_link_type_updates_but_doesnt_create()
     {
+        $type = factory(MagentoProductLinkType::class)->create([
+            'id' => 5,
+        ]);
+
         $typesFromApi = [
             [
-                'code' => 1,
-                'name' => 'Related',
-            ],
-            [
                 'code' => 5,
-                'name' => 'Checkout',
-            ],
-            [
-                'code' => 2,
-                'name' => 'Upsell',
+                'name' => 'Related',
             ],
         ];
 
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
         $magentoProductLinkTypes->storeTypes($typesFromApi);
-
-        $types = MagentoProductLinkType::get();
-
-        $this->assertEquals(3, $types->count());
-        $this->assertEquals('Checkout', $types->last()->name);
-        $this->assertEquals(5, $types->last()->id);
+        
+        $this->assertEquals('Related', $type->fresh()->name);
     }
 }

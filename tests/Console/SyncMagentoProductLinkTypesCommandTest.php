@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Queue;
 
 class SyncMagentoProductLinkTypesCommandTest extends TestCase
 {
-    public function test_magento_magento_product_link_types_command_fires_job()
+    public function test_magento_product_link_types_command_fires_job()
     {
         Queue::fake();
 
