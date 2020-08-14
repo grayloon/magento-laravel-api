@@ -103,7 +103,15 @@ $magento->api('products')->show($sku);
 #### Product Attributes
 Retrieve specific product attribute information:
 ```php
-$magento->api('productAttributes')->show($attributeCode)
+$magento->api('productAttributes')->show($attributeCode);
+```
+
+#### Product Link Types (catalogProductLinkTypeListV1)
+`/V1/products/links/types`
+
+Retrieve information about available product link types:
+```php
+$magento->api('productLinkType')->types();
 ```
 
 #### Schema
@@ -190,6 +198,11 @@ php artisan magento:sync-customers
 Launch a job to import all products from the Magento 2 REST API:
 ```bash
 php artisan magento:sync-products
+```
+
+Launch a job to import all product link types from the Magento 2 REST API:
+```bash
+php artisan magento:sync-product-link-types
 ```
 
 ## Testing
