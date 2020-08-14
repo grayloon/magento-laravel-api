@@ -84,7 +84,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
         $magentoProductLinkTypes->storeTypes($typesFromApi);
-        
+
         $this->assertEquals('Related', $type->fresh()->name);
     }
 }
