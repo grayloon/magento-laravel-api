@@ -106,8 +106,9 @@ Retrieve specific product attribute information:
 $magento->api('productAttributes')->show($attributeCode);
 ```
 
-#### Product Link Types
-/V1/products/links/types
+#### Product Link Types (catalogProductLinkTypeListV1)
+`/V1/products/links/types`
+
 Retrieve information about available product link types:
 ```php
 $magento->api('productLinkType')->types();
