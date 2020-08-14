@@ -103,7 +103,14 @@ $magento->api('products')->show($sku);
 #### Product Attributes
 Retrieve specific product attribute information:
 ```php
-$magento->api('productAttributes')->show($attributeCode)
+$magento->api('productAttributes')->show($attributeCode);
+```
+
+#### Product Link Types
+/V1/products/links/types
+Retrieve information about available product link types:
+```php
+$magento->api('productLinkType')->types();
 ```
 
 #### Schema
