@@ -14,6 +14,7 @@ class MagentoProductLinkType extends Model
     protected $fillable = [
         'name',
         'synced_at',
+        'id',
     ];
 
     /**

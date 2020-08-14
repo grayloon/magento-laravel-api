@@ -18,9 +18,11 @@ class MagentoProductLinkTypeModelTest extends TestCase
         $type = factory(MagentoProductLinkType::class)->create([
             'name' => 'foo',
             'synced_at' => '2020-01-01 00:00:00',
+            'id' => 2,
         ]);
 
         $this->assertNotEmpty($type);
+        $this->assertEquals(2, $type->id);
         $this->assertEquals('foo', $type->name);
         $this->assertEquals('2020-01-01 00:00:00', $type->synced_at);
     }
