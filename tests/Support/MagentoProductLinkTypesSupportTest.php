@@ -28,7 +28,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
         $magentoProductLinkTypes->storeTypes($typesFromApi);
-        
+
         $types = MagentoProductLinkType::get();
 
         $this->assertEquals(3, $types->count());
@@ -43,7 +43,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
         $magentoProductLinkTypes->storeTypes($typesFromApi);
-        
+
         $types = MagentoProductLinkType::get();
 
         $this->assertEmpty($types);
@@ -55,13 +55,13 @@ class MagentoProductLinkTypesSupportTest extends TestCase
         $typesFromApi = [
             [
                 'name' => 'foo',
-            ]
+            ],
         ];
 
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
         $magentoProductLinkTypes->storeTypes($typesFromApi);
-        
+
         $types = MagentoProductLinkType::get();
 
         $this->assertEmpty($types);
@@ -88,7 +88,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
         $magentoProductLinkTypes->storeTypes($typesFromApi);
-        
+
         $types = MagentoProductLinkType::get();
 
         $this->assertEquals(3, $types->count());
