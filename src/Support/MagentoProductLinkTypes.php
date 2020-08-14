@@ -13,7 +13,7 @@ class MagentoProductLinkTypes
      * @param  array  $types
      * @return void
      */
-    public function store_types($types)
+    public function storeTypes($types)
     {
         foreach ($types as $type) {
             if (! isset($type['code'])) {

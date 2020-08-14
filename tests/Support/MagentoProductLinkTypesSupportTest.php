@@ -27,7 +27,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
 
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
-        $magentoProductLinkTypes->store_types($typesFromApi);
+        $magentoProductLinkTypes->storeTypes($typesFromApi);
         
         $types = MagentoProductLinkType::get();
 
@@ -42,7 +42,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
 
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
-        $magentoProductLinkTypes->store_types($typesFromApi);
+        $magentoProductLinkTypes->storeTypes($typesFromApi);
         
         $types = MagentoProductLinkType::get();
 
@@ -60,7 +60,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
 
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
-        $magentoProductLinkTypes->store_types($typesFromApi);
+        $magentoProductLinkTypes->storeTypes($typesFromApi);
         
         $types = MagentoProductLinkType::get();
 
@@ -87,7 +87,7 @@ class MagentoProductLinkTypesSupportTest extends TestCase
 
         $magentoProductLinkTypes = new MagentoProductLinkTypes();
 
-        $magentoProductLinkTypes->store_types($typesFromApi);
+        $magentoProductLinkTypes->storeTypes($typesFromApi);
         
         $types = MagentoProductLinkType::get();
 
