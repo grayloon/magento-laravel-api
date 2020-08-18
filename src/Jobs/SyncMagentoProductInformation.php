@@ -18,7 +18,7 @@ class SyncMagentoProductInformation implements ShouldQueue
     /**
      * The Magento Product.
      *
-     * @var \Grayloon\Magento\Models\MagentoProduct  $product
+     * @var \Grayloon\Magento\Models\MagentoProduct
      */
     public $product;
 

@@ -25,7 +25,7 @@ class MagentoProductLinksTest extends TestCase
                 ],
             ],
         ];
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, $response);
 
         $this->assertEquals(1, MagentoProductLink::count());
@@ -38,7 +38,7 @@ class MagentoProductLinksTest extends TestCase
     public function test_empty_response_skips_creation()
     {
         $product = factory(MagentoProduct::class)->create();
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, []);
         $this->assertEquals(0, MagentoProductLink::count());
     }
@@ -46,7 +46,7 @@ class MagentoProductLinksTest extends TestCase
     public function test_missing_product_links_response_skips_creation()
     {
         $product = factory(MagentoProduct::class)->create();
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, ['foo' => 'bar']);
         $this->assertEquals(0, MagentoProductLink::count());
     }
@@ -54,7 +54,7 @@ class MagentoProductLinksTest extends TestCase
     public function test_empty_product_links_response_skips_creation()
     {
         $product = factory(MagentoProduct::class)->create();
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, ['product_links' => []]);
         $this->assertEquals(0, MagentoProductLink::count());
     }
@@ -74,7 +74,7 @@ class MagentoProductLinksTest extends TestCase
                 ],
             ],
         ];
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, $response);
 
         Queue::assertPushed(SyncMagentoProductInformation::class);
@@ -101,7 +101,7 @@ class MagentoProductLinksTest extends TestCase
                 ],
             ],
         ];
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, $response);
 
         $this->assertEquals(1, MagentoProductLink::count());
@@ -131,7 +131,7 @@ class MagentoProductLinksTest extends TestCase
                 ],
             ],
         ];
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, $response);
 
         $this->assertEquals(1, MagentoProductLink::count());
@@ -158,7 +158,7 @@ class MagentoProductLinksTest extends TestCase
                 ],
             ],
         ];
-        
+
         (new MagentoProductLinks)->updateProductLinks($product, $response);
 
         $this->assertEquals(2, MagentoProductLink::count());
