@@ -74,7 +74,6 @@ class MagentoServiceProvider extends ServiceProvider
             Console\SyncMagnetoProductsCommand::class,
             Console\SyncMagnetoCategoriesCommand::class,
             Console\SyncMagnetoCustomersCommand::class,
-            Console\SyncMagentoProductLinkTypesCommand::class,
         ]);
 
         // Register the main class to use with the facade
