@@ -31,9 +31,9 @@ class MagentoProductLinks
             }
 
             MagentoProductLink::updateOrCreate([
-                'product_id', $product->id,
-                'related_product_id', $productLink->id,
-                'link_type', $link['link_type'],
+                'product_id' => $product->id,
+                'related_product_id' => $productLink->id,
+                'link_type' => $link['link_type'],
             ], [
                 'position' => $link['position'],
             ]);
