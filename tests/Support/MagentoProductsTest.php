@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
+use Grayloon\Magento\Jobs\SyncMagentoProductInformation;
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
@@ -160,7 +161,7 @@ class MagentoProductsTest extends TestCase
         $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
         $this->assertEquals(1, $product->customAttributes->count());
         $this->assertEquals(1, $product->customAttributes->first()->value);
-        Queue::assertNothingPushed();
+        Queue::assertNotPushed(UpdateProductAttributeGroup::class);
     }
 
     public function test_magento_product_resolves_existing_value_from_api()
@@ -216,11 +217,13 @@ class MagentoProductsTest extends TestCase
         $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
         $this->assertEquals(1, $product->customAttributes->count());
         $this->assertEquals('New York', $product->customAttributes->first()->value);
-        Queue::assertNothingPushed();
+        Queue::assertNotPushed(UpdateProductAttributeGroup::class);
     }
 
     public function test_magento_product_adds_associated_category()
     {
+        Queue::fake();
+
         $category = factory(MagentoCategory::class)->create();
         factory(MagentoCustomAttributeType::class)->create([
             'name' => 'category_ids',
@@ -388,6 +391,8 @@ class MagentoProductsTest extends TestCase
 
     public function test_magento_product_applies_slug_from_url_key()
     {
+        Queue::fake();
+
         $category = factory(MagentoCategory::class)->create();
         factory(MagentoCustomAttributeType::class)->create([
             'name' => 'url_key',
@@ -424,5 +429,45 @@ class MagentoProductsTest extends TestCase
         $product = MagentoProduct::first();
         $this->assertNotNull($product);
         $this->assertEquals('dunder-mifflin-paper', $product->slug);
+    }
+
+    public function test_launches_job_to_get_extended_product_information()
+    {
+        Queue::fake();
+
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'warehouse_id',
+        ]);
+        factory(MagentoCategory::class)->create();
+
+        $products = [
+            [
+                'id'         => '1',
+                'name'       => 'Dunder Mifflin Paper',
+                'sku'        => 'DFPC001',
+                'price'      => 19.99,
+                'status'     => '1',
+                'visibility' => '1',
+                'type_id'    => 'simple',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'weight'     => 10.00,
+                'extension_attributes' => [
+                    'website_id' => [1],
+                ],
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'warehouse_id',
+                        'value'          => '1',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoProducts = new MagentoProducts();
+
+        $magentoProducts->updateProducts($products);
+
+        Queue::assertPushed(SyncMagentoProductInformation::class);
     }
 }
