@@ -3,6 +3,7 @@
 namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
+use Grayloon\Magento\Jobs\SyncMagentoProductInformation;
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoExtensionAttribute;
 use Grayloon\Magento\Models\MagentoExtensionAttributeType;
@@ -70,6 +71,7 @@ class MagentoProducts extends PaginatableMagentoService
 
         $this->syncExtensionAttributes($apiProduct['extension_attributes'], $product);
         $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
+        SyncMagentoProductInformation::dispatch($product);
 
         return $product;
     }
