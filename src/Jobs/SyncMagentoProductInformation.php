@@ -3,15 +3,14 @@
 namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Support\MagentoProductLinks;
+use Grayloon\Magento\Support\MagentoStockItems;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Grayloon\Magento\Models\MagentoStockItem;
-use Grayloon\Magento\Support\MagentoStockItems;
-use Grayloon\Magento\Support\MagentoProductLinks;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class SyncMagentoProductInformation implements ShouldQueue
 {
