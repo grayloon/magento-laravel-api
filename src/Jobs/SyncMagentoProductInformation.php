@@ -4,6 +4,7 @@ namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Models\MagentoStockItem;
 use Grayloon\Magento\Support\MagentoProductLinks;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -45,5 +46,6 @@ class SyncMagentoProductInformation implements ShouldQueue
             ->json();
 
         (new MagentoProductLinks())->updateProductLinks($this->product, $productApi);
+        (new MagentoStockItem())->updateItemStock($productApi);
     }
 }

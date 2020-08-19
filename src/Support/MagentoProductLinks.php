@@ -36,6 +36,7 @@ class MagentoProductLinks
                 'link_type' => $link['link_type'],
             ], [
                 'position' => $link['position'],
+                'synced_at'   => now(),
             ]);
         }
     }
