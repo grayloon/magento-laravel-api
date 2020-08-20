@@ -74,7 +74,7 @@ class MagentoProducts extends PaginatableMagentoService
         $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
         SyncMagentoProductLinks::dispatch($product);
         SyncMagentoStockItems::dispatch($product);
-        
+
         return $product;
     }
 
