@@ -67,14 +67,14 @@ $response->clientError() : bool;
 
 Get a list of all categories:
 ```php
-$magento->api('categories')->all($pageSize = 50, $currentPage = 1);
+$magento->api('categories')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 #### Customers
 
 Get a list of customers:
 ```php
-$magento->api('customers')->all($pageSize = 50, $currentPage = 1);
+$magento->api('customers')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 #### Integration (Tokens)
@@ -92,7 +92,7 @@ $magento->api('integration')->adminToken($username, $password);
 #### Products
 Get a list of products:
 ```php
-$magento->api('products')->all($pageSize = 50, $currentPage = 1); 
+$magento->api('products')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 Get info about a product by the product SKU:
@@ -118,6 +118,12 @@ $magento->api('productLinkType')->types();
 Get a schema blueprint of the Magento 2 REST API:
 ```php
 $magento->api('schema')->show(); 
+```
+
+#### Source Items
+Get a list of paginated sort items (typically used for quantity retrieval):
+```php
+$magento->api('sourceItems')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 ## Manual Configuration Options
