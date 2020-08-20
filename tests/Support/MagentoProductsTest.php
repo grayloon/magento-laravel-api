@@ -3,13 +3,14 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
-use Grayloon\Magento\Jobs\SyncMagentoProductLinks;
 use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
+use Grayloon\Magento\Jobs\WaitForLinkedProductSku;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Models\MagentoProductLink;
 use Grayloon\Magento\Support\MagentoProducts;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
@@ -53,6 +54,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
@@ -99,6 +101,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
@@ -143,6 +146,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
@@ -199,6 +203,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
@@ -245,6 +250,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'category_ids',
@@ -291,6 +297,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'image',
@@ -331,6 +338,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'image',
@@ -371,6 +379,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'image',
@@ -414,6 +423,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'url_key',
@@ -432,7 +442,62 @@ class MagentoProductsTest extends TestCase
         $this->assertEquals('dunder-mifflin-paper', $product->slug);
     }
 
-    public function test_launches_job_to_get_product_links()
+    public function test_creates_product_link()
+    {
+        Queue::fake();
+
+        factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'warehouse_id',
+        ]);
+        factory(MagentoCategory::class)->create();
+        $related = factory(MagentoProduct::class)->create([
+            'sku' => 'foo'
+        ]);
+
+        $products = [
+            [
+                'id'         => '1',
+                'name'       => 'Dunder Mifflin Paper',
+                'sku'        => 'DFPC001',
+                'price'      => 19.99,
+                'status'     => '1',
+                'visibility' => '1',
+                'type_id'    => 'simple',
+                'created_at' => now(),
+                'updated_at' => now(),
+                'weight'     => 10.00,
+                'extension_attributes' => [
+                    'website_id' => [1],
+                ],
+                'product_links' => [
+                    [
+                        "sku"                 => "DFPC001",
+                        "link_type"           => "upsell",
+                        "linked_product_sku"  => "foo",
+                        "linked_product_type" => "simple",
+                        "position"            => 1,
+                    ],
+                ],
+                'custom_attributes' => [
+                    [
+                        'attribute_code' => 'warehouse_id',
+                        'value'          => '1',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoProducts = new MagentoProducts();
+
+        $magentoProducts->updateProducts($products);
+
+        $this->assertEquals(1, MagentoProductLink::count());
+        $this->assertEquals($related->id, MagentoProductLink::first()->related_product_id);
+        $this->assertEquals('simple', MagentoProductLink::first()->link_type);
+        Queue::assertNotPushed(WaitForLinkedProductSku::class);
+    }
+
+    public function test_launches_job_to_wait_for_related_product_sku_data_when_related_link_doesnt_exist()
     {
         Queue::fake();
 
@@ -456,6 +521,15 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [
+                    [
+                        "sku"                 => "DFPC001",
+                        "link_type"           => "upsell",
+                        "linked_product_sku"  => "0241",
+                        "linked_product_type" => "simple",
+                        "position"            => 1,
+                    ],
+                ],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
@@ -469,7 +543,7 @@ class MagentoProductsTest extends TestCase
 
         $magentoProducts->updateProducts($products);
 
-        Queue::assertPushed(SyncMagentoProductLinks::class);
+        Queue::assertPushed(WaitForLinkedProductSku::class);
     }
 
     public function test_launches_job_to_get_product_quantity()
@@ -496,6 +570,7 @@ class MagentoProductsTest extends TestCase
                 'extension_attributes' => [
                     'website_id' => [1],
                 ],
+                'product_links' => [],
                 'custom_attributes' => [
                     [
                         'attribute_code' => 'warehouse_id',
