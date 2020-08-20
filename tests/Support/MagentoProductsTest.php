@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
-use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
 use Grayloon\Magento\Jobs\WaitForLinkedProductSku;
 use Grayloon\Magento\Models\MagentoCategory;
@@ -544,46 +543,5 @@ class MagentoProductsTest extends TestCase
         $magentoProducts->updateProducts($products);
 
         Queue::assertPushed(WaitForLinkedProductSku::class);
-    }
-
-    public function test_launches_job_to_get_product_quantity()
-    {
-        Queue::fake();
-
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'warehouse_id',
-        ]);
-        factory(MagentoCategory::class)->create();
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => '1',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        Queue::assertPushed(SyncMagentoStockItems::class);
     }
 }

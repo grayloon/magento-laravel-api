@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
-use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Jobs\WaitForLinkedProductSku;
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoExtensionAttribute;
@@ -74,7 +73,6 @@ class MagentoProducts extends PaginatableMagentoService
         $this->syncExtensionAttributes($apiProduct['extension_attributes'], $product);
         $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
         $this->syncProductLinks($apiProduct['product_links'], $product);
-        SyncMagentoStockItems::dispatch($product);
 
         return $product;
     }

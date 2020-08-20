@@ -14,7 +14,7 @@ class AddQtyAndIsInStockToProductsTable extends Migration
     public function up()
     {
         Schema::table('magento_products', function (Blueprint $table) {
-            $table->integer('qty')->default(0);
+            $table->integer('quantity')->default(0);
             $table->tinyInteger('is_in_stock')->default(0);
         });
     }
@@ -26,9 +26,6 @@ class AddQtyAndIsInStockToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('magento_products', function (Blueprint $table) {
-            $table->dropColumn('qty');
-            $table->dropColumn('is_in_stock');
-        });
+        //
     }
 }
