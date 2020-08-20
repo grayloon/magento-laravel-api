@@ -17,10 +17,10 @@ class WaitForLinkedProductSkuTest extends TestCase
 
         $response = [
             'sku' => $product->sku,
-            "link_type" => "upsell",
-            "linked_product_sku" => $related->sku,
-            "linked_product_type" => 'simple',
-            "position" => '1',
+            'link_type' => 'upsell',
+            'linked_product_sku' => $related->sku,
+            'linked_product_type' => 'simple',
+            'position' => '1',
         ];
 
         WaitForLinkedProductSku::dispatch($product, $response);
@@ -35,14 +35,14 @@ class WaitForLinkedProductSkuTest extends TestCase
 
         $response = [
             'sku' => $product->sku,
-            "link_type" => "upsell",
-            "linked_product_sku" => 'foo',
-            "linked_product_type" => 'simple',
-            "position" => '1',
+            'link_type' => 'upsell',
+            'linked_product_sku' => 'foo',
+            'linked_product_type' => 'simple',
+            'position' => '1',
         ];
 
         WaitForLinkedProductSku::dispatch($product, $response, 3);
-        
+
         $this->assertEquals(0, MagentoProductLink::count());
     }
 }
