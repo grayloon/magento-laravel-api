@@ -2,12 +2,10 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductLink;
 use Grayloon\Magento\Support\MagentoProductLinks;
 use Grayloon\Magento\Tests\TestCase;
-use Illuminate\Support\Facades\Queue;
 
 class MagentoProductLinksTest extends TestCase
 {
@@ -57,30 +55,6 @@ class MagentoProductLinksTest extends TestCase
         $product = factory(MagentoProduct::class)->create();
 
         (new MagentoProductLinks)->updateProductLinks($product, ['product_links' => []]);
-        $this->assertEquals(0, MagentoProductLink::count());
-    }
-
-    public function test_missing_relating_product_retries_later_in_queue()
-    {
-        Queue::fake();
-
-        $product = factory(MagentoProduct::class)->create();
-
-        $response = [
-            'product_links' => [
-                [
-                    'sku' => $product->sku,
-                    'linked_product_sku' => 'Foo',
-                    'link_type' => 'related',
-                    'position' => 1,
-                ],
-            ],
-        ];
-
-        (new MagentoProductLinks)->updateProductLinks($product, $response);
-
-        Queue::assertPushed(SyncMagentoStockItems::class);
-        Queue::assertPushed(SyncMagentoStockItems::class, fn ($job) => $job->product->id === $product->id);
         $this->assertEquals(0, MagentoProductLink::count());
     }
 

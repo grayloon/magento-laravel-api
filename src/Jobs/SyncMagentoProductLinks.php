@@ -35,10 +35,9 @@ class SyncMagentoProductLinks implements ShouldQueue
      * @param  \Grayloon\Magento\Models\MagentoProduct  $product
      * @return void
      */
-    public function __construct(MagentoProduct $product, $response = [])
+    public function __construct(MagentoProduct $product)
     {
         $this->product = $product;
-        $this->response = $response;
     }
 
     /**
@@ -48,11 +47,9 @@ class SyncMagentoProductLinks implements ShouldQueue
      */
     public function handle()
     {
-        if (! $this->response) {
-            $this->response = (new Magento())->api('products')
-                ->show($this->product->sku)
-                ->json();
-        }
+        $this->response = (new Magento())->api('products')
+            ->show($this->product->sku)
+            ->json();
 
         (new MagentoProductLinks())->updateProductLinks($this->product, $this->response);
     }

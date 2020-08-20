@@ -2,7 +2,6 @@
 
 namespace Grayloon\Magento\Support;
 
-use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductLink;
 
@@ -24,9 +23,7 @@ class MagentoProductLinks
         foreach ($response['product_links'] as $link) {
             $productLink = MagentoProduct::where('sku', $link['linked_product_sku'])->first();
 
-            // If the relating product doesn't exist yet, relaunch the job to check again later.
             if (! $productLink) {
-                SyncMagentoStockItems::dispatch($product, $response);
                 continue;
             }
 
