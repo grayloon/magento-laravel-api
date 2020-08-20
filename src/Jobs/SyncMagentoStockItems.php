@@ -4,7 +4,6 @@ namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
 use Grayloon\Magento\Models\MagentoProduct;
-use Grayloon\Magento\Support\MagentoProductLinks;
 use Grayloon\Magento\Support\MagentoStockItems;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SyncMagentoProductInformation implements ShouldQueue
+class SyncMagentoStockItems implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,6 +21,13 @@ class SyncMagentoProductInformation implements ShouldQueue
      * @var \Grayloon\Magento\Models\MagentoProduct
      */
     public $product;
+
+    /**
+     * The Magento API Response.
+     *
+     * @var array
+     */
+    public $response = [];
 
     /**
      * Create a new job instance.
@@ -41,11 +47,10 @@ class SyncMagentoProductInformation implements ShouldQueue
      */
     public function handle()
     {
-        $productApi = (new Magento())->api('products')
+        $this->response = (new Magento())->api('products')
             ->show($this->product->sku)
             ->json();
 
-        (new MagentoProductLinks())->updateProductLinks($this->product, $productApi);
-        (new MagentoStockItems())->updateItemStock($productApi);
+        (new MagentoStockItems())->updateItemStock($this->response);
     }
 }

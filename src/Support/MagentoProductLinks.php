@@ -2,7 +2,7 @@
 
 namespace Grayloon\Magento\Support;
 
-use Grayloon\Magento\Jobs\SyncMagentoProductInformation;
+use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductLink;
 
@@ -26,7 +26,7 @@ class MagentoProductLinks
 
             // If the relating product doesn't exist yet, relaunch the job to check again later.
             if (! $productLink) {
-                SyncMagentoProductInformation::dispatch($product);
+                SyncMagentoStockItems::dispatch($product, $response);
                 continue;
             }
 

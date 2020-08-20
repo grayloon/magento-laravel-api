@@ -2,7 +2,7 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Jobs\SyncMagentoProductInformation;
+use Grayloon\Magento\Jobs\SyncMagentoStockItems;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductLink;
 use Grayloon\Magento\Support\MagentoProductLinks;
@@ -77,8 +77,8 @@ class MagentoProductLinksTest extends TestCase
 
         (new MagentoProductLinks)->updateProductLinks($product, $response);
 
-        Queue::assertPushed(SyncMagentoProductInformation::class);
-        Queue::assertPushed(SyncMagentoProductInformation::class, fn ($job) => $job->product->id === $product->id);
+        Queue::assertPushed(SyncMagentoStockItems::class);
+        Queue::assertPushed(SyncMagentoStockItems::class, fn ($job) => $job->product->id === $product->id);
         $this->assertEquals(0, MagentoProductLink::count());
     }
 
