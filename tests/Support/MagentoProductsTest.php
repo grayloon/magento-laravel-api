@@ -451,7 +451,7 @@ class MagentoProductsTest extends TestCase
         ]);
         factory(MagentoCategory::class)->create();
         $related = factory(MagentoProduct::class)->create([
-            'sku' => 'foo'
+            'sku' => 'foo',
         ]);
 
         $products = [
@@ -471,11 +471,11 @@ class MagentoProductsTest extends TestCase
                 ],
                 'product_links' => [
                     [
-                        "sku"                 => "DFPC001",
-                        "link_type"           => "upsell",
-                        "linked_product_sku"  => "foo",
-                        "linked_product_type" => "simple",
-                        "position"            => 1,
+                        'sku'                 => 'DFPC001',
+                        'link_type'           => 'upsell',
+                        'linked_product_sku'  => 'foo',
+                        'linked_product_type' => 'simple',
+                        'position'            => 1,
                     ],
                 ],
                 'custom_attributes' => [
@@ -523,11 +523,11 @@ class MagentoProductsTest extends TestCase
                 ],
                 'product_links' => [
                     [
-                        "sku"                 => "DFPC001",
-                        "link_type"           => "upsell",
-                        "linked_product_sku"  => "0241",
-                        "linked_product_type" => "simple",
-                        "position"            => 1,
+                        'sku'                 => 'DFPC001',
+                        'link_type'           => 'upsell',
+                        'linked_product_sku'  => '0241',
+                        'linked_product_type' => 'simple',
+                        'position'            => 1,
                     ],
                 ],
                 'custom_attributes' => [

@@ -33,14 +33,14 @@ class WaitForLinkedProductSku implements ShouldQueue
     /**
      * The current number of attempts we have tried to check if the product exists.
      *
-     * @var integer
+     * @var int
      */
     public $attempts = 1;
 
     /**
-     * The maximum number of attempts to stop
+     * The maximum number of attempts to stop.
      *
-     * @var integer
+     * @var int
      */
     protected $maxAttempts = 3;
 
@@ -69,7 +69,7 @@ class WaitForLinkedProductSku implements ShouldQueue
         if (! $checkSku) {
             if ($this->attempts >= $this->maxAttempts) {
                 throw new Exception('Failed to find a product id with the Sku '.$this->response['linked_product_sku'].
-                    ' to link with product id '. $this->product->id .' after '. $this->attempts . ' attempts.');
+                    ' to link with product id '.$this->product->id.' after '.$this->attempts.' attempts.');
             }
 
             return $this->dispatch($this->product, $this->response, $this->attempts++);
