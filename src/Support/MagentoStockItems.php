@@ -14,11 +14,11 @@ class MagentoStockItems
      */
     public function updateItemStock($response)
     {
-        if (! $response || ! isset($response['stock_item']) || ! isset($response['stock_item']['product_id'])) {
+        if (! $response || ! isset($response['extension_attributes']['stock_item']['product_id'])) {
             return;
         }
 
-        $stock = $response['stock_item'];
+        $stock = $response['extension_attributes']['stock_item'];
 
         MagentoStockItem::updateOrCreate([
             'product_id' => $stock['product_id'],

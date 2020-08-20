@@ -14,12 +14,14 @@ class MagentoStockItemsTest extends TestCase
         $product = factory(MagentoProduct::class)->create();
 
         $response = [
-            'stock_item' => [
-                'product_id'  => $product->id,
-                'item_id'     => $product->id,
-                'stock_id'    => 1,
-                'qty'         => 250,
-                'is_in_stock' => true,
+            'extension_attributes' => [
+                'stock_item' => [
+                    'product_id'  => $product->id,
+                    'item_id'     => $product->id,
+                    'stock_id'    => 1,
+                    'qty'         => 250,
+                    'is_in_stock' => true,
+                ],
             ],
         ];
 
@@ -48,8 +50,10 @@ class MagentoStockItemsTest extends TestCase
     public function test_invalid_stock_item_data_skips_creation()
     {
         (new MagentoStockItems)->updateItemStock([
-            'stock_item' => [
-                'foo' => 'bar',
+            'extension_attributes' => [
+                'stock_item' => [
+                    'foo' => 'bar',
+                ],
             ],
         ]);
         $this->assertEquals(0, MagentoStockItem::count());
@@ -67,12 +71,14 @@ class MagentoStockItemsTest extends TestCase
         ]);
 
         $response = [
-            'stock_item' => [
-                'product_id'  => $product->id,
-                'item_id'     => $product->id,
-                'stock_id'    => 1,
-                'qty'         => 250,
-                'is_in_stock' => true,
+            'extension_attributes' => [
+                'stock_item' => [
+                    'product_id'  => $product->id,
+                    'item_id'     => $product->id,
+                    'stock_id'    => 1,
+                    'qty'         => 250,
+                    'is_in_stock' => true,
+                ],
             ],
         ];
 
