@@ -160,7 +160,7 @@ class MagentoProducts extends PaginatableMagentoService
             'product_id'         => $product->id,
             'related_product_id' => $productLink->id,
         ], [
-            'link_type'   => $link['linked_product_type'],
+            'link_type'   => $link['link_type'],
             'position'    => $link['position'],
             'synced_at'   => now(),
         ]);

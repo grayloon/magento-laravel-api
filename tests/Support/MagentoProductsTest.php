@@ -492,7 +492,7 @@ class MagentoProductsTest extends TestCase
 
         $this->assertEquals(1, MagentoProductLink::count());
         $this->assertEquals($related->id, MagentoProductLink::first()->related_product_id);
-        $this->assertEquals('simple', MagentoProductLink::first()->link_type);
+        $this->assertEquals('upsell', MagentoProductLink::first()->link_type);
         Queue::assertNotPushed(WaitForLinkedProductSku::class);
     }
 
