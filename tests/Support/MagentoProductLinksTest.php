@@ -19,7 +19,8 @@ class MagentoProductLinksTest extends TestCase
         $response = [
             'product_links' => [
                 [
-                    'sku' => $relating->sku,
+                    'sku' => $product->sku,
+                    'linked_product_sku' => $relating->sku,
                     'link_type' => 'related',
                     'position' => 1,
                 ],
@@ -68,7 +69,8 @@ class MagentoProductLinksTest extends TestCase
         $response = [
             'product_links' => [
                 [
-                    'sku' => 'foo',
+                    'sku' => $product->sku,
+                    'linked_product_sku' => 'Foo',
                     'link_type' => 'related',
                     'position' => 1,
                 ],
@@ -95,7 +97,8 @@ class MagentoProductLinksTest extends TestCase
         $response = [
             'product_links' => [
                 [
-                    'sku' => $relating->sku,
+                    'sku' => $product->sku,
+                    'linked_product_sku' => $relating->sku,
                     'link_type' => 'related',
                     'position' => 1,
                 ],
@@ -125,7 +128,8 @@ class MagentoProductLinksTest extends TestCase
         $response = [
             'product_links' => [
                 [
-                    'sku' => $relating->sku,
+                    'sku' => $product->sku,
+                    'linked_product_sku' => $relating->sku,
                     'link_type' => 'related',
                     'position' => 3,
                 ],
@@ -152,7 +156,8 @@ class MagentoProductLinksTest extends TestCase
         $response = [
             'product_links' => [
                 [
-                    'sku' => $relating->sku,
+                    'sku' => $product->sku,
+                    'linked_product_sku' => $relating->sku,
                     'link_type' => 'foo',
                     'position' => 1,
                 ],

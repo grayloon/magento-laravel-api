@@ -22,7 +22,7 @@ class MagentoProductLinks
         }
 
         foreach ($response['product_links'] as $link) {
-            $productLink = MagentoProduct::where('sku', $link['sku'])->first();
+            $productLink = MagentoProduct::where('sku', $link['linked_product_sku'])->first();
 
             // If the relating product doesn't exist yet, relaunch the job to check again later.
             if (! $productLink) {
