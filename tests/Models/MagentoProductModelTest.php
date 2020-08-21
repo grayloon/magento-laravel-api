@@ -7,6 +7,7 @@ use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductCategory;
+use Grayloon\Magento\Models\MagentoProductLink;
 
 class MagentoProductModelTest extends TestCase
 {
@@ -137,5 +138,52 @@ class MagentoProductModelTest extends TestCase
 
         $this->assertEquals(0, $product->customAttributes()->count());
         $this->assertNull($product->customAttributeValue('foo'));
+    }
+
+    public function test_magento_product_can_have_related_products()
+    {
+        $product = factory(MagentoProduct::class)->create();
+        $related = factory(MagentoProduct::class)->create();
+        $link = factory(MagentoProductLink::class)->create([
+            'product_id' => $product->id,
+            'related_product_id' => $related->id,
+        ]);
+
+        $response = $product->related()->get();
+        $this->assertNotEmpty($response);
+        $this->assertEquals($response->first()->id, $related->id);
+        $this->assertInstanceOf(MagentoProduct::class, $response->first());
+    }
+
+    public function test_magento_product_can_have_many_related_products()
+    {
+        $product = factory(MagentoProduct::class)->create();
+        $link = factory(MagentoProductLink::class, 5)->create([
+            'product_id' => $product->id,
+        ]);
+
+        $response = $product->related()->get();
+        $this->assertNotEmpty($response);
+        $this->assertEquals(5, $response->count());
+    }
+
+    public function test_magento_related_products_sorts_by_position()
+    {
+        $product = factory(MagentoProduct::class)->create();
+        $first = factory(MagentoProduct::class)->create();
+        $second = factory(MagentoProduct::class)->create();
+        factory(MagentoProductLink::class)->create([
+            'product_id' => $product->id,
+            'related_product_id' => $second->id,
+            'position' => 2,
+        ]);
+        factory(MagentoProductLink::class)->create([
+            'product_id' => $product->id,
+            'related_product_id' => $first->id,
+            'position' => 1,
+        ]);
+
+        $response = $product->related()->get();
+        $this->assertEquals($response->first()->id, $first->id);
     }
 }

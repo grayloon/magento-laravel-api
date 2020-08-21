@@ -93,4 +93,15 @@ class MagentoProduct extends Model
 
         return null;
     }
+
+    /**
+     * The related Magento products.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function related()
+    {
+        return $this->hasManyThrough(MagentoProduct::class, MagentoProductLink::class, 'product_id', 'id', 'id', 'related_product_id')
+            ->orderBy('position');
+    }
 }
