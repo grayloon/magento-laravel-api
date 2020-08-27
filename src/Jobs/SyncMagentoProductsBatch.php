@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Support\MagentoProducts;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

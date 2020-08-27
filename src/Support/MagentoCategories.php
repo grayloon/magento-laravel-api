@@ -68,45 +68,4 @@ class MagentoCategories extends PaginatableMagentoService
 
         return $category;
     }
-
-    /**
-     * Get a value from the provided custom attributes.
-     *
-     * @param  array  $apiCategory
-     * @return string
-     */
-    protected function findAttributeByKey($key, $attributes)
-    {
-        foreach ($attributes as $attribute) {
-            if ($attribute['attribute_code'] === $key) {
-                return $attribute['value'];
-            }
-        }
-
-        // return null if we don't find a value.
-    }
-
-    /**
-     * Sync the Magento Custom attributes with the Category.
-     *
-     * @param  array  $attributes
-     * @param  \Grayloon\Magento\Models\MagentoCategory\ $category
-     * @return void
-     */
-    protected function syncCustomAttributes($attributes, $category)
-    {
-        foreach ($attributes as $attribute) {
-            $type = $this->resolveCustomAttributeType($attribute['attribute_code']);
-            $value = $this->resolveCustomAttributeValue($type, $attribute['value']);
-
-            $category
-                ->customAttributes()
-                ->updateOrCreate(['attribute_type_id' => $type->id], [
-                    'attribute_type' => $attribute['attribute_code'],
-                    'value'          => $value,
-                ]);
-        }
-
-        return $this;
-    }
 }
