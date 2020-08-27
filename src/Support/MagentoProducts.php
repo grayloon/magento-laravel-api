@@ -35,7 +35,7 @@ class MagentoProducts extends PaginatableMagentoService
             'id'          => $apiProduct['id'],
             'name'        => $apiProduct['name'],
             'sku'         => $apiProduct['sku'],
-            'price'       => $apiProduct['price'] ?? 0,
+            'price'       => $apiProduct['price'],
             'quantity'    => $apiProduct['extension_attributes']['stock_item']['qty'] ?? 0,
             'is_in_stock' => $apiProduct['extension_attributes']['stock_item']['is_in_stock'] ?? false,
             'status'      => $apiProduct['status'],

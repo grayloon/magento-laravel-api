@@ -72,7 +72,7 @@ class MagentoProduct extends Model
      */
     public function images()
     {
-        return $this->hasMany(MagentoProductMedia::class);
+        return $this->hasMany(MagentoProductMedia::class, 'product_id');
     }
 
     /**
