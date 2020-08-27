@@ -66,6 +66,16 @@ class MagentoProduct extends Model
     }
 
     /**
+     * The Magento Product has many Product Images.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function images()
+    {
+        return $this->hasMany(MagentoProductMedia::class);
+    }
+
+    /**
      * Helper to quickly get a value from a custom attribute.
      *
      * @param  string  $key
@@ -79,7 +89,7 @@ class MagentoProduct extends Model
     }
 
     /**
-     * Helper to easily get the product image.
+     * Helper to easily obtain the main product image.
      *
      * @return null|string
      */
