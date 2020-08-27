@@ -21,10 +21,10 @@ class SyncMagentoProducts implements ShouldQueue
     public function handle()
     {
         $products = new MagentoProducts();
-        $totalPages = ceil(($products->count() / 50) + 1);
+        $totalPages = ceil(($products->count() / 100) + 1);
 
         for ($currentPage = 1; $totalPages > $currentPage; $currentPage++) {
-            SyncMagentoProductsBatch::dispatch(50, $currentPage);
+            SyncMagentoProductsBatch::dispatch(100, $currentPage);
         }
     }
 }

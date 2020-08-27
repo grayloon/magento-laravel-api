@@ -10,22 +10,25 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SyncMagentoProductsBatch implements ShouldQueue
+class SyncMagentoProductSingle implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $pageSize;
-    public $requestedPage;
+    /**
+     * The Magento Product SKU for the API.
+     *
+     * @var string
+     */
+    public $sku;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($pageSize, $requestedPage)
+    public function __construct($sku)
     {
-        $this->pageSize = $pageSize;
-        $this->requestedPage = $requestedPage;
+        $this->sku = $sku;
     }
 
     /**
@@ -35,12 +38,10 @@ class SyncMagentoProductsBatch implements ShouldQueue
      */
     public function handle()
     {
-        $products = (new Magento())->api('products')
-            ->all($this->pageSize, $this->requestedPage)
+        $product = (new Magento())->api('products')
+            ->show($this->sku)
             ->json();
 
-        foreach ($products['items'] as $product) {
-            SyncMagentoProductSingle::dispatch($product['sku']);
-        }
+        (new MagentoProducts())->updateOrCreateProduct($product);
     }
 }

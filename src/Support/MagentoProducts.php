@@ -30,31 +30,12 @@ class MagentoProducts extends PaginatableMagentoService
     }
 
     /**
-     * Updates products from the Magento API.
-     *
-     * @param  array  $products
-     * @return void
-     */
-    public function updateProducts($products)
-    {
-        if (! $products) {
-            return;
-        }
-
-        foreach ($products as $apiProduct) {
-            $this->updateProduct($apiProduct);
-        }
-
-        return $this;
-    }
-
-    /**
      * Updates a product from the Magento API.
      *
      * @param  array  $products
      * @return void
      */
-    public function updateProduct($apiProduct)
+    public function updateOrCreateProduct($apiProduct)
     {
         $product = MagentoProduct::updateOrCreate(['id' => $apiProduct['id']], [
             'id'         => $apiProduct['id'],
