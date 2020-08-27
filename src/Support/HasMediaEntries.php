@@ -3,38 +3,35 @@
 namespace Grayloon\Magento\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
+use Grayloon\Magento\Models\MagentoProductMedia;
 
 trait HasMediaEntries
 {
     /**
-     * Determine if the Custom Attribute type is an image.
+     * Store image record and launch a job to download an image to the Laravel application.
      *
-     * @param  string  $attribute_type
-     * @return bool
-     */
-    protected function isImageType($attribute_type)
-    {
-        $types = [
-            'thumbnail',
-            'image',
-            'small_image',
-        ];
-
-        return in_array($attribute_type, $types);
-    }
-
-    /**
-     * Launch a job to download an image to the Laravel application.
-     *
-     * @param  string  $image
+     * @param  array  $image
+     * @param  \Grayloon\Magento\Models\MagentoProduct  $product
      * @return void
      */
-    protected function downloadImage($image)
+    public function downloadProductImages($images, $product)
     {
-        if ($image === 'no_selection') {
-            return;
+        foreach ($images as $image) {
+            MagentoProductMedia::updateOrCreate([
+                'id'         => $image['id'],
+                'product_id' => $product->id,
+            ], [
+                'media_type' => $image['media_type'],
+                'label'      => $image['label'],
+                'position'   => $image['position'],
+                'disabled'   => $image['disabled'],
+                'types'      => $image['types'],
+                'file'       => $image['file'],
+            ]);
+
+            DownloadMagentoProductImage::dispatch($image['file']);
         }
 
-        DownloadMagentoProductImage::dispatch($image);
+        return $this;
     }
 }

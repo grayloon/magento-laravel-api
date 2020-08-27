@@ -36,8 +36,8 @@ class MagentoProducts extends PaginatableMagentoService
             'name'        => $apiProduct['name'],
             'sku'         => $apiProduct['sku'],
             'price'       => $apiProduct['price'] ?? 0,
-            'quantity'    => $apiProduct['stock_item']['qty'] ?? 0,
-            'is_in_stock' => $apiProduct['stock_item']['is_in_stock'] ?? 0,
+            'quantity'    => $apiProduct['extension_attributes']['stock_item']['qty'] ?? 0,
+            'is_in_stock' => $apiProduct['extension_attributes']['stock_item']['is_in_stock'] ?? false,
             'status'      => $apiProduct['status'],
             'visibility'  => $apiProduct['visibility'],
             'type'        => $apiProduct['type_id'],
@@ -50,6 +50,7 @@ class MagentoProducts extends PaginatableMagentoService
         $this->syncExtensionAttributes($apiProduct['extension_attributes'], $product);
         $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
         $this->syncProductLinks($apiProduct['product_links'], $product);
+        $this->downloadProductImages($apiProduct['media_gallery_entries'] ?? [], $product);
 
         return $product;
     }
@@ -71,10 +72,6 @@ class MagentoProducts extends PaginatableMagentoService
             $product->update([
                 'slug' => $attribute['value'],
             ]);
-        }
-
-        if ($this->isImageType($attribute['attribute_code'])) {
-            $this->downloadImage($attribute['value']);
         }
 
         return $this;
