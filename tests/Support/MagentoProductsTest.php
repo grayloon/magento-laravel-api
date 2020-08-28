@@ -150,6 +150,39 @@ class MagentoProductsTest extends TestCase
         $this->assertEquals('/p/paper.jpg', $product->images->first()->file);
     }
 
+    public function test_can_add_applied_rule_category_ids()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::with('categories')->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertNotEmpty($product->categories);
+        $this->assertEquals(1, $product->categories->count());
+    }
+
+    public function test_can_apply_rule_apply_slug()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::with('categories')->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertEquals('paper-and-office-supplies', $product->slug);
+    }
+
     protected function fakeProduct($attributes = null)
     {
         $product = [
@@ -227,6 +260,12 @@ class MagentoProductsTest extends TestCase
                     'attribute_code' => 'url_key',
                     'value'          => 'paper-and-office-supplies',
                 ],
+                [
+                    'attribute_code' => 'category_ids',
+                    'value'          => [
+                        '1',
+                    ],
+                ]
             ],
         ];
 

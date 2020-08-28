@@ -48,7 +48,7 @@ class MagentoProducts extends PaginatableMagentoService
         ]);
 
         $this->syncExtensionAttributes($apiProduct['extension_attributes'], $product);
-        $this->syncCustomAttributes($apiProduct['custom_attributes'], $product);
+        $this->syncCustomAttributes($apiProduct['custom_attributes'], $product, true);
         $this->syncProductLinks($apiProduct['product_links'], $product);
         $this->downloadProductImages($apiProduct['media_gallery_entries'] ?? [], $product);
 

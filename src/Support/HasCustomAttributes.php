@@ -77,11 +77,11 @@ trait HasCustomAttributes
      * @param  mixed  $model
      * @return void
      */
-    protected function syncCustomAttributes($attributes, $model)
+    protected function syncCustomAttributes($attributes, $model, $checkConditionalRules = false)
     {
         foreach ($attributes as $attribute) {
             // Custom rules set by the specified
-            if (function_exists('applyConditionalRules')) {
+            if ($checkConditionalRules) {
                 $this->applyConditionalRules($attribute, $model);
             }
 
