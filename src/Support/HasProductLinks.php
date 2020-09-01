@@ -17,13 +17,11 @@ trait HasProductLinks
      */
     protected function syncProductLinks($links, $product)
     {
-        if (! $links) {
-            return;
-        }
-
         foreach ($links as $link) {
             $this->updateProductLink($link, $product);
         }
+
+        return $this;
     }
 
     /**
