@@ -3,29 +3,32 @@
 namespace Grayloon\Magento\Jobs;
 
 use Grayloon\Magento\Magento;
-use Grayloon\Magento\Support\MagentoSourceItems;
+use Grayloon\Magento\Support\MagentoProducts;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SyncMagentoProductQuantityBatch implements ShouldQueue
+class SyncMagentoProductSingle implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $pageSize;
-    public $requestedPage;
+    /**
+     * The Magento Product SKU for the API.
+     *
+     * @var string
+     */
+    public $sku;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($pageSize, $requestedPage)
+    public function __construct($sku)
     {
-        $this->pageSize = $pageSize;
-        $this->requestedPage = $requestedPage;
+        $this->sku = $sku;
     }
 
     /**
@@ -35,10 +38,10 @@ class SyncMagentoProductQuantityBatch implements ShouldQueue
      */
     public function handle()
     {
-        $sourceItems = (new Magento())->api('sourceItems')
-            ->all($this->pageSize, $this->requestedPage)
+        $product = (new Magento())->api('products')
+            ->show($this->sku)
             ->json();
 
-        (new MagentoSourceItems())->updateQuantities($sourceItems['items']);
+        (new MagentoProducts())->updateOrCreateProduct($product);
     }
 }

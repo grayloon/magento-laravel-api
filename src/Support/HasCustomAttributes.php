@@ -69,4 +69,50 @@ trait HasCustomAttributes
 
         return $this;
     }
+
+    /**
+     * Sync the Magento Custom attributes with the associated model.
+     *
+     * @param  array  $attributes
+     * @param  mixed  $model
+     * @return void
+     */
+    protected function syncCustomAttributes($attributes, $model, $checkConditionalRules = false)
+    {
+        foreach ($attributes as $attribute) {
+            // Custom rules set by the specified group.
+            if ($checkConditionalRules) {
+                $this->applyConditionalRules($attribute, $model);
+            }
+
+            $type = $this->resolveCustomAttributeType($attribute['attribute_code']);
+            $value = $this->resolveCustomAttributeValue($type, $attribute['value']);
+
+            $model
+                ->customAttributes()
+                ->updateOrCreate(['attribute_type_id' => $type->id], [
+                    'attribute_type' => $attribute['attribute_code'],
+                    'value'          => $value,
+                ]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get a value from the provided custom attributes.
+     *
+     * @param  array  $apiCategory
+     * @return string
+     */
+    protected function findAttributeByKey($key, $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            if ($attribute['attribute_code'] === $key) {
+                return $attribute['value'];
+            }
+        }
+
+        return null;
+    }
 }

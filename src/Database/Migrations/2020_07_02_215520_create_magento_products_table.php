@@ -17,7 +17,10 @@ class CreateMagentoProductsTable extends Migration
             $table->id();
             $table->string('sku')->index();
             $table->string('name')->index();
+            $table->string('slug')->nullable()->index();
             $table->decimal('price', 15, 4)->default(0.00);
+            $table->integer('quantity')->default(0);
+            $table->tinyInteger('is_in_stock')->default(0);
             $table->tinyInteger('status');
             $table->integer('visibility');
             $table->string('type');

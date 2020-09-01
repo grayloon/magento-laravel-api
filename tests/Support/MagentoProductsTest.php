@@ -2,14 +2,13 @@
 
 namespace Grayloon\Magento\Tests\Support;
 
-use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
-use Grayloon\Magento\Jobs\UpdateProductAttributeGroup;
-use Grayloon\Magento\Jobs\WaitForLinkedProductSku;
 use Grayloon\Magento\Models\MagentoCategory;
 use Grayloon\Magento\Models\MagentoCustomAttribute;
 use Grayloon\Magento\Models\MagentoCustomAttributeType;
+use Grayloon\Magento\Models\MagentoExtensionAttribute;
+use Grayloon\Magento\Models\MagentoExtensionAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
-use Grayloon\Magento\Models\MagentoProductLink;
+use Grayloon\Magento\Models\MagentoProductMedia;
 use Grayloon\Magento\Support\MagentoProducts;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Http;
@@ -32,516 +31,248 @@ class MagentoProductsTest extends TestCase
         $this->assertEquals(1, $count);
     }
 
-    public function test_magento_product_adds_attribute_type()
+    public function test_can_create_product()
     {
         Queue::fake();
-
         factory(MagentoCategory::class)->create();
 
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => '1',
-                    ],
-                ],
-            ],
-        ];
+        $product = $this->fakeProduct();
 
         $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
 
-        $magentoProducts->updateProducts($products);
+        $product = MagentoProduct::first();
+        $this->assertNotEmpty($product);
+        $this->assertEquals('Dunder Mifflin Paper', $product->name);
+        $this->assertEquals('DMPC001', $product->sku);
+        $this->assertEquals(250, $product->quantity);
+        $this->assertNotEmpty($product->synced_at);
+    }
+
+    public function test_missing_stock_item_resolves_quantity()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct([
+            'extension_attributes' => [
+                'website_id' => [1],
+            ],
+        ]);
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::first();
+        $this->assertNotEmpty($product);
+        $this->assertEquals(0, $product->quantity);
+        $this->assertEquals(0, $product->is_in_stock);
+    }
+
+    public function test_can_add_extension_attributes()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::with('extensionAttributes', 'extensionAttributes.type')->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertEquals(2, $product->extensionAttributes->count());
+        $this->assertInstanceOf(MagentoExtensionAttribute::class, $product->extensionAttributes->first());
+        $this->assertEquals($product->id, $product->extensionAttributes->first()->magento_product_id);
+        $this->assertInstanceOf(MagentoExtensionAttributeType::class, $product->extensionAttributes->first()->type);
+        $this->assertEquals([1], $product->extensionAttributes->first()->attribute);
+        $this->assertEquals('website_id', $product->extensionAttributes->first()->type->type);
+    }
+
+    public function test_can_add_custom_attributes()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
 
         $product = MagentoProduct::with('customAttributes', 'customAttributes.type')->first();
 
+        $this->assertNotEmpty($product);
         $this->assertNotEmpty($product->customAttributes->first());
         $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
         $this->assertEquals('1', $product->customAttributes->first()->value);
         $this->assertInstanceOf(MagentoCustomAttributeType::class, $product->customAttributes->first()->type()->first());
         $this->assertEquals('Warehouse Id', $product->customAttributes->first()->type()->first()->display_name);
         $this->assertEquals('warehouse_id', $product->customAttributes->first()->type()->first()->name);
-        Queue::assertPushed(UpdateProductAttributeGroup::class);
-        Queue::assertPushed(UpdateProductAttributeGroup::class, fn ($job) => $job->type->id === $product->customAttributes->first()->type()->first()->id);
     }
 
-    public function test_magento_product_unknown_attribute_type_value_resolves_as_raw_value()
+    public function test_can_add_product_links()
     {
         Queue::fake();
-
         factory(MagentoCategory::class)->create();
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => 'Unknown',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        $product = MagentoProduct::with('customAttributes')->first();
-
-        $this->assertNotEmpty($product->customAttributes->first());
-        $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
-        $this->assertEquals('Unknown', $product->customAttributes->first()->value);
-    }
-
-    public function test_magento_product_existing_attribute_type_doesnt_launch_api_job()
-    {
-        Queue::fake();
-
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'warehouse_id',
-        ]);
-        factory(MagentoCategory::class)->create();
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => '1',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        $product = MagentoProduct::with('customAttributes')->first();
-
-        $this->assertNotEmpty($product->customAttributes->first());
-        $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
-        $this->assertEquals(1, $product->customAttributes->count());
-        $this->assertEquals(1, $product->customAttributes->first()->value);
-        Queue::assertNotPushed(UpdateProductAttributeGroup::class);
-    }
-
-    public function test_magento_product_resolves_existing_value_from_api()
-    {
-        Queue::fake();
-
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'warehouse_id',
-            'options' => [
-                [
-                    'label' => 'New York',
-                    'value' => '1',
-                ],
-                [
-                    'label' => 'Los Angeles',
-                    'value' => '2',
-                ],
-            ],
-        ]);
-        factory(MagentoCategory::class)->create();
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => '1',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        $product = MagentoProduct::with('customAttributes')->first();
-
-        $this->assertNotEmpty($product->customAttributes->first());
-        $this->assertInstanceOf(MagentoCustomAttribute::class, $product->customAttributes->first());
-        $this->assertEquals(1, $product->customAttributes->count());
-        $this->assertEquals('New York', $product->customAttributes->first()->value);
-        Queue::assertNotPushed(UpdateProductAttributeGroup::class);
-    }
-
-    public function test_magento_product_adds_associated_category()
-    {
-        Queue::fake();
-
-        $category = factory(MagentoCategory::class)->create();
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'category_ids',
+        factory(MagentoProduct::class)->create([
+            'sku' => 'bar',
         ]);
 
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'category_ids',
-                        'value'          => ['1'],
-                    ],
-                ],
-            ],
-        ];
+        $product = $this->fakeProduct();
 
         $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
 
-        $magentoProducts->updateProducts($products);
-
-        $product = MagentoProduct::first();
-        $productCategories = $product->categories()->get();
+        $product = MagentoProduct::with('related')->first();
 
         $this->assertNotEmpty($product);
-        $this->assertNotEmpty($productCategories);
-        $this->assertCount(1, $productCategories);
-        $this->assertSame($category->id, $productCategories->first()->id);
+        $this->assertNotEmpty($product->related);
+        $this->assertEquals('bar', $product->related->first()->sku);
     }
 
-    public function test_magento_product_launches_job_to_download_product_image()
+    public function test_can_add_product_images()
     {
         Queue::fake();
-
-        factory(MagentoCategory::class)->create();
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'image',
-        ]);
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'image',
-                        'value'          => 'foo.jpg',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        Queue::assertPushed(DownloadMagentoProductImage::class);
-    }
-
-    public function test_magento_product_does_not_job_on_invalid_image_download()
-    {
-        Queue::fake();
-
-        factory(MagentoCategory::class)->create();
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'image',
-        ]);
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'image',
-                        'value'          => 'no_selection',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        Queue::assertNotPushed(DownloadMagentoProductImage::class);
-    }
-
-    public function test_magento_product_download_image_is_correctly_constructed()
-    {
-        Queue::fake();
-
-        factory(MagentoCategory::class)->create();
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'image',
-        ]);
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'image',
-                        'value'          => '/foo.jpg',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        Queue::assertPushed(DownloadMagentoProductImage::class);
-        Queue::assertPushed(fn (DownloadMagentoProductImage $downloadJob) => $downloadJob->uri === '/foo.jpg');
-        Queue::assertPushed(fn (DownloadMagentoProductImage $downloadJob) => $downloadJob->directory === '/pub/media/catalog/product');
-        Queue::assertPushed(fn (DownloadMagentoProductImage $downloadJob) => $downloadJob->fullUrl === '/pub/media/catalog/product/foo.jpg');
-    }
-
-    public function test_magento_product_applies_slug_from_url_key()
-    {
-        Queue::fake();
-
-        $category = factory(MagentoCategory::class)->create();
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'url_key',
-        ]);
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'url_key',
-                        'value'          => 'dunder-mifflin-paper',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        $product = MagentoProduct::first();
-        $this->assertNotNull($product);
-        $this->assertEquals('dunder-mifflin-paper', $product->slug);
-    }
-
-    public function test_creates_product_link()
-    {
-        Queue::fake();
-
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'warehouse_id',
-        ]);
-        factory(MagentoCategory::class)->create();
-        $related = factory(MagentoProduct::class)->create([
-            'sku' => 'foo',
-        ]);
-
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
-                ],
-                'product_links' => [
-                    [
-                        'sku'                 => 'DFPC001',
-                        'link_type'           => 'upsell',
-                        'linked_product_sku'  => 'foo',
-                        'linked_product_type' => 'simple',
-                        'position'            => 1,
-                    ],
-                ],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => '1',
-                    ],
-                ],
-            ],
-        ];
-
-        $magentoProducts = new MagentoProducts();
-
-        $magentoProducts->updateProducts($products);
-
-        $this->assertEquals(1, MagentoProductLink::count());
-        $this->assertEquals($related->id, MagentoProductLink::first()->related_product_id);
-        $this->assertEquals('upsell', MagentoProductLink::first()->link_type);
-        Queue::assertNotPushed(WaitForLinkedProductSku::class);
-    }
-
-    public function test_launches_job_to_wait_for_related_product_sku_data_when_related_link_doesnt_exist()
-    {
-        Queue::fake();
-
-        factory(MagentoCustomAttributeType::class)->create([
-            'name' => 'warehouse_id',
-        ]);
         factory(MagentoCategory::class)->create();
 
-        $products = [
-            [
-                'id'         => '1',
-                'name'       => 'Dunder Mifflin Paper',
-                'sku'        => 'DFPC001',
-                'price'      => 19.99,
-                'status'     => '1',
-                'visibility' => '1',
-                'type_id'    => 'simple',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'weight'     => 10.00,
-                'extension_attributes' => [
-                    'website_id' => [1],
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::with('images')->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertNotEmpty($product->images);
+        $this->assertEquals(1, $product->images->count());
+        $this->assertInstanceOf(MagentoProductMedia::class, $product->images->first());
+        $this->assertEquals('/p/paper.jpg', $product->images->first()->file);
+    }
+
+    public function test_can_add_applied_rule_category_ids()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::with('categories')->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertNotEmpty($product->categories);
+        $this->assertEquals(1, $product->categories->count());
+    }
+
+    public function test_can_apply_rule_apply_slug()
+    {
+        Queue::fake();
+        factory(MagentoCategory::class)->create();
+
+        $product = $this->fakeProduct();
+
+        $magentoProducts = new MagentoProducts();
+        $magentoProducts->updateOrCreateProduct($product);
+
+        $product = MagentoProduct::with('categories')->first();
+
+        $this->assertNotEmpty($product);
+        $this->assertEquals('paper-and-office-supplies', $product->slug);
+    }
+
+    protected function fakeProduct($attributes = null)
+    {
+        $product = [
+            'id'         => '1',
+            'name'       => 'Dunder Mifflin Paper',
+            'sku'        => 'DMPC001',
+            'price'      => 19.99,
+            'status'     => '1',
+            'visibility' => '1',
+            'type_id'    => 'simple',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'weight'     => 10.00,
+            'extension_attributes' => [
+                'website_id' => [1],
+                'stock_item' => [
+                    'item_id' => 1,
+                    'product_id' => 1,
+                    'stock_id' => 1,
+                    'qty' => 250,
+                    'is_in_stock' => true,
+                    'is_qty_decimal' => false,
+                    'show_default_notification_message' => false,
+                    'use_config_min_qty' => true,
+                    'min_qty' => 3,
+                    'use_config_min_sale_qty' => 1,
+                    'min_sale_qty' => 1,
+                    'use_config_max_sale_qty' => true,
+                    'max_sale_qty' => 10000,
+                    'use_config_backorders' => true,
+                    'backorders' => 0,
+                    'use_config_notify_stock_qty' => true,
+                    'notify_stock_qty' => 0,
+                    'use_config_qty_increments' => true,
+                    'qty_increments' => 0,
+                    'use_config_enable_qty_inc' => true,
+                    'enable_qty_increments' => false,
+                    'use_config_manage_stock' => false,
+                    'manage_stock' => false,
+                    'low_stock_date' => null,
+                    'is_decimal_divided' => false,
+                    'stock_status_changed_auto' => 0,
                 ],
-                'product_links' => [
-                    [
-                        'sku'                 => 'DFPC001',
-                        'link_type'           => 'upsell',
-                        'linked_product_sku'  => '0241',
-                        'linked_product_type' => 'simple',
-                        'position'            => 1,
+            ],
+            'product_links' => [
+                [
+                    'sku' => 'DMPC001',
+                    'link_type' => 'related',
+                    'linked_product_sku' => 'bar',
+                    'linked_product_type' => 'simple',
+                    'position' => 0,
+                ],
+            ],
+            'media_gallery_entries' => [
+                [
+                    'id' => 1,
+                    'media_type' => 'image',
+                    'label' => null,
+                    'position' => 1,
+                    'disabled' => false,
+                    'types' => [
+                        'image',
+                        'small_image',
+                        'thumbnail',
                     ],
+                    'file' => '/p/paper.jpg',
                 ],
-                'custom_attributes' => [
-                    [
-                        'attribute_code' => 'warehouse_id',
-                        'value'          => '1',
+            ],
+            'custom_attributes' => [
+                [
+                    'attribute_code' => 'warehouse_id',
+                    'value'          => '1',
+                ],
+                [
+                    'attribute_code' => 'url_key',
+                    'value'          => 'paper-and-office-supplies',
+                ],
+                [
+                    'attribute_code' => 'category_ids',
+                    'value'          => [
+                        '1',
                     ],
                 ],
             ],
         ];
 
-        $magentoProducts = new MagentoProducts();
+        if ($attributes) {
+            $product = array_merge($product, $attributes);
+        }
 
-        $magentoProducts->updateProducts($products);
-
-        Queue::assertPushed(WaitForLinkedProductSku::class);
+        return $product;
     }
 }

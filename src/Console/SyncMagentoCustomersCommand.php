@@ -2,24 +2,24 @@
 
 namespace Grayloon\Magento\Console;
 
-use Grayloon\Magento\Jobs\SyncMagentoProducts;
+use Grayloon\Magento\Jobs\SyncMagentoCustomers;
 use Illuminate\Console\Command;
 
-class SyncMagnetoProductsCommand extends Command
+class SyncMagentoCustomersCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'magento:sync-products';
+    protected $signature = 'magento:sync-customers';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Imports the product data from the Magneto 2 API';
+    protected $description = 'Imports the customer data from the Magneto 2 API';
 
     /**
      * Execute the console command.
@@ -28,8 +28,8 @@ class SyncMagnetoProductsCommand extends Command
      */
     public function handle()
     {
-        SyncMagentoProducts::dispatch();
+        SyncMagentoCustomers::dispatch();
 
-        $this->info('Successfully launched job to import magento products.');
+        $this->info('Successfully launched job to import magento customers.');
     }
 }

@@ -8,6 +8,7 @@ use Grayloon\Magento\Models\MagentoCustomAttributeType;
 use Grayloon\Magento\Models\MagentoProduct;
 use Grayloon\Magento\Models\MagentoProductCategory;
 use Grayloon\Magento\Models\MagentoProductLink;
+use Grayloon\Magento\Models\MagentoProductMedia;
 
 class MagentoProductModelTest extends TestCase
 {
@@ -185,5 +186,17 @@ class MagentoProductModelTest extends TestCase
 
         $response = $product->related()->get();
         $this->assertEquals($response->first()->id, $first->id);
+    }
+
+    public function test_magento_product_can_have_many_images()
+    {
+        $product = factory(MagentoProduct::class)->create();
+        factory(MagentoProductMedia::class, 5)->create([
+            'product_id' => $product->id,
+        ]);
+
+        $response = $product->images()->get();
+        $this->assertNotEmpty($response);
+        $this->assertEquals(5, $response->count());
     }
 }
