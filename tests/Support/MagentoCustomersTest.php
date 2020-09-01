@@ -143,4 +143,51 @@ class MagentoCustomersTest extends TestCase
         $this->assertEquals('1', $customer->customAttributes()->first()->value);
         Queue::assertPushed(UpdateProductAttributeGroup::class);
     }
+    
+
+    public function test_can_create_customer_without_custom_attributes()
+    {
+        $customers = [
+            [
+                'id'         => '1',
+                'group_id'   => '1',
+                'created_at' => '2014-04-04 14:17:29',
+                'updated_at' => '2014-04-04 14:17:29',
+                'email'      => 'dschrute@dundermifflin.com',
+                'firstname'  => 'Dwight',
+                'lastname'   => 'Schrute',
+                'store_id'   => 1,
+                'website_id' => 1,
+                'addresses' => [
+                    [
+                        'id' => 1,
+                        'customer_id' => 1,
+                        'region' => [
+                            'region_code' => 'PA',
+                            'region'      => 'Pennsylvania',
+                            'region_id'   => 1,
+                        ],
+                        'region_id' => 1,
+                        'country_id' => 'US',
+                        'street' => [
+                            '100 Beetfarm Lake',
+                        ],
+                        'telephone' => '888 888-8888',
+                        'city'      => 'Scranton',
+                        'firstname' => 'Dwight',
+                        'lastname'  => 'Schrute',
+                    ],
+                ],
+            ],
+        ];
+
+        $magentoCustomers = new MagentoCustomers();
+
+        $magentoCustomers->updateCustomers($customers);
+
+        $customer = MagentoCustomer::first();
+
+        $this->assertNotEmpty($customer);
+        $this->assertEmpty($customer->customAttributes()->get());
+    }
 }
