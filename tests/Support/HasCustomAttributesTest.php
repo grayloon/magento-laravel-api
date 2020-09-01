@@ -170,6 +170,23 @@ class HasCustomAttributesTest extends TestCase
 
         $this->assertEquals('Unknown', $attribute->fresh()->value);
     }
+
+    public function test_raw_attribute_value_is_resolvable()
+    {
+        $type = factory(MagentoCustomAttributeType::class)->create([
+            'name' => 'foo_bar',
+            'options' => [],
+        ]);
+
+        $attribute = factory(MagentoCustomAttribute::class)->create([
+            'attribute_type_id' => $type->id,
+            'value' => null,
+        ]);
+
+        (new FakeSupportingClass)->exposedUpdateCustomAttributeTypeValues($type);
+
+        $this->assertNull($attribute->fresh()->value);
+    }
 }
 
 class FakeSupportingClass

@@ -60,8 +60,8 @@ class MagentoCustomers extends PaginatableMagentoService
             'synced_at'          => now(),
         ]);
 
-        $this->syncCustomAttributes($apiCustomer['custom_attributes'] ?? [], $customer);
-        $this->syncCustomerAddresses($apiCustomer['addresses'] ?? [], $customer);
+        $this->syncCustomAttributes($apiCustomer['custom_attributes'], $customer);
+        $this->syncCustomerAddresses($apiCustomer['addresses'], $customer);
 
         return $customer;
     }

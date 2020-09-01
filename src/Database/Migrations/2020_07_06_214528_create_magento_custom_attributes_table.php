@@ -17,7 +17,7 @@ class CreateMagentoCustomAttributesTable extends Migration
             $table->id();
             $table->string('attribute_type')->index();
             $table->integer('attribute_type_id')->index();
-            $table->text('value');
+            $table->text('value')->nullable();
             $table->bigInteger('attributable_id')->index();
             $table->string('attributable_type')->index();
             $table->timestamps();
