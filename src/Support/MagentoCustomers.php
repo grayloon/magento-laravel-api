@@ -31,10 +31,6 @@ class MagentoCustomers extends PaginatableMagentoService
      */
     public function updateCustomers($customers)
     {
-        if (! $customers) {
-            return;
-        }
-
         foreach ($customers as $customer) {
             $this->updateCustomer($customer);
         }
@@ -71,34 +67,6 @@ class MagentoCustomers extends PaginatableMagentoService
     }
 
     /**
-     * Sync the Magento 2 Custom attributes with the Magento Customer.
-     *
-     * @param  array  $attributes
-     * @param  \Grayloon\Magento\Models\MagentoCustomer\ $customer
-     * @return void
-     */
-    protected function syncCustomAttributes($attributes, $customer)
-    {
-        if (! $attributes) {
-            return;
-        }
-
-        foreach ($attributes as $attribute) {
-            $type = $this->resolveCustomAttributeType($attribute['attribute_code']);
-            $value = $this->resolveCustomAttributeValue($type, $attribute['value']);
-
-            $customer
-                ->customAttributes()
-                ->updateOrCreate(['attribute_type_id' => $type->id], [
-                    'attribute_type' => $attribute['attribute_code'],
-                    'value'          => $value,
-                ]);
-        }
-
-        return $this;
-    }
-
-    /**
      * Sync the Magento 2 Customer Addresses with the Magento Customer.
      *
      * @param  array  $addresses
@@ -107,10 +75,6 @@ class MagentoCustomers extends PaginatableMagentoService
      */
     protected function syncCustomerAddresses($addresses, $customer)
     {
-        if (! $addresses) {
-            return;
-        }
-
         foreach ($addresses as $address) {
             $customer->addresses()->updateOrCreate(['id' => $address['id']], [
                 'customer_id' => $customer->id,
