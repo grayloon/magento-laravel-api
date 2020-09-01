@@ -14,7 +14,7 @@ class HasMediaEntriesTest extends TestCase
     public function test_creates_new_product_images()
     {
         Queue::fake();
-        
+
         $product = factory(MagentoProduct::class)->create();
         $images = [
             [
@@ -26,7 +26,7 @@ class HasMediaEntriesTest extends TestCase
                 'types' => [
                     'image',
                     'small_image',
-                    'thumbnail'
+                    'thumbnail',
                 ],
                 'file' => '/p/paper.jpg',
             ],
@@ -47,7 +47,7 @@ class HasMediaEntriesTest extends TestCase
     public function test_launches_job_to_download_product_image()
     {
         Queue::fake();
-        
+
         $product = factory(MagentoProduct::class)->create();
         $images = [
             [
@@ -59,7 +59,7 @@ class HasMediaEntriesTest extends TestCase
                 'types' => [
                     'image',
                     'small_image',
-                    'thumbnail'
+                    'thumbnail',
                 ],
                 'file' => '/p/paper.jpg',
             ],
@@ -76,7 +76,7 @@ class HasMediaEntriesTest extends TestCase
     public function test_updates_existing_image()
     {
         Queue::fake();
-        
+
         $product = factory(MagentoProduct::class)->create();
         $image = factory(MagentoProductMedia::class)->create([
             'id' => 1,
@@ -93,7 +93,7 @@ class HasMediaEntriesTest extends TestCase
                 'types' => [
                     'image',
                     'small_image',
-                    'thumbnail'
+                    'thumbnail',
                 ],
                 'file' => '/p/paper.jpg',
             ],
