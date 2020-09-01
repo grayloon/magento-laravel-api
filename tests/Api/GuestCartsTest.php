@@ -2,7 +2,6 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Api\Categories;
 use Grayloon\Magento\Api\GuestCarts;
 use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
