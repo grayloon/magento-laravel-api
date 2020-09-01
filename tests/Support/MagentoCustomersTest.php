@@ -83,6 +83,7 @@ class MagentoCustomersTest extends TestCase
         $this->assertEquals('100 Beetfarm Lake', $customer->addresses()->first()->street);
         $this->assertNotEmpty($customer->customAttributes()->get());
         $this->assertEquals('rewards_member', $customer->customAttributes()->first()->attribute_type);
+        $this->assertEquals('1', $customer->customAttributes()->first()->value);
     }
 
     public function test_can_apply_new_custom_attribute_type_to_customer()
@@ -139,6 +140,7 @@ class MagentoCustomersTest extends TestCase
         $this->assertEquals('rewards_member', $customer->customAttributes()->first()->attribute_type);
         $this->assertInstanceOf(MagentoCustomAttributeType::class, $customer->customAttributes()->first()->type()->first());
         $this->assertEquals('Rewards Member', $customer->customAttributes()->first()->type()->first()->display_name);
+        $this->assertEquals('1', $customer->customAttributes()->first()->value);
         Queue::assertPushed(UpdateProductAttributeGroup::class);
     }
 }
