@@ -80,7 +80,7 @@ trait HasCustomAttributes
     protected function syncCustomAttributes($attributes, $model, $checkConditionalRules = false)
     {
         foreach ($attributes as $attribute) {
-            // Custom rules set by the specified
+            // Custom rules set by the specified group.
             if ($checkConditionalRules) {
                 $this->applyConditionalRules($attribute, $model);
             }

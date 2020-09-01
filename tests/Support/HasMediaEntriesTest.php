@@ -104,6 +104,14 @@ class HasMediaEntriesTest extends TestCase
         $this->assertEquals(1, MagentoProductMedia::count());
         $this->assertEquals('foo', MagentoProductMedia::first()->label);
     }
+
+    public function test_product_images_can_receive_empty_images_result()
+    {
+        $product = factory(MagentoProduct::class)->create();
+        (new FakeSupportingMediaEntriesClass)->exposedDownloadProductImages($images = [], $product);
+
+        $this->assertEquals(0, MagentoProductMedia::count());
+    }
 }
 
 class FakeSupportingMediaEntriesClass

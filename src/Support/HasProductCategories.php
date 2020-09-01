@@ -15,10 +15,6 @@ trait HasProductCategories
      */
     protected function syncProductCategories($categoryIds, $product)
     {
-        if (! $categoryIds) {
-            return;
-        }
-
         foreach ($categoryIds as $categoryId) {
             MagentoProductCategory::updateOrCreate([
                 'magento_product_id'  => $product->id,
