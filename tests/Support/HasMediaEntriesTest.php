@@ -3,14 +3,11 @@
 namespace Grayloon\Magento\Tests\Support;
 
 use Grayloon\Magento\Jobs\DownloadMagentoProductImage;
+use Grayloon\Magento\Models\MagentoProduct;
+use Grayloon\Magento\Models\MagentoProductMedia;
+use Grayloon\Magento\Support\HasMediaEntries;
 use Grayloon\Magento\Tests\TestCase;
 use Illuminate\Support\Facades\Queue;
-use Grayloon\Magento\Models\MagentoProduct;
-use Grayloon\Magento\Support\HasMediaEntries;
-use Grayloon\Magento\Models\MagentoProductMedia;
-use Grayloon\Magento\Support\HasExtensionAttributes;
-use Grayloon\Magento\Models\MagentoExtensionAttribute;
-use Grayloon\Magento\Models\MagentoExtensionAttributeType;
 
 class HasMediaEntriesTest extends TestCase
 {
@@ -73,7 +70,7 @@ class HasMediaEntriesTest extends TestCase
         $this->assertEquals(1, MagentoProductMedia::count());
 
         Queue::assertPushed(DownloadMagentoProductImage::class);
-        Queue::assertPushed(DownloadMagentoProductImage::class, fn($job) => $job->uri === '/p/paper.jpg');
+        Queue::assertPushed(DownloadMagentoProductImage::class, fn ($job) => $job->uri === '/p/paper.jpg');
     }
 
     public function test_updates_existing_image()
