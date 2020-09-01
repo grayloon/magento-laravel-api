@@ -10,7 +10,7 @@ abstract class AbstractApi
     /**
      * The Magento Client instance.
      *
-     * @var \Grayloon\Magento\Magneto
+     * @var \Grayloon\Magento\Magento
      */
     public $magento;
 

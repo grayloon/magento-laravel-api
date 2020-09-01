@@ -71,9 +71,9 @@ class MagentoServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/magento.php', 'magento');
 
         $this->commands([
-            Console\SyncMagnetoProductsCommand::class,
-            Console\SyncMagnetoCategoriesCommand::class,
-            Console\SyncMagnetoCustomersCommand::class,
+            Console\SyncMagentoProductsCommand::class,
+            Console\SyncMagentoCategoriesCommand::class,
+            Console\SyncMagentoCustomersCommand::class,
         ]);
 
         // Register the main class to use with the facade
