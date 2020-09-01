@@ -14,7 +14,7 @@ class HasExtensionAttributesTest extends TestCase
     {
         $product = factory(MagentoProduct::class)->create();
 
-        (new FakeSupportingClass)->exposedSyncExtensionAttributes(['foo' => 'bar'], $product);
+        (new FakeSupportingExtensionClass)->exposedSyncExtensionAttributes(['foo' => 'bar'], $product);
 
         $this->assertEquals(1, MagentoExtensionAttributeType::count());
         $this->assertEquals(1, MagentoExtensionAttribute::count());
@@ -25,36 +25,12 @@ class HasExtensionAttributesTest extends TestCase
     public function test_resolves_existing_extension_attribute_type()
     {
         $product = factory(MagentoProduct::class)->create();
-        $type = factory(MagentoExtensionAttributeType::class)->create([
+        factory(MagentoExtensionAttributeType::class)->create([
             'type' => 'foo',
         ]);
-        factory(MagentoExtensionAttribute::class)->create([
-            'attribute' => 'bar',
-            'magento_product_id' => $product->id,
-            'magento_ext_attribute_type_id' => $type,
-        ]);
 
-        (new FakeSupportingClass)->exposedSyncExtensionAttributes(['foo' => 'bar'], $product);
 
-        $this->assertEquals(1, MagentoExtensionAttributeType::count());
-        $this->assertEquals(1, MagentoExtensionAttribute::count());
-        $this->assertEquals('foo', MagentoExtensionAttributeType::first()->type);
-        $this->assertEquals('bar', MagentoExtensionAttribute::first()->attribute);
-    }
-
-    public function test_resolves_existing_extension_attribute()
-    {
-        $product = factory(MagentoProduct::class)->create();
-        $type = factory(MagentoExtensionAttributeType::class)->create([
-            'type' => 'foo',
-        ]);
-        factory(MagentoExtensionAttribute::class)->create([
-            'attribute' => 'bar',
-            'magento_product_id' => $product->id,
-            'magento_ext_attribute_type_id' => $type->id,
-        ]);
-
-        (new FakeSupportingClass)->exposedSyncExtensionAttributes(['foo' => 'bar'], $product);
+        (new FakeSupportingExtensionClass)->exposedSyncExtensionAttributes(['foo' => 'bar'], $product);
 
         $this->assertEquals(1, MagentoExtensionAttributeType::count());
         $this->assertEquals(1, MagentoExtensionAttribute::count());
@@ -63,7 +39,7 @@ class HasExtensionAttributesTest extends TestCase
     }
 }
 
-class FakeSupportingClass
+class FakeSupportingExtensionClass
 {
     use HasExtensionAttributes;
 
