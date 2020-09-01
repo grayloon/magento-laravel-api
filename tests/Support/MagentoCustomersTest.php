@@ -143,7 +143,6 @@ class MagentoCustomersTest extends TestCase
         $this->assertEquals('1', $customer->customAttributes()->first()->value);
         Queue::assertPushed(UpdateProductAttributeGroup::class);
     }
-    
 
     public function test_can_create_customer_without_custom_attributes()
     {
