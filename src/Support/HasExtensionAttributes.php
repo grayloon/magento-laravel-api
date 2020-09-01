@@ -18,7 +18,7 @@ trait HasExtensionAttributes
     {
         foreach ($attributes as $key => $attribute) {
             $type = MagentoExtensionAttributeType::firstOrCreate(['type' => $key]);
-            
+
             MagentoExtensionAttribute::updateOrCreate([
                 'magento_product_id'            => $model->id,
                 'magento_ext_attribute_type_id' => $type->id,

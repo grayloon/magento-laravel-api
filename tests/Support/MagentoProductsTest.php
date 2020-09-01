@@ -238,17 +238,17 @@ class MagentoProductsTest extends TestCase
             ],
             'media_gallery_entries' => [
                 [
-                  'id' => 1,
-                  'media_type' => 'image',
-                  'label' => null,
-                  'position' => 1,
-                  'disabled' => false,
-                  'types' => [
-                    'image',
-                    'small_image',
-                    'thumbnail'
-                  ],
-                  'file' => '/p/paper.jpg'
+                    'id' => 1,
+                    'media_type' => 'image',
+                    'label' => null,
+                    'position' => 1,
+                    'disabled' => false,
+                    'types' => [
+                        'image',
+                        'small_image',
+                        'thumbnail',
+                    ],
+                    'file' => '/p/paper.jpg',
                 ],
             ],
             'custom_attributes' => [
@@ -265,7 +265,7 @@ class MagentoProductsTest extends TestCase
                     'value'          => [
                         '1',
                     ],
-                ]
+                ],
             ],
         ];
 
