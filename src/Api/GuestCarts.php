@@ -13,4 +13,14 @@ class GuestCarts extends AbstractApi
     {
         return $this->post('/guest-carts');
     }
+
+    /**
+     * List items that are assigned to a specified cart.
+     *
+     * @return string
+     */
+    public function items($cartId)
+    {
+        return $this->post('/guest-carts/'.$cartId.'/items');
+    }
 }
