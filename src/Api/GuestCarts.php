@@ -15,9 +15,19 @@ class GuestCarts extends AbstractApi
     }
 
     /**
+     * Enable a guest user to return information for a specified cart.
+     *
+     * @return array
+     */
+    public function cart($cartId)
+    {
+        return $this->get('/guest-carts/'.$cartId);
+    }
+
+    /**
      * List items that are assigned to a specified cart.
      *
-     * @return string
+     * @return array
      */
     public function items($cartId)
     {
