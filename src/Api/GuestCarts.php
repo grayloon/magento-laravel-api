@@ -21,6 +21,6 @@ class GuestCarts extends AbstractApi
      */
     public function items($cartId)
     {
-        return $this->post('/guest-carts/'.$cartId.'/items');
+        return $this->get('/guest-carts/'.$cartId.'/items');
     }
 }
