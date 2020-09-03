@@ -127,6 +127,7 @@ $magento->api('guestCarts')->create();
 ```
 
 `/V1/guest-carts/{cartId}`
+
 Return information for a specified cart.
 ```php
 $magento->api('guestCarts')->cart($cartId);
