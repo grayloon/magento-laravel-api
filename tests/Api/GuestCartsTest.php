@@ -58,4 +58,15 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_call_guest_carts_totals()
+    {
+        Http::fake();
+
+        $magento = new Magento();
+
+        $api = $magento->api('guestCarts')->totals('foo');
+
+        $this->assertTrue($api->ok());
+    }
 }

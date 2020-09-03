@@ -52,4 +52,14 @@ class GuestCarts extends AbstractApi
             ],
         ]);
     }
+
+    /**
+     * Return quote totals data for a specified cart.
+     *
+     * @return array
+     */
+    public function totals($cartId)
+    {
+        return $this->get('/guest-carts/'.$cartId.'/totals');
+    }
 }
