@@ -45,12 +45,10 @@ class GuestCarts extends AbstractApi
     public function addItem($cartId, $sku, $quantity)
     {
         return $this->post('/guest-carts/'.$cartId.'/items', [
-            [
-                'cartItem' => [
-                    'quote_id' => $cartId,
-                    'sku'      => $sku,
-                    'qty'      => $quantity,
-                ],
+            'cartItem' => [
+                'quote_id' => $cartId,
+                'sku'      => $sku,
+                'qty'      => $quantity,
             ],
         ]);
     }
