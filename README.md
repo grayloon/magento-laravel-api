@@ -13,13 +13,28 @@
 
 # Laravel - Magento API
 
-A Magento 2 API Object Oriented wrapper for a Laravel application. This package also includes an optional opinionated storage system for consuming Magento 2 data in your Laravel application. 
+A Magento 2 API Object Oriented wrapper for a Laravel application.
+
+- [Installation](#installation)
+- [API Usage](#api-usage)
+- [Available Methods](#available-methods)
+  - [Admin Token](#admin-token)
+  - [Categories](#categories)
+  - [Customer Token](#customer-token)
+  - [Customers](#customers)
+  - [Guest Cart](#guest-cart)
+  - [Product Attributes](#product-attributes)
+  - [Product Link Types](#product-link-types)
+  - [Products](#products)
+  - [Schema](#schema)
+  - [Source Items](#source-items)
+
 
 ## Installation
 
-You can install the package via composer:
+Install this package via Composer:
 
-```bash q
+```bash
 composer require grayloon/laravel-magento-api
 ```
 
@@ -28,20 +43,18 @@ Publish the config options:
 php artisan vendor:publish --provider="Grayloon\Magento\MagentoServiceProvider" --tag="config"
 ```
 
-Optional:
-If you are wanting to store the data from the Magento API and want to use our opinionated storage system, publish the migrations:
-```bash
-php artisan vendor:publish --provider="Grayloon\Magento\MagentoServiceProvider" --tag="migrations"
-```
-
-> more configuration options are available in the [Manual Configuration Options](#manual-configuration-options) section.
-
 Configure your Magento 2 API endpoint and token in your `.env` file:
 ```
 MAGENTO_BASE_URL="https://mydomain.com"
 MAGENTO_ACCESS_TOKEN="client_access_token_here"
+
+# Optional Config:
+MAGENTO_BASE_PATH="rest"
+MAGENTO_STORE_CODE="all"
+MAGENTO_API_VERSION="V1"
 ```
 
+> You can test your connection by running tinker, then: `(new \Grayloon\Magento\Magento)->api('schema')->show();`
 ## API Usage
 
 Example:
@@ -61,52 +74,84 @@ $response->serverError() : bool;
 $response->clientError() : bool;
 ```
 
-### Available Methods:
+## Available Methods:
 
-#### Categories
+<a id="admin-token"></a>
+### Admin Token Integration (IntegrationAdminTokenServiceV1)
+
+`/V1/integration/admin/token`
+
+Generate a admin token:
+```php
+$magento->api('integration')->adminToken($username, $password);
+```
+
+<a id="categories"></a>
+### Categories (catalogCategoryManagementV1)
+
+`/V1/categories`
 
 Get a list of all categories:
 ```php
 $magento->api('categories')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
-#### Customers
+<a id="customer-token"></a>
+### Customer Token Integration (IntegrationCustomerTokenServiceV1)
 
-Get a list of customers:
-```php
-$magento->api('customers')->all($pageSize = 50, $currentPage = 1, $filters = []);
-```
-
-#### Integration (Tokens)
+`/V1/integration/customer/token`
 
 Generate a customer token:
 ```php
 $magento->api('integration')->customerToken($username, $password);
 ```
 
-Generate an admin token:
+<a id="customers"></a>
+### Customers (customerCustomerRepositoryV1)
+
+`/V1/customers/search`
+
+Get a list of customers:
 ```php
-$magento->api('integration')->adminToken($username, $password);
+$magento->api('customers')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
-#### Products
-Get a list of products:
+<a id="guest-cart"></a>
+### Guest Cart
+
+`/V1/guest-carts`
+
+Enable customer or guest user to create an empty cart and quote for an anonymous customer.
 ```php
-$magento->api('products')->all($pageSize = 50, $currentPage = 1, $filters = []);
+$magento->api('guestCarts')->create();
 ```
 
-Get info about a product by the product SKU:
+`/V1/guest-carts/{cartId}`
+Return information for a specified cart.
 ```php
-$magento->api('products')->show($sku);
+$magento->api('guestCarts')->cart($cartId);
 ```
 
-#### Product Attributes
+`/V1/guest-carts/{cartId}/items`
+
+List items that are assigned to a specified cart.
+```php
+$magento->api('guestCarts')->items($cartId);
+```
+
+<a id="product-attributes"></a>
+### Product Attributes (catalogProductAttributeRepositoryV1)
+
+`/V1/products/attributes/{attributeCode}`
+
 Retrieve specific product attribute information:
 ```php
 $magento->api('productAttributes')->show($attributeCode);
 ```
 
-#### Product Link Types (catalogProductLinkTypeListV1)
+<a id="product-link-types"></a>
+### Product Link Types (catalogProductLinkTypeListV1)
+
 `/V1/products/links/types`
 
 Retrieve information about available product link types:
@@ -114,101 +159,38 @@ Retrieve information about available product link types:
 $magento->api('productLinkType')->types();
 ```
 
-#### Schema
+<a id="products"></a>
+### Products (catalogProductRepositoryV1)
+
+`/V1/products`
+
+Get a list of products:
+```php
+$magento->api('products')->all($pageSize = 50, $currentPage = 1, $filters = []);
+```
+
+`/V1/products/{sku}`
+
+Get info about a product by the product SKU:
+```php
+$magento->api('products')->show($sku);
+```
+
+<a id="schema"></a>
+### Schema
+
 Get a schema blueprint of the Magento 2 REST API:
 ```php
 $magento->api('schema')->show(); 
 ```
 
-#### Source Items
+### Source Items (inventoryApiSourceItemRepositoryV1)
+
+`/V1/inventory/source-items`
+
 Get a list of paginated sort items (typically used for quantity retrieval):
 ```php
 $magento->api('sourceItems')->all($pageSize = 50, $currentPage = 1, $filters = []);
-```
-
-## Manual Configuration Options
-
-This package features additional configuration options which uses the Magento 2 default settings. You are more than welcome to change any of the values as you need fit in your application:
-
-### Base API Path
-
-The Magento 2 REST API Base Path. By default, this is assigned as 'rest'. Developers should only update this setting if the path has changed:
-```
-MAGENTO_BASE_PATH='rest'
-```
-
-### Magento Store Code
-
-The Magento 2 REST API Store Code By default, this is assigned to 'all' specifying all magento stores on requests. Developers may update this to specify the API around a specific store code.
-```
-MAGENTO_STORE_CODE='all'
-```
-
-### Magento API Version
-
-The Magento 2 REST API Version. By default, Magento 2 sets this to 'V1'. Developers should only update this setting if the version has changed.
-```
-MAGENTO_API_VERSION='V1'
-```
-
-## Jobs
-
-> In order use these queue jobs, you must have registered the migrations from the installation section noted above.
-
-This package has many pre-built queue jobs to sync your Magento products to your Laravel application. Feel free to leverage these jobs or create your own.
-
-Updates all products from the Magento API:
-```php
-Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoProducts::class);
-```
-
-Updates a specified product from the Magento API:
-```php
-Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoProduct::class, $sku);
-```
-
-Updates all categories from the Magento API:
-```php
-Bus::dispatch(\Grayloon\Magento\Jobs\SyncMagentoCategories::class);
-```
-
-
-## API / Webhooks
-
-> In order use these api routes, you must have registered the migrations from the installation section noted above.
-
-This package has included routes to automatically update Magento information from the API. These can be utilized with Magento Webhooks to keep your items in sync.
-
-> All routes are guarded by the default `API` Laravel middleware.
-
-Fire the `SyncMagentoProduct($sku)` job to update a specified product SKU:
-```
-/api/laravel-magento-api/products/update/{sku}
-```
-
-
-## Commands
-
-> In order use these commands, you must have registered the migrations from the installation section noted above.
-
-Launch a job to import all categories from the Magento 2 REST API:
-```bash
-php artisan magento:sync-categories
-```
-
-Launch a job to import all customers from the Magento 2 REST API:
-```bash
-php artisan magento:sync-customers
-```
-
-Launch a job to import all products from the Magento 2 REST API:
-```bash
-php artisan magento:sync-products
-```
-
-Launch a job to import all product link types from the Magento 2 REST API:
-```bash
-php artisan magento:sync-product-link-types
 ```
 
 ## Testing
