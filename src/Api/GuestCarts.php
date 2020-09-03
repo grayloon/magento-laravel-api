@@ -33,4 +33,25 @@ class GuestCarts extends AbstractApi
     {
         return $this->get('/guest-carts/'.$cartId.'/items');
     }
+
+    /**
+     * Add/update the specified cart item.
+     *
+     * @param  string  $cartId
+     * @param  string  $sku
+     * @param  string  $quantity
+     * @return array
+     */
+    public function addItem($cartId, $sku, $quantity)
+    {
+        return $this->post('/guest-carts/'.$cartId.'/items', [
+            [
+                'cartItem' => [
+                    'quote_id' => $cartId,
+                    'sku'      => $sku,
+                    'qty'      => $quantity,
+                ],
+            ],
+        ]);
+    }
 }

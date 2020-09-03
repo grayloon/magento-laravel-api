@@ -117,7 +117,7 @@ $magento->api('customers')->all($pageSize = 50, $currentPage = 1, $filters = [])
 ```
 
 <a id="guest-cart"></a>
-### Guest Cart
+### Guest Cart (various)
 
 `/V1/guest-carts`
 
@@ -138,6 +138,13 @@ $magento->api('guestCarts')->cart($cartId);
 List items that are assigned to a specified cart.
 ```php
 $magento->api('guestCarts')->items($cartId);
+```
+
+`/V1/guest-carts/{cartId}/items`
+
+Add/update the specified cart item.
+```php
+$magento->api('guestCarts')->addItem($cartId, $sku, $quantity);
 ```
 
 <a id="product-attributes"></a>
