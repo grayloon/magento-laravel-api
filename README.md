@@ -19,6 +19,7 @@ A Magento 2 API Object Oriented wrapper for a Laravel application.
 - [API Usage](#api-usage)
 - [Available Methods](#available-methods)
   - [Admin Token](#admin-token)
+  - [Carts](#carts)
   - [Categories](#categories)
   - [Customer Token](#customer-token)
   - [Customers](#customers)
@@ -84,6 +85,15 @@ $response->clientError() : bool;
 Generate a admin token:
 ```php
 $magento->api('integration')->adminToken($username, $password);
+```
+
+#### Carts
+
+`/V1/carts/mine`
+
+Returns information for the cart for the authenticated customer. Must have a store code.
+```php
+$magento->api('carts')->mine();
 ```
 
 <a id="categories"></a>
