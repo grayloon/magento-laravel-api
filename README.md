@@ -105,6 +105,12 @@ Lists items that are assigned to a specified customer cart. Must have a store co
 $magento->api('cartItems')->mine();
 ```
 
+`/V1/carts/mine/items/`
+
+Add/update the specified cart item with a customer token. Must have a store code.
+```php
+$magento->api('cartItems')->addItem($cartId, $sku, $quantity);
+
 #### Cart Totals (quoteCartTotalRepositoryV1)
 
 `/V1/carts/mine/totals`
