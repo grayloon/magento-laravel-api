@@ -35,17 +35,6 @@ class TestCase extends OrchestraTestCase
             ->give('testbench');
     }
 
-    /**
-     * Setup the test environment.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../src/Database/Factories');
-        $this->loadMigrationsFrom(__DIR__.'/../src/Database/Migrations');
-    }
-
     protected function getPackageProviders($app)
     {
         return [MagentoServiceProvider::class];
