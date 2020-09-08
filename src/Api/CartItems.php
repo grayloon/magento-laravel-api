@@ -27,7 +27,7 @@ class CartItems extends AbstractApi
     public function addItem($quoteId, $sku, $quantity)
     {
         $this->validateSingleStoreCode();
-        
+
         return $this->post('/carts/mine/items', [
             'cartItem' => [
                 'qty'      => $quantity,
