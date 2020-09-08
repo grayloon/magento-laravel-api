@@ -11,7 +11,7 @@ class Carts extends AbstractApi
      */
     public function mine()
     {
-        $this->validateStoreCode();
+        $this->validateSingleStoreCode();
 
         return $this->get('/carts/mine');
     }

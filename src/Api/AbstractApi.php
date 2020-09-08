@@ -80,7 +80,7 @@ abstract class AbstractApi
      * @throws \Exception
      * @return void
      */
-    protected function validateStoreCode()
+    protected function validateSingleStoreCode()
     {
         if ($this->magento->storeCode === 'all') {
             throw new Exception(__('You must pass a single store code. "all" cannot be used.'));
