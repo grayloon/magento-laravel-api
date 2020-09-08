@@ -96,6 +96,15 @@ Returns information for the cart for the authenticated customer. Must use a sing
 $magento->api('carts')->mine();
 ```
 
+#### Cart Items (quoteCartItemRepositoryV1)
+
+`/V1/carts/mine/items/`
+
+Lists items that are assigned to a specified customer cart. Must have a store code.
+```php
+$magento->api('cartItems')->mine();
+```
+
 #### Cart Totals (quoteCartTotalRepositoryV1)
 
 `/V1/carts/mine/totals`
