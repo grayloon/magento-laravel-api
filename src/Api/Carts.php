@@ -15,7 +15,7 @@ class Carts extends AbstractApi
     {
         $this->validateStoreCode();
 
-        return $this->get('carts/mine');
+        return $this->get('/carts/mine');
     }
 
     /**
