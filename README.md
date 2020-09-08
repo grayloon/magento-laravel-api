@@ -110,6 +110,7 @@ $magento->api('cartItems')->mine();
 Add/update the specified cart item with a customer token. Must have a store code.
 ```php
 $magento->api('cartItems')->addItem($cartId, $sku, $quantity);
+```
 
 #### Cart Totals (quoteCartTotalRepositoryV1)
 
