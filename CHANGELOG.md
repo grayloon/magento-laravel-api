@@ -2,6 +2,9 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.4.1 - September 8, 2020
+- Support for Laravel 8 applications
+
 ## 0.4.0 - September 2, 2020
 - Removed Storage System (moved to its own package for less breaking changes)
 - Added Guest Carts Endpoint
