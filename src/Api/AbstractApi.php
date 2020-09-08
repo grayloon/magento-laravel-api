@@ -2,6 +2,7 @@
 
 namespace Grayloon\Magento\Api;
 
+use Exception;
 use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
 
@@ -71,5 +72,20 @@ abstract class AbstractApi
     {
         return Http::withToken($this->magento->token)
             ->post($this->apiRequest.$path, $parameters);
+    }
+
+    /**
+     * Validates the usage of the store code as needed.
+     *
+     * @throws \Exception
+     * @return void
+     */
+    protected function validateStoreCode()
+    {
+        if ($this->magento->storeCode === 'all') {
+            throw new Exception(__('You must pass a single store code. "all" cannot be used.'));
+        }
+
+        return $this;
     }
 }

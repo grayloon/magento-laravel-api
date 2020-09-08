@@ -91,9 +91,18 @@ $magento->api('integration')->adminToken($username, $password);
 
 `/V1/carts/mine`
 
-Returns information for the cart for the authenticated customer. Must have a store code.
+Returns information for the cart for the authenticated customer. Must use a single store code.
 ```php
 $magento->api('carts')->mine();
+```
+
+#### Cart Totals (quoteCartTotalRepositoryV1)
+
+`/V1/carts/mine/totals`
+
+Returns information for the cart totals for the authenticated customer. Must use a single store code.
+```php
+$magento->api('cartTotals')->mine();
 ```
 
 <a id="categories"></a>
