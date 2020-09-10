@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.3",
-        "guzzlehttp/guzzle": "^6.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0",
         "illuminate/support": "^7.0|^8.0"
     },
     "require-dev": {
