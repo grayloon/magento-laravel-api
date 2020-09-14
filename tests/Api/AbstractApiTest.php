@@ -46,6 +46,19 @@ class AbstractApiTest extends TestCase
         (new FakeApiClass((new Magento('example.com'))))->fakePostEndpoint();
     }
 
+    public function test_expect_message_body_from_array_on_exception_throw()
+    {
+        $this->expectException('exception');
+        $this->expectExceptionMessage('There was an error.');
+        Http::fake([
+            '*' => Http::response([
+                'message' => 'There was an error.',
+            ], 500),
+        ]);
+
+        (new FakeApiClass((new Magento('example.com'))))->fakePostEndpoint();
+    }
+
     public function test_400_error_does_not_throw_exception()
     {
         Http::fake([
