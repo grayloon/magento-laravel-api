@@ -83,7 +83,7 @@ abstract class AbstractApi
      */
     protected function checkExceptions($response)
     {
-        if (! $response->ok()) {
+        if ($response->serverError()) {
             throw new Exception($response);
         }
 

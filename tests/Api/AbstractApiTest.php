@@ -25,7 +25,11 @@ class AbstractApiTest extends TestCase
     public function test_expect_throw_exception_on_get_api_error()
     {
         $this->expectException('exception');
-        Http::fake(['message' => 'There was an error.'], 500);
+        Http::fake([
+            '*' => Http::response([
+                'message' => 'There was an error.',
+            ], 500),
+        ]);
         
         (new FakeApiClass((new Magento('example.com'))))->fakeGetEndpoint();
     }
@@ -33,9 +37,35 @@ class AbstractApiTest extends TestCase
     public function test_expect_throw_exception_on_post_api_error()
     {
         $this->expectException('exception');
-        Http::fake(['message' => 'There was an error.'], 500);
+        Http::fake([
+            '*' => Http::response([
+                'message' => 'There was an error.',
+            ], 500),
+        ]);
         
         (new FakeApiClass((new Magento('example.com'))))->fakePostEndpoint();
+    }
+
+    public function test_400_error_does_not_throw_exception()
+    {
+        Http::fake([
+            '*' => Http::response([
+                'message' => 'Unauthorized',
+            ], 401),
+        ]);
+        
+        $this->assertNull((new FakeApiClass((new Magento('foo.com'))))->fakeGetEndpoint());
+    }
+
+    public function test_200_error_does_not_throw_exception()
+    {
+        Http::fake([
+            '*' => Http::response([
+                'message' => 'Ready to Rock!',
+            ], 200),
+        ]);
+        
+        $this->assertNull((new FakeApiClass((new Magento('foo.com'))))->fakeGetEndpoint());
     }
 }
 
