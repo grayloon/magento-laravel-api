@@ -55,7 +55,6 @@ MAGENTO_STORE_CODE="all"
 MAGENTO_API_VERSION="V1"
 ```
 
-> You can test your connection by running tinker, then: `(new \Grayloon\Magento\Magento)->api('schema')->show();`
 ## API Usage
 
 Example:
@@ -69,11 +68,9 @@ $response->body() : string;
 $response->json() : array|mixed;
 $response->status() : int;
 $response->ok() : bool;
-$response->successful() : bool;
-$response->failed() : bool;
-$response->serverError() : bool;
-$response->clientError() : bool;
 ```
+
+> Will throw an exception on >500 errors.
 
 ## Available Methods:
 

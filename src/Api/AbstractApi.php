@@ -56,8 +56,8 @@ abstract class AbstractApi
      */
     protected function get($path, $parameters = [])
     {
-        return Http::withToken($this->magento->token)
-            ->get($this->apiRequest.$path, $parameters);
+        return $this->checkExceptions(Http::withToken($this->magento->token)
+            ->get($this->apiRequest.$path, $parameters));
     }
 
     /**
@@ -70,8 +70,24 @@ abstract class AbstractApi
      */
     protected function post($path, $parameters = [])
     {
-        return Http::withToken($this->magento->token)
-            ->post($this->apiRequest.$path, $parameters);
+        return $this->checkExceptions(Http::withToken($this->magento->token)
+            ->post($this->apiRequest.$path, $parameters));
+    }
+
+    /**
+     * Check for any type of invalid API Responses.
+     *
+     * @param \Illuminate\Http\Client\Response $response
+     * @throws \Exception
+     * @return void
+     */
+    protected function checkExceptions($response)
+    {
+        if (! $response->ok()) {
+            throw new Exception($response);
+        }
+
+        return $response;
     }
 
     /**
