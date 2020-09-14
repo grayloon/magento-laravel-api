@@ -30,7 +30,7 @@ class AbstractApiTest extends TestCase
                 'message' => 'There was an error.',
             ], 500),
         ]);
-        
+
         (new FakeApiClass((new Magento('example.com'))))->fakeGetEndpoint();
     }
 
@@ -42,7 +42,7 @@ class AbstractApiTest extends TestCase
                 'message' => 'There was an error.',
             ], 500),
         ]);
-        
+
         (new FakeApiClass((new Magento('example.com'))))->fakePostEndpoint();
     }
 
@@ -53,7 +53,7 @@ class AbstractApiTest extends TestCase
                 'message' => 'Unauthorized',
             ], 401),
         ]);
-        
+
         $this->assertNull((new FakeApiClass((new Magento('foo.com'))))->fakeGetEndpoint());
     }
 
@@ -64,7 +64,7 @@ class AbstractApiTest extends TestCase
                 'message' => 'Ready to Rock!',
             ], 200),
         ]);
-        
+
         $this->assertNull((new FakeApiClass((new Magento('foo.com'))))->fakeGetEndpoint());
     }
 }
