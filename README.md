@@ -179,6 +179,13 @@ Add/update the specified cart item.
 $magento->api('guestCarts')->addItem($cartId, $sku, $quantity);
 ```
 
+`/V1/guest-carts/{cartId}/estimate-shipping-methods`
+
+Estimate shipping by address and return list of available shipping methods.
+```php
+$magento->api('guestCarts')->estimateShippingMethods($cartId);
+```
+
 <a id="product-attributes"></a>
 ### Product Attributes (catalogProductAttributeRepositoryV1)
 
