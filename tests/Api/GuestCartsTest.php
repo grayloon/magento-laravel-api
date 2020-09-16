@@ -95,12 +95,4 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
-
-    public function test_must_pass_a_single_store_code_to_totals_information()
-    {
-        $this->expectException('exception');
-
-        $magento = new Magento();
-        $magento->api('carts')->totalsInformation([]);
-    }
 }
