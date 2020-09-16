@@ -38,7 +38,7 @@ class Carts extends AbstractApi
     public function totalsInformation($body = [])
     {
         $this->validateSingleStoreCode();
-        
+
         return $this->post('/carts/mine/totals-information', $body);
     }
 }
