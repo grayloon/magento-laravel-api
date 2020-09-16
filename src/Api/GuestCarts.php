@@ -74,4 +74,16 @@ class GuestCarts extends AbstractApi
     {
         return $this->post('/guest-carts/'.$cartId.'/estimate-shipping-methods', $body);
     }
+
+    /**
+     * Calculate quote totals based on address and shipping method.
+     *
+     * @param  string $cartId
+     * @param  array  $body
+     * @return array
+     */
+    public function totalsInformation($cartId, $body = [])
+    {
+        return $this->post('/guest-carts/'.$cartId.'/totals-information', $body);
+    }
 }
