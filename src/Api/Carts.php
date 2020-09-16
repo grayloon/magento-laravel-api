@@ -15,4 +15,17 @@ class Carts extends AbstractApi
 
         return $this->get('/carts/mine');
     }
+
+    /**
+     * Estimate shipping by address and return list of available shipping methods.
+     *
+     * @param  array  $body
+     * @return array
+     */
+    public function estimateShippingMethods($body = [])
+    {
+        $this->validateSingleStoreCode();
+        
+        return $this->post('/carts/mine/estimate-shipping-methods', $body);
+    }
 }
