@@ -56,4 +56,18 @@ class CartsTest extends TestCase
         $magento = new Magento();
         $magento->api('carts')->estimateShippingMethods([]);
     }
+
+    public function test_can_call_carts_totals_information()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine/totals-information' => Http::response([], 200),
+        ]);
+
+        $magento = new Magento();
+        $magento->storeCode = 'default';
+
+        $api = $magento->api('carts')->totalsInformation([]);
+
+        $this->assertTrue($api->ok());
+    }
 }

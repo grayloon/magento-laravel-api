@@ -25,7 +25,20 @@ class Carts extends AbstractApi
     public function estimateShippingMethods($body = [])
     {
         $this->validateSingleStoreCode();
-        
+
         return $this->post('/carts/mine/estimate-shipping-methods', $body);
+    }
+
+    /**
+     * Calculate quote totals based on address and shipping method.
+     *
+     * @param  array  $body
+     * @return array
+     */
+    public function totalsInformation($body = [])
+    {
+        $this->validateSingleStoreCode();
+        
+        return $this->post('/carts/mine/totals-information', $body);
     }
 }
