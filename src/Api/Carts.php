@@ -41,4 +41,17 @@ class Carts extends AbstractApi
 
         return $this->post('/carts/mine/totals-information', $body);
     }
+
+    /**
+     * Save the total shipping information.
+     *
+     * @param  array  $body
+     * @return array
+     */
+    public function shippingInformation($body = [])
+    {
+        $this->validateSingleStoreCode();
+
+        return $this->post('/carts/mine/shipping-information', $body);
+    }
 }

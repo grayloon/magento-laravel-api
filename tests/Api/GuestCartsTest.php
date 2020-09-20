@@ -95,4 +95,17 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_call_guest_carts_shipping_information()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo/shipping-information' => Http::response([], 200),
+        ]);
+
+        $magento = new Magento();
+
+        $api = $magento->api('guestCarts')->shippingInformation('foo');
+
+        $this->assertTrue($api->ok());
+    }
 }

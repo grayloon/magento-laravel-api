@@ -86,4 +86,16 @@ class GuestCarts extends AbstractApi
     {
         return $this->post('/guest-carts/'.$cartId.'/totals-information', $body);
     }
+
+    /**
+     * Save the total shipping information.
+     *
+     * @param  string $cartId
+     * @param  array  $body
+     * @return array
+     */
+    public function shippingInformation($cartId, $body = [])
+    {
+        return $this->post('/guest-carts/'.$cartId.'/shipping-information', $body);
+    }
 }
