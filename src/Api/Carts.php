@@ -54,4 +54,17 @@ class Carts extends AbstractApi
 
         return $this->post('/carts/mine/shipping-information', $body);
     }
+
+    /**
+     * Lists available payment methods for a specified shopping cart. This call returns an array of objects, but detailed information about each object’s attributes might not be included.
+     *
+     * @param  array  $body
+     * @return array
+     */
+    public function paymentMethods()
+    {
+        $this->validateSingleStoreCode();
+
+        return $this->get('/carts/mine/payment-methods');
+    }
 }
