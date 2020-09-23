@@ -18,8 +18,7 @@ class CartTotalsTest extends TestCase
         Http::fake();
 
         $magento = new Magento();
-        $magento->storeCode = 'def
-        ault';
+        $magento->storeCode = 'default';
 
         $api = $magento->api('cartTotals')->mine();
 
