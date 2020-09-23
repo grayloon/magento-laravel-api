@@ -98,4 +98,14 @@ class GuestCarts extends AbstractApi
     {
         return $this->post('/guest-carts/'.$cartId.'/shipping-information', $body);
     }
+
+    /**
+     * List available payment methods for a specified shopping cart. This call returns an array of objects, but detailed information about each object’s attributes might not be included.
+     *
+     * @return array
+     */
+    public function paymentMethods($cartId)
+    {
+        return $this->get('/guest-carts/'.$cartId.'/payment-methods');
+    }
 }

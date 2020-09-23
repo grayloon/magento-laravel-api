@@ -108,4 +108,17 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_call_guest_carts_payment_methods()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo/payment-methods' => Http::response([], 200),
+        ]);
+
+        $magento = new Magento();
+
+        $api = $magento->api('guestCarts')->paymentMethods('foo');
+
+        $this->assertTrue($api->ok());
+    }
 }
