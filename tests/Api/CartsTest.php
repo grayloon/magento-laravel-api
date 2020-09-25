@@ -122,4 +122,26 @@ class CartsTest extends TestCase
         $magento = new Magento();
         $magento->api('carts')->paymentMethods([]);
     }
+
+    public function test_can_call_carts_payment_information()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine/payment-information' => Http::response([], 200),
+        ]);
+
+        $magento = new Magento();
+        $magento->storeCode = 'default';
+
+        $api = $magento->api('carts')->paymentInformation([]);
+
+        $this->assertTrue($api->ok());
+    }
+
+    public function test_must_pass_a_single_store_code_to_payment_information()
+    {
+        $this->expectException('exception');
+
+        $magento = new Magento();
+        $magento->api('carts')->paymentInformation([]);
+    }
 }
