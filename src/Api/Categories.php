@@ -30,6 +30,7 @@ class Categories extends AbstractApi
     public function products($categoryId)
     {
         $this->validateSingleStoreCode();
+
         return $this->get('/categories/'.$categoryId.'/products');
     }
 }
