@@ -19,4 +19,17 @@ class Categories extends AbstractApi
             'searchCriteria[currentPage]' => $currentPage,
         ]);
     }
+
+    /**
+     * Get products assigned to category.
+     *
+     * @param int $categoryId
+     *
+     * @return array
+     */
+    public function products($categoryId)
+    {
+        $this->validateSingleStoreCode();
+        return $this->get('/categories/'.$categoryId.'/products');
+    }
 }
