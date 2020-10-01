@@ -2,6 +2,7 @@
 
 namespace Grayloon\Magento;
 
+use Grayloon\Magento\Api\Custom;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
@@ -49,6 +50,12 @@ class Magento
      */
     public $storeCode;
 
+    /**
+     * Magento constructor.
+     *
+     * @param string $baseUrl
+     * @param string $token
+     */
     public function __construct($baseUrl = null, $token = null)
     {
         $this->baseUrl = $baseUrl ?: config('magento.base_url');
@@ -68,12 +75,13 @@ class Magento
      */
     public function api($name)
     {
-        $apiMethodExists = class_exists($name = "\Grayloon\Magento\Api\\".Str::ucfirst($name));
+        $className = $name;
+        $apiMethodExists = class_exists($className = "\Grayloon\Magento\Api\\".Str::ucfirst($className));
 
         if (! $apiMethodExists) {
-            throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
+            return new Custom($name, $this);
         }
 
-        return new $name($this);
+        return new $className($this);
     }
 }
