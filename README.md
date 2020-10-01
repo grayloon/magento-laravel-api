@@ -228,19 +228,19 @@ $magento->api('products')->show($sku);
 Magento modules can have their own API endpoints.
 For example:
 ```xml
-<route method="POST" url="/V1/custom/save">
+<route method="POST" url="/V1/my-custom-endpoint/save">
     ...
 </route>
-<route method="GET" url="/V1/custom/get/:id">
+<route method="GET" url="/V1/my-custom-endpoint/get/:id">
     ...
 </route>
 ```
 To use these you can directly use get/post methods:
 ```php
-$magento->api('custom')->post('save', [...]);
+$magento->api('my-custom-endpoint')->post('save', [...]);
 ```
 ```php
-$magento->api('custom')->get('get/1');
+$magento->api('my-custom-endpoint')->get('get/1');
 ```
 
 <a id="schema"></a>
