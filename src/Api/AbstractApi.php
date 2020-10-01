@@ -49,8 +49,8 @@ abstract class AbstractApi
     /**
      * Send a GET request with query parameters.
      *
-     * @param  string  $path
-     * @param  string  $parameters
+     * @param string $path
+     * @param string $parameters
      *
      * @return \Illuminate\Http\Client\Response
      */
@@ -63,8 +63,8 @@ abstract class AbstractApi
     /**
      * Send a POST request with query parameters.
      *
-     * @param  string  $path
-     * @param  string  $parameters
+     * @param string $path
+     * @param string $parameters
      *
      * @return \Illuminate\Http\Client\Response
      */
@@ -75,11 +75,39 @@ abstract class AbstractApi
     }
 
     /**
+     * Send a PUT request
+     *
+     * @param $path
+     * @param array $parameters
+     *
+     * @return \Illuminate\Http\Client\Response|void
+     */
+    protected function put($path, $parameters = [])
+    {
+        return $this->checkExceptions(Http::withToken($this->magento->token)
+            ->put($this->apiRequest.$path, $parameters));
+    }
+
+    /**
+     * Send a DELETE request
+     *
+     * @param $path
+     * @param array $parameters
+     *
+     * @return \Illuminate\Http\Client\Response|void
+     */
+    protected function delete($path, $parameters = [])
+    {
+        return $this->checkExceptions(Http::withToken($this->magento->token)
+            ->delete($this->apiRequest.$path, $parameters));
+    }
+
+    /**
      * Check for any type of invalid API Responses.
      *
      * @param \Illuminate\Http\Client\Response $response
-     * @throws \Exception
      * @return void
+     * @throws \Exception
      */
     protected function checkExceptions($response)
     {
@@ -93,8 +121,8 @@ abstract class AbstractApi
     /**
      * Validates the usage of the store code as needed.
      *
-     * @throws \Exception
      * @return void
+     * @throws \Exception
      */
     protected function validateSingleStoreCode()
     {
