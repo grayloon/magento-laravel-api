@@ -35,7 +35,7 @@ class Custom extends AbstractApi
     public function __call($method, $args)
     {
         if (in_array($method, self::HTTP_METHODS)) {
-            $args[0] = $this->endpoint . ltrim($args[0], '/');
+            $args[0] = $this->endpoint.ltrim($args[0], '/');
         }
 
         return call_user_func_array([$this, $method], $args);

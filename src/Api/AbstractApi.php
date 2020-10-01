@@ -75,7 +75,7 @@ abstract class AbstractApi
     }
 
     /**
-     * Send a PUT request
+     * Send a PUT request.
      *
      * @param $path
      * @param array $parameters
@@ -89,7 +89,7 @@ abstract class AbstractApi
     }
 
     /**
-     * Send a DELETE request
+     * Send a DELETE request.
      *
      * @param $path
      * @param array $parameters
