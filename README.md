@@ -29,6 +29,7 @@ A Magento 2 API Object Oriented wrapper for a Laravel application.
   - [Products](#products)
   - [Schema](#schema)
   - [Source Items](#source-items)
+  - [Custom modules](#custom modules)
 
 
 ## Installation
@@ -221,6 +222,25 @@ $magento->api('products')->all($pageSize = 50, $currentPage = 1, $filters = []);
 Get info about a product by the product SKU:
 ```php
 $magento->api('products')->show($sku);
+```
+
+### Custom modules
+Magento modules can have their own API endpoints.
+For example:
+```xml
+<route method="POST" url="/V1/custom/save">
+    ...
+</route>
+<route method="GET" url="/V1/custom/get/:id">
+    ...
+</route>
+```
+To use these you can directly use get/post methods:
+```php
+$magento->api('custom')->post('save', [...]);
+```
+```php
+$magento->api('custom')->get('get/1');
 ```
 
 <a id="schema"></a>
