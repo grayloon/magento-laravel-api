@@ -6,6 +6,8 @@ use Grayloon\Magento\Magento;
 
 class Custom extends AbstractApi
 {
+    const HTTP_METHODS = ['get', 'post', 'put', 'delete'];
+
     /**
      * @var string Magento API endpoint
      */
@@ -18,7 +20,7 @@ class Custom extends AbstractApi
      */
     public function __construct(string $endpoint, Magento $magento)
     {
-        $this->endpoint = $endpoint;
+        $this->endpoint = '/'.rtrim(ltrim($endpoint, '/'), '/').'/';
 
         parent::__construct($magento);
     }
@@ -32,8 +34,8 @@ class Custom extends AbstractApi
      */
     public function __call($method, $args)
     {
-        if ($method == 'get' || $method == 'post') {
-            $args[0] = rtrim($this->endpoint, '/').'/'.$args[0];
+        if (in_array($method, self::HTTP_METHODS)) {
+            $args[0] = $this->endpoint.ltrim($args[0], '/');
         }
 
         return call_user_func_array([$this, $method], $args);
