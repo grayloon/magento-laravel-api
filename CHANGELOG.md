@@ -2,6 +2,19 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.5 - October 6, 2020
+- Fix for Laravel 8 Applications
+- Ability to query custom extension API endpoints
+- Added Delete and Put Methods
+- Added Product Categories API Endpoint
+- Added Payment as Guest Endpoint
+- Added Payment as Customer Endpoint
+- Added Cart Payment Methods Endpoint
+- Added Shipping Information Endpoint
+- Added Add Items as Customer to Cart Endpoint
+- Now throws Exception when >500 error is thrown
+
+
 ## 0.4.1 - September 8, 2020
 - Support for Laravel 8 applications
 
