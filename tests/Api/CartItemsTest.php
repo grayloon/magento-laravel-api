@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Api\CartItems;
-use Grayloon\Magento\Magento;
 use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
 
