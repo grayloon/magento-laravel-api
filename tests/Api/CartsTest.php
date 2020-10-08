@@ -3,26 +3,21 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Api\Carts;
-use Grayloon\Magento\Magento;
+use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
 
 class CartsTest extends TestCase
 {
     public function test_can_call_carts()
     {
-        $magento = new Magento();
-
-        $this->assertInstanceOf(Carts::class, $magento->api('carts'));
+        $this->assertInstanceOf(Carts::class, MagentoFacade::api('carts'));
     }
 
     public function test_can_call_carts_mine()
     {
         Http::fake();
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('carts')->mine();
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->mine();
 
         $this->assertTrue($api->ok());
     }
@@ -31,8 +26,7 @@ class CartsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('carts')->mine();
+        MagentoFacade::api('carts')->mine();
     }
 
     public function test_can_call_carts_estimate_shipping_methods()
@@ -41,10 +35,7 @@ class CartsTest extends TestCase
             '*rest/default/V1/carts/mine/estimate-shipping-methods' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('carts')->estimateShippingMethods([]);
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->estimateShippingMethods([]);
 
         $this->assertTrue($api->ok());
     }
@@ -53,8 +44,7 @@ class CartsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('carts')->estimateShippingMethods([]);
+        MagentoFacade::api('carts')->estimateShippingMethods([]);
     }
 
     public function test_can_call_carts_totals_information()
@@ -63,10 +53,7 @@ class CartsTest extends TestCase
             '*rest/default/V1/carts/mine/totals-information' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('carts')->totalsInformation([]);
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->totalsInformation([]);
 
         $this->assertTrue($api->ok());
     }
@@ -75,8 +62,7 @@ class CartsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('carts')->totalsInformation([]);
+        MagentoFacade::api('carts')->totalsInformation([]);
     }
 
     public function test_can_call_carts_shipping_information()
@@ -85,10 +71,7 @@ class CartsTest extends TestCase
             '*rest/default/V1/carts/mine/shipping-information' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('carts')->shippingInformation([]);
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->shippingInformation([]);
 
         $this->assertTrue($api->ok());
     }
@@ -97,8 +80,7 @@ class CartsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('carts')->shippingInformation([]);
+        MagentoFacade::api('carts')->shippingInformation([]);
     }
 
     public function test_can_call_carts_payment_methods()
@@ -107,10 +89,7 @@ class CartsTest extends TestCase
             '*rest/default/V1/carts/mine/payment-methods' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('carts')->paymentMethods([]);
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->paymentMethods([]);
 
         $this->assertTrue($api->ok());
     }
@@ -119,8 +98,7 @@ class CartsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('carts')->paymentMethods([]);
+        MagentoFacade::api('carts')->paymentMethods([]);
     }
 
     public function test_can_call_carts_payment_information()
@@ -129,10 +107,7 @@ class CartsTest extends TestCase
             '*rest/default/V1/carts/mine/payment-information' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('carts')->paymentInformation([]);
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->paymentInformation([]);
 
         $this->assertTrue($api->ok());
     }
@@ -141,7 +116,6 @@ class CartsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('carts')->paymentInformation([]);
+        MagentoFacade::api('carts')->paymentInformation([]);
     }
 }

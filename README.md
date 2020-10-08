@@ -60,10 +60,9 @@ MAGENTO_API_VERSION="V1"
 
 Example:
 ```php
-use Grayloon\Magento\Magento;
+use Magento;
 
-$magento = new Magento();
-$response = $magento->api('products')->all();
+$response = Magento::api('products')->all();
 
 $response->body() : string;
 $response->json() : array|mixed;
@@ -82,7 +81,7 @@ $response->ok() : bool;
 
 Generate a admin token:
 ```php
-$magento->api('integration')->adminToken($username, $password);
+Magento::api('integration')->adminToken($username, $password);
 ```
 
 #### Carts
@@ -91,7 +90,7 @@ $magento->api('integration')->adminToken($username, $password);
 
 Returns information for the cart for the authenticated customer. Must use a single store code.
 ```php
-$magento->api('carts')->mine();
+Magento::api('carts')->mine();
 ```
 
 #### Cart Items (quoteCartItemRepositoryV1)
@@ -100,14 +99,14 @@ $magento->api('carts')->mine();
 
 Lists items that are assigned to a specified customer cart. Must have a store code.
 ```php
-$magento->api('cartItems')->mine();
+Magento::api('cartItems')->mine();
 ```
 
 `/V1/carts/mine/items/`
 
 Add/update the specified cart item with a customer token. Must have a store code.
 ```php
-$magento->api('cartItems')->addItem($cartId, $sku, $quantity);
+Magento::api('cartItems')->addItem($cartId, $sku, $quantity);
 ```
 
 #### Cart Totals (quoteCartTotalRepositoryV1)
@@ -116,7 +115,7 @@ $magento->api('cartItems')->addItem($cartId, $sku, $quantity);
 
 Returns information for the cart totals for the authenticated customer. Must use a single store code.
 ```php
-$magento->api('cartTotals')->mine();
+Magento::api('cartTotals')->mine();
 ```
 
 <a id="categories"></a>
@@ -126,7 +125,7 @@ $magento->api('cartTotals')->mine();
 
 Get a list of all categories:
 ```php
-$magento->api('categories')->all($pageSize = 50, $currentPage = 1, $filters = []);
+Magento::api('categories')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 <a id="customer-token"></a>
@@ -136,7 +135,7 @@ $magento->api('categories')->all($pageSize = 50, $currentPage = 1, $filters = []
 
 Generate a customer token:
 ```php
-$magento->api('integration')->customerToken($username, $password);
+Magento::api('integration')->customerToken($username, $password);
 ```
 
 <a id="customers"></a>
@@ -146,7 +145,7 @@ $magento->api('integration')->customerToken($username, $password);
 
 Get a list of customers:
 ```php
-$magento->api('customers')->all($pageSize = 50, $currentPage = 1, $filters = []);
+Magento::api('customers')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 <a id="guest-cart"></a>
@@ -156,35 +155,35 @@ $magento->api('customers')->all($pageSize = 50, $currentPage = 1, $filters = [])
 
 Enable customer or guest user to create an empty cart and quote for an anonymous customer.
 ```php
-$magento->api('guestCarts')->create();
+Magento::api('guestCarts')->create();
 ```
 
 `/V1/guest-carts/{cartId}`
 
 Return information for a specified cart.
 ```php
-$magento->api('guestCarts')->cart($cartId);
+Magento::api('guestCarts')->cart($cartId);
 ```
 
 `/V1/guest-carts/{cartId}/items`
 
 List items that are assigned to a specified cart.
 ```php
-$magento->api('guestCarts')->items($cartId);
+Magento::api('guestCarts')->items($cartId);
 ```
 
 `/V1/guest-carts/{cartId}/items`
 
 Add/update the specified cart item.
 ```php
-$magento->api('guestCarts')->addItem($cartId, $sku, $quantity);
+Magento::api('guestCarts')->addItem($cartId, $sku, $quantity);
 ```
 
 `/V1/guest-carts/{cartId}/estimate-shipping-methods`
 
 Estimate shipping by address and return list of available shipping methods.
 ```php
-$magento->api('guestCarts')->estimateShippingMethods($cartId);
+Magento::api('guestCarts')->estimateShippingMethods($cartId);
 ```
 
 <a id="product-attributes"></a>
@@ -194,7 +193,7 @@ $magento->api('guestCarts')->estimateShippingMethods($cartId);
 
 Retrieve specific product attribute information:
 ```php
-$magento->api('productAttributes')->show($attributeCode);
+Magento::api('productAttributes')->show($attributeCode);
 ```
 
 <a id="product-link-types"></a>
@@ -204,7 +203,7 @@ $magento->api('productAttributes')->show($attributeCode);
 
 Retrieve information about available product link types:
 ```php
-$magento->api('productLinkType')->types();
+Magento::api('productLinkType')->types();
 ```
 
 <a id="products"></a>
@@ -214,14 +213,14 @@ $magento->api('productLinkType')->types();
 
 Get a list of products:
 ```php
-$magento->api('products')->all($pageSize = 50, $currentPage = 1, $filters = []);
+Magento::api('products')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 `/V1/products/{sku}`
 
 Get info about a product by the product SKU:
 ```php
-$magento->api('products')->show($sku);
+Magento::api('products')->show($sku);
 ```
 
 ### Custom modules
@@ -237,10 +236,10 @@ For example:
 ```
 To use these you can directly use get/post methods:
 ```php
-$magento->api('my-custom-endpoint')->post('save', [...]);
+Magento::api('my-custom-endpoint')->post('save', [...]);
 ```
 ```php
-$magento->api('my-custom-endpoint')->get('get/1');
+Magento::api('my-custom-endpoint')->get('get/1');
 ```
 
 <a id="schema"></a>
@@ -248,7 +247,7 @@ $magento->api('my-custom-endpoint')->get('get/1');
 
 Get a schema blueprint of the Magento 2 REST API:
 ```php
-$magento->api('schema')->show(); 
+Magento::api('schema')->show(); 
 ```
 
 ### Source Items (inventoryApiSourceItemRepositoryV1)
@@ -257,7 +256,7 @@ $magento->api('schema')->show();
 
 Get a list of paginated sort items (typically used for quantity retrieval):
 ```php
-$magento->api('sourceItems')->all($pageSize = 50, $currentPage = 1, $filters = []);
+Magento::api('sourceItems')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 ## Testing

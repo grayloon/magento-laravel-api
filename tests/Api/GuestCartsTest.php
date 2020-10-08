@@ -3,25 +3,21 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Api\GuestCarts;
-use Grayloon\Magento\Magento;
+use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
 
 class GuestCartsTest extends TestCase
 {
     public function test_can_call_guest_carts()
     {
-        $magento = new Magento();
-
-        $this->assertInstanceOf(GuestCarts::class, $magento->api('guestCarts'));
+        $this->assertInstanceOf(GuestCarts::class, MagentoFacade::api('guestCarts'));
     }
 
     public function test_can_call_guest_carts_create()
     {
         Http::fake();
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->create();
+        $api = MagentoFacade::api('guestCarts')->create();
 
         $this->assertTrue($api->ok());
     }
@@ -30,9 +26,7 @@ class GuestCartsTest extends TestCase
     {
         Http::fake();
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->cart('foo');
+        $api = MagentoFacade::api('guestCarts')->cart('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -41,9 +35,7 @@ class GuestCartsTest extends TestCase
     {
         Http::fake();
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->items('foo');
+        $api = MagentoFacade::api('guestCarts')->items('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -52,9 +44,7 @@ class GuestCartsTest extends TestCase
     {
         Http::fake();
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->addItem('foo', 'bar', 1);
+        $api = MagentoFacade::api('guestCarts')->addItem('foo', 'bar', 1);
 
         $this->assertTrue($api->ok());
     }
@@ -63,9 +53,7 @@ class GuestCartsTest extends TestCase
     {
         Http::fake();
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->totals('foo');
+        $api = MagentoFacade::api('guestCarts')->totals('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -76,9 +64,7 @@ class GuestCartsTest extends TestCase
             '*rest/all/V1/guest-carts/foo/estimate-shipping-methods' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->estimateShippingMethods('foo');
+        $api = MagentoFacade::api('guestCarts')->estimateShippingMethods('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -89,9 +75,7 @@ class GuestCartsTest extends TestCase
             '*rest/all/V1/guest-carts/foo/totals-information' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->totalsInformation('foo');
+        $api = MagentoFacade::api('guestCarts')->totalsInformation('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -102,9 +86,7 @@ class GuestCartsTest extends TestCase
             '*rest/all/V1/guest-carts/foo/shipping-information' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->shippingInformation('foo');
+        $api = MagentoFacade::api('guestCarts')->shippingInformation('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -115,9 +97,7 @@ class GuestCartsTest extends TestCase
             '*rest/all/V1/guest-carts/foo/payment-methods' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->paymentMethods('foo');
+        $api = MagentoFacade::api('guestCarts')->paymentMethods('foo');
 
         $this->assertTrue($api->ok());
     }
@@ -128,9 +108,7 @@ class GuestCartsTest extends TestCase
             '*rest/all/V1/guest-carts/foo/payment-information' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-
-        $api = $magento->api('guestCarts')->paymentInformation('foo', ['bar']);
+        $api = MagentoFacade::api('guestCarts')->paymentInformation('foo', ['bar']);
 
         $this->assertTrue($api->ok());
     }
