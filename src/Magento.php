@@ -84,4 +84,76 @@ class Magento
 
         return new $className($this);
     }
+
+    /**
+     * @param  string  $baseUrl
+     *
+     * @return Magento
+     */
+    public function setBaseUrl(string $baseUrl): Magento
+    {
+        $this->baseUrl = $baseUrl;
+
+        return $this;
+    }
+
+    /**
+     * @param  string|null  $token
+     *
+     * @return Magento
+     */
+    public function setToken(?string $token): Magento
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @param  bool  $versionIncluded
+     *
+     * @return Magento
+     */
+    public function setVersionIncluded(bool $versionIncluded): Magento
+    {
+        $this->versionIncluded = $versionIncluded;
+
+        return $this;
+    }
+
+    /**
+     * @param  string  $version
+     *
+     * @return Magento
+     */
+    public function setVersion(string $version): Magento
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * @param  string  $basePath
+     *
+     * @return Magento
+     */
+    public function setBasePath(string $basePath): Magento
+    {
+        $this->basePath = $basePath;
+
+        return $this;
+    }
+
+    /**
+     * @param  string  $storeCode
+     *
+     * @return Magento
+     */
+    public function setStoreCode(string $storeCode): Magento
+    {
+        $this->storeCode = $storeCode;
+
+        return $this;
+    }
 }

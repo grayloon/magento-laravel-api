@@ -2,7 +2,7 @@
 
 namespace Grayloon\Magento\Tests;
 
-use Grayloon\Magento\Magento;
+use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
 
 class CustomTest extends TestCase
@@ -13,8 +13,7 @@ class CustomTest extends TestCase
             '*rest/all/V1/foo/bar' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $customApi = $magento->api('/foo')->get('bar');
+        $customApi = MagentoFacade::api('/foo')->get('bar');
 
         $this->assertTrue($customApi->ok());
     }
@@ -25,8 +24,7 @@ class CustomTest extends TestCase
             '*rest/all/V1/foo/bar' => Http::response([], 200),
         ]);
 
-        $magento = new Magento();
-        $customApi = $magento->api('/foo')->post('bar');
+        $customApi = MagentoFacade::api('/foo')->post('bar');
 
         $this->assertTrue($customApi->ok());
     }
@@ -37,8 +35,7 @@ class CustomTest extends TestCase
             '*rest/all/V1/foo/bar' => Http::response([], 200, ['baz' => 'test']),
         ]);
 
-        $magento = new Magento();
-        $customApi = $magento->api('/foo')->post('bar', [
+        $customApi = MagentoFacade::api('/foo')->post('bar', [
             'baz' => 'test',
         ]);
 

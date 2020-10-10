@@ -3,24 +3,21 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Api\CartItems;
-use Grayloon\Magento\Magento;
+use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
 
 class CartItemsTest extends TestCase
 {
     public function test_can_call_cart_items()
     {
-        $this->assertInstanceOf(CartItems::class, (new Magento())->api('CartItems'));
+        $this->assertInstanceOf(CartItems::class, MagentoFacade::api('CartItems'));
     }
 
     public function test_can_call_cart_item_mine()
     {
         Http::fake();
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('cartItems')->mine();
+        $api = MagentoFacade::setStoreCode('default')->api('cartItems')->mine();
 
         $this->assertTrue($api->ok());
     }
@@ -29,18 +26,14 @@ class CartItemsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('cartItems')->mine();
+        MagentoFacade::api('cartItems')->mine();
     }
 
     public function test_can_call_cart_item_add_item()
     {
         Http::fake();
 
-        $magento = new Magento();
-        $magento->storeCode = 'default';
-
-        $api = $magento->api('cartItems')->addItem('foo', 'bar', 1);
+        $api = MagentoFacade::setStoreCode('default')->api('cartItems')->addItem('foo', 'bar', 1);
 
         $this->assertTrue($api->ok());
     }
@@ -49,7 +42,6 @@ class CartItemsTest extends TestCase
     {
         $this->expectException('exception');
 
-        $magento = new Magento();
-        $magento->api('cartItems')->addItem('foo', 'bar', 1);
+        MagentoFacade::api('cartItems')->addItem('foo', 'bar', 1);
     }
 }
