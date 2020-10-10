@@ -29,7 +29,7 @@ A Magento 2 API Object Oriented wrapper for a Laravel application.
   - [Products](#products)
   - [Schema](#schema)
   - [Source Items](#source-items)
-  - [Custom modules](#custom modules)
+  - [Custom Modules](#custom-modules)
 
 
 ## Installation
@@ -60,9 +60,10 @@ MAGENTO_API_VERSION="V1"
 
 Example:
 ```php
-use Magento;
+use Grayloon\Magento\Magento;
 
-$response = Magento::api('products')->all();
+$magento = new Magento();
+$response = $magento->api('products')->all();
 
 $response->body() : string;
 $response->json() : array|mixed;
@@ -223,7 +224,8 @@ Get info about a product by the product SKU:
 Magento::api('products')->show($sku);
 ```
 
-### Custom modules
+<a id="custom-modules"></a>
+### Custom Modules
 Magento modules can have their own API endpoints.
 For example:
 ```xml
