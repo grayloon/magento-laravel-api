@@ -20,4 +20,15 @@ class Customers extends AbstractApi
             'searchCriteria[currentPage]' => $currentPage,
         ]));
     }
+
+    /**
+     * Create customer account. Perform necessary business operations like sending email.
+     *
+     * @param  array  $body
+     * @return array
+     */
+    public function create($body)
+    {
+        return $this->post('/customers', $body);
+    }
 }

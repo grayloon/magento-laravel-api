@@ -33,4 +33,15 @@ class CustomersTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_create_customer()
+    {
+        Http::fake([
+            '*rest/all/V1/customers' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('customers')->create(['foo' => 'bar']);
+
+        $this->assertTrue($api->ok());
+    }
 }
