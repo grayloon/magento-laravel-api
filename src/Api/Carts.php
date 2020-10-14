@@ -17,6 +17,18 @@ class Carts extends AbstractApi
     }
 
     /**
+     * Returns information for the cart for the authenticated customer. Must have a store code.
+     *
+     * @return array
+     */
+    public function create()
+    {
+        $this->validateSingleStoreCode();
+
+        return $this->post('/carts/mine');
+    }
+
+    /**
      * Estimate shipping by address and return list of available shipping methods.
      *
      * @param  array  $body

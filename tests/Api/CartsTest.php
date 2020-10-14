@@ -112,6 +112,17 @@ class CartsTest extends TestCase
         $this->assertTrue($api->ok());
     }
 
+    public function test_can_call_cart_mine_create()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine' => Http::response('foo', 200),
+        ]);
+
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->create();
+
+        $this->assertTrue($api->ok());
+    }
+
     public function test_must_pass_a_single_store_code_to_payment_information()
     {
         $this->expectException('exception');
