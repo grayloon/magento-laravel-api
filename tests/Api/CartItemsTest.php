@@ -44,4 +44,15 @@ class CartItemsTest extends TestCase
 
         MagentoFacade::api('cartItems')->addItem('foo', 'bar', 1);
     }
+
+    public function test_can_call_cart_item_remove_item()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine/items/1' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::setStoreCode('default')->api('cartItems')->removeItem(1);
+
+        $this->assertTrue($api->ok());
+    }
 }
