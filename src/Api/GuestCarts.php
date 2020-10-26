@@ -121,4 +121,16 @@ class GuestCarts extends AbstractApi
     {
         return $this->post('/guest-carts/'.$cartId.'/payment-information', $body);
     }
+
+    /**
+     * Remove the specified item from the specified cart.
+     *
+     * @param  string  $cartId
+     * @param  int  $itemId
+     * @return array
+     */
+    public function removeItem($cartId, $itemId)
+    {
+        return $this->delete('/guest-carts/'.$cartId.'/items/'. $itemId);
+    }
 }

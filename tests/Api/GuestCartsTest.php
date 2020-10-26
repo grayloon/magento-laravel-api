@@ -112,4 +112,15 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_remove_items_from_cart()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo/items/1' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('guestCarts')->removeItem('foo', 1);
+
+        $this->assertTrue($api->ok());
+    }
 }
