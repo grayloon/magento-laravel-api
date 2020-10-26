@@ -36,4 +36,17 @@ class CartItems extends AbstractApi
             ],
         ]);
     }
+
+    /**
+     * Remove the specified cart item.
+     *
+     * @param  int  $itemId
+     * @return array
+     */
+    public function removeItem($itemId)
+    {
+        $this->validateSingleStoreCode();
+
+        return $this->delete('/carts/mine/items/'. $itemId);
+    }
 }
