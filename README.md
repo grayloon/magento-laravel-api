@@ -110,6 +110,11 @@ Add/update the specified cart item with a customer token. Must have a store code
 Magento::api('cartItems')->addItem($cartId, $sku, $quantity);
 ```
 
+Remove the specified cart item with a customer token. Must have a store code.
+```php
+Magento::api('cartItems')->removeItem($itemId);
+```
+
 #### Cart Totals (quoteCartTotalRepositoryV1)
 
 `/V1/carts/mine/totals`
@@ -178,6 +183,11 @@ Magento::api('guestCarts')->items($cartId);
 Add/update the specified cart item.
 ```php
 Magento::api('guestCarts')->addItem($cartId, $sku, $quantity);
+```
+
+Remove the specified cart item.
+```php
+Magento::api('guestCarts')->removeItem($cartId, $itemId);
 ```
 
 `/V1/guest-carts/{cartId}/estimate-shipping-methods`
