@@ -131,6 +131,6 @@ class GuestCarts extends AbstractApi
      */
     public function removeItem($cartId, $itemId)
     {
-        return $this->delete('/guest-carts/'.$cartId.'/items/'. $itemId);
+        return $this->delete('/guest-carts/'.$cartId.'/items/'.$itemId);
     }
 }

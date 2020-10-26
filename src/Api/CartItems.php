@@ -47,6 +47,6 @@ class CartItems extends AbstractApi
     {
         $this->validateSingleStoreCode();
 
-        return $this->delete('/carts/mine/items/'. $itemId);
+        return $this->delete('/carts/mine/items/'.$itemId);
     }
 }
