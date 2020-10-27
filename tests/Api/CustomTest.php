@@ -18,6 +18,17 @@ class CustomTest extends TestCase
         $this->assertTrue($customApi->ok());
     }
 
+    public function test_can_get_singular_custom_endpoint()
+    {
+        Http::fake([
+            '*rest/all/V1/foo' => Http::response([], 200),
+        ]);
+
+        $customApi = MagentoFacade::api('foo')->get();
+
+        $this->assertTrue($customApi->ok());
+    }
+
     public function test_can_post_custom_endpoint()
     {
         Http::fake([
