@@ -2,7 +2,14 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
-## 0.5 - October 6, 2020
+
+## 0.6.0 - October 27, 2020
+- Ability to create cart as customer
+- Ability to remove items from cart as guest
+- Ability to remove items from cart as customer
+- Fix: support custom singular API endpoints
+
+## 0.5.0 - October 6, 2020
 - Fix for Laravel 8 Applications
 - Ability to query custom extension API endpoints
 - Added Delete and Put Methods
