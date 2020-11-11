@@ -6,7 +6,7 @@ class Sources extends AbstractApi
 {
     /**
      * inventoryApiSourcesRepositoryV1
-     * All of paginated source items.
+     * All of paginated sources.
      *
      * @param  int  $pageSize
      * @param  int  $currentPage
@@ -22,6 +22,14 @@ class Sources extends AbstractApi
         ]));
     }
 
+    /**
+     * inventoryApiSourcesRepositoryV1
+     * Return Specific Source by name.
+     *
+     * @param  string  $name
+     *
+     * @return array
+     */
     public function bySourceName(String $name = 'default')
     {
         return $this->get('/inventory/sources/'.$name);

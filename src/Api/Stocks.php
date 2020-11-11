@@ -6,7 +6,7 @@ class Stocks extends AbstractApi
 {
     /**
      * inventoryApiStocksRepositoryV1
-     * All of paginated source items.
+     * All of paginated stock items.
      *
      * @param  int  $pageSize
      * @param  int  $currentPage
