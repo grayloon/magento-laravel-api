@@ -21,5 +21,4 @@ class Stocks extends AbstractApi
             'searchCriteria[currentPage]' => $currentPage,
         ]));
     }
-
 }
