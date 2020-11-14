@@ -3,7 +3,6 @@
 namespace Grayloon\Magento\Tests;
 
 use Grayloon\Magento\Api\Stocks;
-use Grayloon\Magento\Api\Sources;
 use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
 
