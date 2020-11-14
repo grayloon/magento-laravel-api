@@ -2,6 +2,13 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.7.0 - November 14, 2020
+- Added Bundle Product Options Endpoint
+- Added Sources Endpoint
+- Added Sources by name Endpoint
+- Added Orders Endpoint
+- Added Stocks Endpoint
+
 
 ## 0.6.0 - October 27, 2020
 - Ability to create cart as customer
