@@ -19,16 +19,20 @@ A Magento 2 API Object Oriented wrapper for a Laravel application.
 - [API Usage](#api-usage)
 - [Available Methods](#available-methods)
   - [Admin Token](#admin-token)
+  - [Bundle Products](#bundle-products)
   - [Carts](#carts)
   - [Categories](#categories)
   - [Customer Token](#customer-token)
   - [Customers](#customers)
   - [Guest Cart](#guest-cart)
+  - [Orders](#orders)
   - [Product Attributes](#product-attributes)
   - [Product Link Types](#product-link-types)
   - [Products](#products)
   - [Schema](#schema)
   - [Source Items](#source-items)
+  - [Sources](#sources)
+  - [Stocks]($stocks)
   - [Custom Modules](#custom-modules)
 
 
@@ -83,6 +87,16 @@ $response->ok() : bool;
 Generate a admin token:
 ```php
 Magento::api('integration')->adminToken($username, $password);
+```
+
+<a id="bundle-products"></a>
+### Bundle Product Options (bundleProductOptionRepositoryV1)
+
+`/V1/bundle-products/{sku}/options/all`
+
+Get all options for bundle product.
+```php
+Magento::api('bundleProduct')->options($sku);
 ```
 
 #### Carts
@@ -197,6 +211,18 @@ Estimate shipping by address and return list of available shipping methods.
 Magento::api('guestCarts')->estimateShippingMethods($cartId);
 ```
 
+<a id="orders"></a>
+### Orders (salesOrderRepositoryV1)
+
+ Lists orders that match specified search criteria.
+
+`/V1/orders`
+
+Lists orders that match specified search criteria. 
+```php
+Magento::api('orders')->all($pageSize = 50, $currentPage = 1, $filters = []);
+```
+
 <a id="product-attributes"></a>
 ### Product Attributes (catalogProductAttributeRepositoryV1)
 
@@ -269,6 +295,34 @@ Magento::api('schema')->show();
 Get a list of paginated sort items (typically used for quantity retrieval):
 ```php
 Magento::api('sourceItems')->all($pageSize = 50, $currentPage = 1, $filters = []);
+```
+
+<a id="sources"></a>
+### Sources (inventoryApiSourcesRepositoryV1)
+
+`/V1/inventory/sources`
+
+Get a list of paginated sources.
+```php
+Magento::api('sources')->all($pageSize = 50, $currentPage = 1, $filters = []);
+```
+
+`/V1/inventory/sources/{$name}`
+
+Get a specified source.
+```php
+Magento::api('sources')->bySourceName($name);
+```
+
+<a id="stocks"></a>
+
+### Stocks (inventoryApiStocksRepositoryV1)
+
+`/V1/inventory/stocks`
+
+Get a list of paginated stocks.
+```php
+Magento::api('stocks')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
 ## Testing
