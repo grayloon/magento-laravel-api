@@ -30,7 +30,7 @@ class Sources extends AbstractApi
      *
      * @return array
      */
-    public function bySourceName(String $name = 'default')
+    public function bySourceName($name = 'default')
     {
         return $this->get('/inventory/sources/'.$name);
     }
