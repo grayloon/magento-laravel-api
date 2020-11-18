@@ -44,4 +44,26 @@ class CustomersTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_request_password_reset_link()
+    {
+        Http::fake([
+            '*rest/all/V1/customers/password' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('customers')->password('foo@bar.com', 'default', 1);
+
+        $this->assertTrue($api->ok());
+    }
+
+    public function test_can_reset_password()
+    {
+        Http::fake([
+            '*rest/all/V1/customers/resetPassword' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('customers')->resetPassword('foo@bar.com', 'fake_token', 'password');
+
+        $this->assertTrue($api->ok());
+    }
 }
