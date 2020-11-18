@@ -159,13 +159,27 @@ Magento::api('integration')->customerToken($username, $password);
 ```
 
 <a id="customers"></a>
-### Customers (customerCustomerRepositoryV1)
+### Customers (various)
 
 `/V1/customers/search`
 
 Get a list of customers:
 ```php
 Magento::api('customers')->all($pageSize = 50, $currentPage = 1, $filters = []);
+```
+
+`/V1/customers/password`
+
+Send an email to the customer with a password reset link.
+```php
+Magento::api('customers')->password($email, $template, $websiteId);
+```
+
+`/V1/customers/resetPassword`
+
+Reset customer password.
+```php
+Magento::api('customers')->resetPassword($email, $resetToken, $newPassword);
 ```
 
 <a id="guest-cart"></a>
