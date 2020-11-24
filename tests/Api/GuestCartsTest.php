@@ -123,4 +123,26 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_add_coupon()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo/coupons/bar' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('guestCarts')->couponCode('foo', 'bar');
+
+        $this->assertTrue($api->ok());
+    }
+
+    public function test_can_remove_coupon()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo/coupons' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('guestCarts')->removeCoupons('foo');
+
+        $this->assertTrue($api->ok());
+    }
 }

@@ -129,4 +129,26 @@ class CartsTest extends TestCase
 
         MagentoFacade::api('carts')->paymentInformation([]);
     }
+
+    public function test_can_add_coupon_code()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine/coupons/foo' => Http::response('foo', 200),
+        ]);
+
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->couponCode('foo');
+
+        $this->assertTrue($api->ok());
+    }
+
+    public function test_can_remove_coupon_code()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine/coupons' => Http::response('foo', 200),
+        ]);
+
+        $api = MagentoFacade::setStoreCode('default')->api('carts')->removeCoupons();
+
+        $this->assertTrue($api->ok());
+    }
 }

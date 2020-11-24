@@ -108,6 +108,13 @@ Returns information for the cart for the authenticated customer. Must use a sing
 Magento::api('carts')->mine();
 ```
 
+`/V1/carts/mine/coupons/{couponCode}`
+
+Apply a coupon to a specified cart.
+```php
+Magento::api('carts')->couponCode($couponCode);
+```
+
 #### Cart Items (quoteCartItemRepositoryV1)
 
 `/V1/carts/mine/items/`
@@ -223,6 +230,13 @@ Magento::api('guestCarts')->removeItem($cartId, $itemId);
 Estimate shipping by address and return list of available shipping methods.
 ```php
 Magento::api('guestCarts')->estimateShippingMethods($cartId);
+```
+
+`/V1/guest-carts/{cartId}/coupons/{couponCode}`
+
+Apply a coupon to a specified cart.
+```php
+Magento::api('guestCarts')->couponCode($cartId, $couponCode);
 ```
 
 <a id="orders"></a>

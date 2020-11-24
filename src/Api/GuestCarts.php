@@ -133,4 +133,26 @@ class GuestCarts extends AbstractApi
     {
         return $this->delete('/guest-carts/'.$cartId.'/items/'.$itemId);
     }
+
+    /**
+     * Apply a coupon to a specified cart.
+     *
+     * @param  string  $cartId
+     * @param  string  $couponCode
+     * @return void
+     */
+    public function couponCode($cartId, $couponCode)
+    {
+        return $this->put('/guest-carts/'.$cartId.'/coupons/'.$couponCode);
+    }
+
+    /**
+     * Removes coupon(s) from specified cart.
+     *
+     * @return void
+     */
+    public function removeCoupons($cartId)
+    {
+        return $this->delete('/guest-carts/'.$cartId.'/coupons');
+    }
 }

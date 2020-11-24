@@ -91,4 +91,25 @@ class Carts extends AbstractApi
 
         return $this->post('/carts/mine/payment-information', $body);
     }
+
+    /**
+     * Apply a coupon to a specified cart.
+     *
+     * @param  string  $couponCode
+     * @return void
+     */
+    public function couponCode($couponCode)
+    {
+        return $this->put('/carts/mine/coupons/'.$couponCode);
+    }
+
+    /**
+     * Removes coupon(s) from specified cart.
+     *
+     * @return void
+     */
+    public function removeCoupons()
+    {
+        return $this->delete('/carts/mine/coupons');
+    }
 }
