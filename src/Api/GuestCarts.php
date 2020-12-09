@@ -53,7 +53,6 @@ class GuestCarts extends AbstractApi
         ]);
     }
 
-
     /**
      * Add/update the specified cart item.
      *
@@ -64,7 +63,7 @@ class GuestCarts extends AbstractApi
      */
     public function editItem($cartId, $itemId, $body = [])
     {
-        return $this->put('/guest-carts/'.$cartId.'/items/'. $itemId, $body);
+        return $this->put('/guest-carts/'.$cartId.'/items/'.$itemId, $body);
     }
 
     /**
