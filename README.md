@@ -131,6 +131,13 @@ Add/update the specified cart item with a customer token. Must have a store code
 Magento::api('cartItems')->addItem($cartId, $sku, $quantity);
 ```
 
+`put` - `/V1/carts/mine/items/{itemId}`
+
+Update the specified cart item with a customer token. Must have a store code.
+```php
+Magento::api('cartItems')->editItem($itemId, $body = []);
+```
+
 Remove the specified cart item with a customer token. Must have a store code.
 ```php
 Magento::api('cartItems')->removeItem($itemId);
@@ -218,6 +225,13 @@ Magento::api('guestCarts')->items($cartId);
 Add/update the specified cart item.
 ```php
 Magento::api('guestCarts')->addItem($cartId, $sku, $quantity);
+```
+
+`put` - `/V1/guest-carts/{cartId}/items/{itemId}`
+
+Update the specified cart item.
+```php
+Magento::api('guestCarts')->editItem($cartId, $itemId, $body = []);
 ```
 
 Remove the specified cart item.

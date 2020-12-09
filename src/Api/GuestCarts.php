@@ -54,6 +54,19 @@ class GuestCarts extends AbstractApi
     }
 
     /**
+     * Add/update the specified cart item.
+     *
+     * @param  string  $cartId
+     * @param  int     $itemId
+     * @param  array   $body
+     * @return array
+     */
+    public function editItem($cartId, $itemId, $body = [])
+    {
+        return $this->put('/guest-carts/'.$cartId.'/items/'.$itemId, $body);
+    }
+
+    /**
      * Return quote totals data for a specified cart.
      *
      * @return array

@@ -38,6 +38,20 @@ class CartItems extends AbstractApi
     }
 
     /**
+     * Update the specified cart item.
+     *
+     * @param  int    $itemId
+     * @param  array  $body
+     * @return array
+     */
+    public function editItem($itemId, $body = [])
+    {
+        $this->validateSingleStoreCode();
+
+        return $this->put('/carts/mine/items/'.$itemId, $body);
+    }
+
+    /**
      * Remove the specified cart item.
      *
      * @param  int  $itemId

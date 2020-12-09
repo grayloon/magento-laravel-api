@@ -55,4 +55,15 @@ class CartItemsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_edit_cart_item()
+    {
+        Http::fake([
+            '*rest/default/V1/carts/mine/items/foo' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::setStoreCode('default')->api('cartItems')->editItem('foo', []);
+
+        $this->assertTrue($api->ok());
+    }
 }
