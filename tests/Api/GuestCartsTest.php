@@ -145,4 +145,15 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_edit_item()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo/items/bar' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('guestCarts')->editItem('foo', 'bar', []);
+
+        $this->assertTrue($api->ok());
+    }
 }
