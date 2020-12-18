@@ -64,7 +64,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Magento API Log Failed Request
+    | Magento API Log Failed Requests
     |--------------------------------------------------------------------------
     |
     |  Logs all non-successful Useful for debugging request parameters,

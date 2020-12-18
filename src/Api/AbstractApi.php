@@ -118,7 +118,7 @@ abstract class AbstractApi
 
         if (! $response->successful()) {
             if (config('magento.log_failed_requests')) {
-                Log::info('[MAGENTO API][STATUS] '.$response->status() .' [ENDPOINT] ' . $endpoint .' [PARAMETERS] '. json_encode($parameters).' [RESPONSE] ' . json_encode($response->json()));
+                Log::info('[MAGENTO API][STATUS] '.$response->status().' [ENDPOINT] '.$endpoint.' [RESPONSE] '.json_encode($response->json()));
             }
         }
 
