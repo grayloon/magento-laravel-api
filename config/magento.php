@@ -61,4 +61,15 @@ return [
     |
     */
     'version' => env('MAGENTO_API_VERSION', 'V1'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Magento API Log Failed Requests
+    |--------------------------------------------------------------------------
+    |
+    |  Logs all non-successful Useful for debugging request parameters,
+    |  endpoints, or responses from the Magento API. Logs to the
+    |  Laravel Log file.
+    */
+    'log_failed_requests' => env('MAGENTO_API_LOG_FAILED_REQUESTS', false),
 ];
