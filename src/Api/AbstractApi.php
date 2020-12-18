@@ -5,6 +5,7 @@ namespace Grayloon\Magento\Api;
 use Exception;
 use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 abstract class AbstractApi
 {
@@ -57,7 +58,7 @@ abstract class AbstractApi
     protected function get($path, $parameters = [])
     {
         return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->get($this->apiRequest.$path, $parameters));
+            ->get($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
     }
 
     /**
@@ -71,7 +72,7 @@ abstract class AbstractApi
     protected function post($path, $parameters = [])
     {
         return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->post($this->apiRequest.$path, $parameters));
+            ->post($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
     }
 
     /**
@@ -85,7 +86,7 @@ abstract class AbstractApi
     protected function put($path, $parameters = [])
     {
         return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->put($this->apiRequest.$path, $parameters));
+            ->put($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
     }
 
     /**
@@ -99,7 +100,7 @@ abstract class AbstractApi
     protected function delete($path, $parameters = [])
     {
         return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->delete($this->apiRequest.$path, $parameters));
+            ->delete($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
     }
 
     /**
@@ -109,10 +110,16 @@ abstract class AbstractApi
      * @return void
      * @throws \Exception
      */
-    protected function checkExceptions($response)
+    protected function checkExceptions($response, $endpoint, $parameters)
     {
         if ($response->serverError()) {
             throw new Exception($response['message'] ?? $response);
+        }
+
+        if (! $response->successful()) {
+            if (config('magento.log_failed_requests')) {
+                Log::info('[MAGENTO API][STATUS] '.$response->status() .' [ENDPOINT] ' . $endpoint .' [PARAMETERS] '. json_encode($parameters).' [RESPONSE] ' . json_encode($response->json()));
+            }
         }
 
         return $response;
