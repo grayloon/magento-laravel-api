@@ -256,14 +256,22 @@ Magento::api('guestCarts')->couponCode($cartId, $couponCode);
 <a id="orders"></a>
 ### Orders (salesOrderRepositoryV1)
 
- Lists orders that match specified search criteria.
+Lists orders that match specified search criteria.
 
 `/V1/orders`
-
-Lists orders that match specified search criteria. 
 ```php
 Magento::api('orders')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
+
+`/V1/orders/{id}`
+
+List a specified order:
+```php
+Magento::api('orders')->show($orderId);
+```
+
+
+
 
 <a id="product-attributes"></a>
 ### Product Attributes (catalogProductAttributeRepositoryV1)
