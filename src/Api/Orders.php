@@ -20,4 +20,16 @@ class Orders extends AbstractApi
             'searchCriteria[currentPage]' => $currentPage,
         ]));
     }
+
+    /**
+     * Loads a specified order.
+     *
+     * @param  int  $orderId
+     *
+     * @return  array
+     */
+    public function show($orderId)
+    {
+        return $this->get('/orders/'.$orderId);
+    }
 }
