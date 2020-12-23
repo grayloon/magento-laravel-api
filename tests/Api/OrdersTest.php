@@ -38,7 +38,6 @@ class OrdersTest extends TestCase
         $this->assertTrue($api->ok());
     }
 
-
     public function test_can_call_magento_show()
     {
         Http::fake([
