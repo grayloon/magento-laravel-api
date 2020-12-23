@@ -37,4 +37,16 @@ class OrdersTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+
+    public function test_can_call_magento_show()
+    {
+        Http::fake([
+            '*rest/all/V1/orders/1' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('orders')->show(1);
+
+        $this->assertTrue($api->ok());
+    }
 }
