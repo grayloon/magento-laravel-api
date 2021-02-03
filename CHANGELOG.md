@@ -2,6 +2,11 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.9.0 - February 2, 2021
+- Add ability to log and debug unsuccessful API requests
+- Add endpoint to show specific order by order ID
+
+
 ## 0.8.0 - December 9, 2020
 - Support for PHP 8
 - Add endpoint to reset customer passwords
