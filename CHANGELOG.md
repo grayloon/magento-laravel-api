@@ -2,6 +2,13 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.8.0 - December 9, 2020
+- Support for PHP 8
+- Add endpoint to reset customer passwords
+- Add endpoint to apply customer coupons
+- Add endpoint to edit specific guest cart item
+- Add endpoint to edit specific customer cart item
+
 ## 0.7.0 - November 14, 2020
 - Added Bundle Product Options Endpoint
 - Added Sources Endpoint
