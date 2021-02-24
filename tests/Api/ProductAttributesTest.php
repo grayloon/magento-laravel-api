@@ -21,7 +21,7 @@ class ProductAttributesTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
-    
+
     public function test_can_call_magento_api_product_attributes_all()
     {
         Http::fake([
