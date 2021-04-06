@@ -2,6 +2,10 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.9.1 - April 6, 2021
+- Add Store Website Repository Interface endpoint
+- Add Product Attributes Endpoint
+
 ## 0.9.0 - February 2, 2021
 - Add ability to log and debug unsuccessful API requests
 - Add endpoint to show specific order by order ID
