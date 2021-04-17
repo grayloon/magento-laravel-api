@@ -12,12 +12,12 @@ class Products extends AbstractApi
      *
      * @return  array
      */
-    public function all($pageSize = 50, $currentPage = 1)
+    public function all($pageSize = 50, $currentPage = 1, $filters = [])
     {
-        return $this->get('/products', [
+        return $this->get('/products', array_merge($filters, [
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
-        ]);
+        ]));
     }
 
     /**
