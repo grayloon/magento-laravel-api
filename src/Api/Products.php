@@ -31,4 +31,16 @@ class Products extends AbstractApi
     {
         return $this->get('/products/'.$sku);
     }
+
+    /**
+     * Edit product.
+     *
+     * @param  string $sku
+     * @param  array  $body
+     * @return array
+     */
+    public function edit($sku, $body = [])
+    {
+        return $this->put('/products/'.$sku, $body);
+    }
 }
