@@ -2,6 +2,9 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.10.1 - April 20, 2021
+- Add endpoint to edit products. [#58](https://github.com/grayloon/magento-laravel-api/pull/58)
+
 ## 0.10.0 - April 17, 2021
 - Fix product filters to allow set filters [#57](https://github.com/grayloon/magento-laravel-api/pull/57)
     - Breaking change if extending the `products()` method.
