@@ -33,9 +33,9 @@ class Products extends AbstractApi
     }
 
     /**
-     * Edit product.
+     * Edit the product by the specified SKU.
      *
-     * @param  string $sku
+     * @param  string  $sku
      * @param  array  $body
      * @return array
      */
