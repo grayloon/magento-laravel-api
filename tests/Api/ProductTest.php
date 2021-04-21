@@ -30,4 +30,15 @@ class ProductTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_edit_product()
+    {
+        Http::fake([
+            '*rest/all/V1/products/foo' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('products')->edit('foo', []);
+
+        $this->assertTrue($api->ok());
+    }
 }
