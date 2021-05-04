@@ -2,6 +2,8 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+## 0.10.2 - May 4, 2021
+- Add endpoint to assign a specified customer to a specified shopping cart. [#62](https://github.com/grayloon/magento-laravel-api/pull/62)
 ## 0.10.1 - April 20, 2021
 - Add endpoint to edit products. [#58](https://github.com/grayloon/magento-laravel-api/pull/58)
 
