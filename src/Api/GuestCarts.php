@@ -168,4 +168,20 @@ class GuestCarts extends AbstractApi
     {
         return $this->delete('/guest-carts/'.$cartId.'/coupons');
     }
+
+    /**
+     * Assign a specified customer to a specified shopping cart.
+     *
+     * @param  string   $cartId
+     * @param  int  $customerId
+     * @param  int  $storeId
+     * @return array
+     */
+    public function assignCustomer($cartId, $customerId, $storeId)
+    {
+        return $this->put('/guest-carts/'.$cartId, [
+            'customerId' => $customerId,
+            'storeId' => $storeId,
+        ]);
+    }
 }

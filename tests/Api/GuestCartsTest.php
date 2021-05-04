@@ -156,4 +156,15 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_it_can_assign_customer()
+    {
+        Http::fake([
+            '*rest/all/V1/guest-carts/foo' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('guestCarts')->assignCustomer('foo', 1, 1);
+
+        $this->assertTrue($api->ok());
+    }
 }

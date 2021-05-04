@@ -253,6 +253,13 @@ Apply a coupon to a specified cart.
 Magento::api('guestCarts')->couponCode($cartId, $couponCode);
 ```
 
+`/V1/guest-carts/{cartId}`
+
+Assign a specified customer to a specified shopping cart.
+```php
+Magento::api('guestCarts')->assignCustomer($cartId, $customerId, $storeId);
+```
+
 <a id="orders"></a>
 ### Orders (salesOrderRepositoryV1)
 
