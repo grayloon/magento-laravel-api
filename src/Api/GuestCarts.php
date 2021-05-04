@@ -173,8 +173,8 @@ class GuestCarts extends AbstractApi
      * Assign a specified customer to a specified shopping cart.
      *
      * @param  string   $cartId
-     * @param  integer  $customerId
-     * @param  integer  $storeId
+     * @param  int  $customerId
+     * @param  int  $storeId
      * @return array
      */
     public function assignCustomer($cartId, $customerId, $storeId)

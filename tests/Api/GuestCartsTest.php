@@ -156,7 +156,7 @@ class GuestCartsTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
-    
+
     public function test_it_can_assign_customer()
     {
         Http::fake([
