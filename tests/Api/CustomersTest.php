@@ -66,4 +66,15 @@ class CustomersTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_customer_show()
+    {
+        Http::fake([
+            '*rest/all/V1/customers/1' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('customers')->show(1);
+
+        $this->assertTrue($api->ok());
+    }
 }
