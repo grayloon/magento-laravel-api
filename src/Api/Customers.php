@@ -65,4 +65,15 @@ class Customers extends AbstractApi
             'newPassword' => $newPassword,
         ]);
     }
+
+    /**
+     * Get the customer by Customer ID.
+     *
+     * @param  int  $id
+     * @return array
+     */
+    public function show($id)
+    {
+        return $this->get('/customers/'.$id);
+    }
 }
