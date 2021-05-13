@@ -69,7 +69,7 @@ class Customers extends AbstractApi
     /**
      * Get the customer by Customer ID.
      *
-     * @param  integer  $id
+     * @param  int  $id
      * @return array
      */
     public function show($id)
