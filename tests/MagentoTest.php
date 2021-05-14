@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 class MagentoTest extends TestCase
 {
     /**
-     * Test by configuring the settings in the constructor
+     * Test by configuring the settings in the constructor.
      *
      * @return void
      **/
@@ -24,7 +24,7 @@ class MagentoTest extends TestCase
     }
 
     /**
-     * Test by configuring the settings in the laravel configs
+     * Test by configuring the settings in the laravel configs.
      *
      * @return void
      **/
@@ -46,7 +46,7 @@ class MagentoTest extends TestCase
     }
 
     /**
-     * Test without configuring the settings
+     * Test without configuring the settings.
      *
      * @return void
      **/
@@ -68,7 +68,7 @@ class MagentoTest extends TestCase
     }
 
     /**
-     * Test by configuring the settings in the constructor have priority
+     * Test by configuring the settings in the constructor have priority.
      *
      * @return void
      **/
