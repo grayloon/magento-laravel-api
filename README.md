@@ -77,6 +77,16 @@ $response->ok() : bool;
 
 > Will throw an exception on >500 errors.
 
+Use the wrapper for multiple shops, without needing to publish config or setting environment variables::
+
+```php
+use Grayloon\Magento\Magento;
+
+$magento = new Magento('https://myshop.url', 'token', 'V1', 'basePath', 'storeCode');
+$response = $magento->api('products')->all();
+
+```
+
 ## Available Methods:
 
 <a id="admin-token"></a>
