@@ -83,7 +83,7 @@ You may also utilize the constructor directly without having to configure enviro
 use Grayloon\Magento\Magento;
 
 $magento = new Magento(
-    $baseUrl = 'https://my-magneto-shop.com',
+    $baseUrl = 'https://my-magento-shop.com',
     $token = 'client_access_token',
     $version = 'V1',
     $basePath = 'rest',
