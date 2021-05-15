@@ -77,14 +77,20 @@ $response->ok() : bool;
 
 > Will throw an exception on >500 errors.
 
-Use the wrapper for multiple shops, without needing to publish config or setting environment variables::
+You may also utilize the constructor directly without having to configure environment variables:
 
 ```php
 use Grayloon\Magento\Magento;
 
-$magento = new Magento('https://myshop.url', 'token', 'V1', 'basePath', 'storeCode');
-$response = $magento->api('products')->all();
+$magento = new Magento(
+    $baseUrl = 'https://my-magneto-shop.com',
+    $token = 'client_access_token',
+    $version = 'V1',
+    $basePath = 'rest',
+    $storeCode = 'default'
+);
 
+$response = $magento->api('products')->all();
 ```
 
 ## Available Methods:
@@ -352,7 +358,7 @@ Magento::api('my-custom-endpoint')->get('get/1');
 
 Get a schema blueprint of the Magento 2 REST API:
 ```php
-Magento::api('schema')->show(); 
+Magento::api('schema')->show();
 ```
 
 ### Source Items (inventoryApiSourceItemRepositoryV1)
