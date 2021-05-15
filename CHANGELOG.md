@@ -2,6 +2,9 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+# 0.12.0 - May 15, 2021
+- Configured constructor to allow dynamic configuration of store URL [#65](https://github.com/grayloon/magento-laravel-api/pull/65)
+
 ## 0.11.0 - May 14, 2021
 - Add endpoint to show specified customer. [#64](https://github.com/grayloon/magento-laravel-api/pull/64)
 
