@@ -12,7 +12,7 @@ class CustomerGroups extends AbstractApi
      */
     public function show($id)
     {
-        return $this->get('/customerGroups/' . $id);
+        return $this->get('/customerGroups/'.$id);
     }
 
     /**
@@ -24,7 +24,7 @@ class CustomerGroups extends AbstractApi
      */
     public function saveGroup($id, $customerGroupRepositoryV1SavePutBody = [])
     {
-        return $this->put('/customerGroups/' . $id, $customerGroupRepositoryV1SavePutBody);
+        return $this->put('/customerGroups/'.$id, $customerGroupRepositoryV1SavePutBody);
     }
 
     /**
@@ -35,11 +35,11 @@ class CustomerGroups extends AbstractApi
      */
     public function deleteGroup($id)
     {
-        return $this->delete('/customerGroups/' . $id);
+        return $this->delete('/customerGroups/'.$id);
     }
 
     /**
-     * Save/Create Customer Group
+     * Save/Create Customer Group.
      *
      * @param  array  $customerGroupRepositoryV1SavePutBody
      * @return array
@@ -84,9 +84,8 @@ class CustomerGroups extends AbstractApi
      */
     public function setDefault($id)
     {
-        return $this->put('/customerGroups/default/' . $id);
+        return $this->put('/customerGroups/default/'.$id);
     }
-
 
     /**
      * Check if customer group can be deleted.
@@ -96,6 +95,6 @@ class CustomerGroups extends AbstractApi
      */
     public function permissions($id)
     {
-        return $this->get('/customerGroups/' . $id . '/permissions');
+        return $this->get('/customerGroups/'.$id.'/permissions');
     }
 }
