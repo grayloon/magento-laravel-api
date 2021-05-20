@@ -50,7 +50,7 @@ class CustomerGroups extends AbstractApi
     }
 
     /**
-     * The list of Customer Groups.
+     * Search the Customer Groups.
      *
      * @param  int  $pageSize
      * @param  int  $currentPage
