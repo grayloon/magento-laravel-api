@@ -266,6 +266,14 @@ Set the default customer group.
 Magento::api('customerGroups')->setDefault($id);
 ```
 
+GET `/V1/customerGroups/{id}/permissions`
+
+Determine if customer group can be deleted.
+```php
+Magento::api('customerGroups')->permissions($id);
+```
+
+
 <a id="guest-cart"></a>
 ### Guest Cart (various)
 
