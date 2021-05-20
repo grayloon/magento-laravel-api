@@ -24,6 +24,7 @@ A Magento 2 API Object Oriented wrapper for a Laravel application.
   - [Categories](#categories)
   - [Customer Token](#customer-token)
   - [Customers](#customers)
+  - [Customer Groups](#customer-groups)
   - [Guest Cart](#guest-cart)
   - [Orders](#orders)
   - [Product Attributes](#product-attributes)
@@ -211,6 +212,67 @@ Reset customer password.
 ```php
 Magento::api('customers')->resetPassword($email, $resetToken, $newPassword);
 ```
+
+<a id="customer-groups"></a>
+
+### Customer Groups
+
+GET `/V1/customerGroups/{id}`
+
+Show the customer group by the provided ID.
+```php
+Magento::api('customerGroups')->show($id);
+```
+
+PUT `/V1/customerGroups/{id}`
+
+Save the customer group by the provided ID.
+```php
+Magento::api('customerGroups')->saveGroup($id, $customerGroupRepositoryV1SavePutBody = []);
+```
+
+DELETE `/V1/customerGroups/{id}`
+
+Delete customer group by the provided ID.
+```php
+Magento::api('customerGroups')->deleteGroup($id);
+```
+
+POST `/V1/customerGroups`
+
+Save/Create Customer Group.
+```php
+Magento::api('customerGroups')->createGroup($customerGroupRepositoryV1SavePostBody = []);
+```
+
+GET `/V1/customerGroups/search`
+
+Search the Customer Groups.
+```php
+Magento::api('customerGroups')->search($pageSize = 50, $currentPage = 1, $filters = []);
+```
+
+GET `/V1/customerGroups/default`
+
+Get the default customer group.
+```php
+Magento::api('customerGroups')->default();
+```
+
+PUT `/V1/customerGroups/default/{id}`
+
+Set the default customer group.
+```php
+Magento::api('customerGroups')->setDefault($id);
+```
+
+GET `/V1/customerGroups/{id}/permissions`
+
+Determine if customer group can be deleted.
+```php
+Magento::api('customerGroups')->permissions($id);
+```
+
 
 <a id="guest-cart"></a>
 ### Guest Cart (various)
