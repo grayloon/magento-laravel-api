@@ -2,6 +2,17 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+# 0.13.0 - May 21, 2021
+- Adds Customer Group Endpoints: [#66](https://github.com/grayloon/magento-laravel-api/pull/66)
+GET /V1/customerGroups/{id} - Show the customer group by the provided ID.
+PUT /V1/customerGroups/{id} - Save the customer group by the provided ID.
+DELETE /V1/customerGroups/{id} - Delete customer group by the provided ID.
+POST /V1/customerGroups - Save/Create Customer Group.
+GET /V1/customerGroups/search - Search the Customer Groups.
+GET /V1/customerGroups/default - Get the default customer group.
+PUT /V1/customerGroups/default/{id} - Set the default customer group.
+GET /V1/customerGroups/{id}/permissions - Determine if customer group can be deleted.
+
 # 0.12.0 - May 15, 2021
 - Configured constructor to allow dynamic configuration of store URL [#65](https://github.com/grayloon/magento-laravel-api/pull/65)
 
