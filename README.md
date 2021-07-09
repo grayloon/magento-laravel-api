@@ -460,6 +460,15 @@ Get a list of paginated stocks.
 Magento::api('stocks')->all($pageSize = 50, $currentPage = 1, $filters = []);
 ```
 
+### Store (storeGroupRepositoryV1)
+
+`/V1/store/storeConfigs`
+
+Get a list of store configs.
+```php
+Magento::api('store')->storeConfigs();
+```
+
 ## Testing
 
 ``` bash
