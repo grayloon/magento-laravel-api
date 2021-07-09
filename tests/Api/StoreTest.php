@@ -10,7 +10,7 @@ class StoreTest extends TestCase
 {
     public function test_can_instantiate_store()
     {
-        $this->assertInstanceOf(Stores::class, MagentoFacade::api('store'));
+        $this->assertInstanceOf(Store::class, MagentoFacade::api('store'));
     }
 
     public function test_can_call_store_store_configs()
