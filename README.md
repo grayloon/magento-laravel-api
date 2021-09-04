@@ -27,6 +27,7 @@ A Magento 2 API Object Oriented wrapper for a Laravel application.
   - [Customer Groups](#customer-groups)
   - [Guest Cart](#guest-cart)
   - [Orders](#orders)
+  - [Order](#order)
   - [Product Attributes](#product-attributes)
   - [Product Link Types](#product-link-types)
   - [Products](#products)
@@ -353,6 +354,20 @@ Magento::api('orders')->all($pageSize = 50, $currentPage = 1, $filters = []);
 List a specified order:
 ```php
 Magento::api('orders')->show($orderId);
+```
+<a id="orders"></a>
+
+
+### Order 
+
+Creates invoice for the order
+
+
+`/V1/order/{orderId}/invoice`
+
+```php
+Magento::api('order')->invoice(orderId,$capture= true,$notify= true,$appendComment=true,
+                            $extension_attributes="",$comment="",$is_visible_on_front= 0);
 ```
 
 
