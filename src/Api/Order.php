@@ -15,7 +15,7 @@ class Order extends AbstractApi
     public function invoice($orderId,$capture= true,$notify= true,$appendComment=true,
                             $extension_attributes="",$comment="",$is_visible_on_front= 0)
     {
-        return $this->post('/orders/'.$orderId. '/invoice',[
+        return $this->post('/order/'.$orderId. '/invoice',[
             'capture' => $capture,
             'notify' => $notify,
             'appendComment' => $appendComment,
