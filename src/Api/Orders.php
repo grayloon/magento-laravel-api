@@ -42,7 +42,7 @@ class Orders extends AbstractApi
     public function edit($entity = [])
     {
         return $this->post('/orders', [
-            'entity' => $entity
+            'entity' => $entity,
         ]);
     }
 }
