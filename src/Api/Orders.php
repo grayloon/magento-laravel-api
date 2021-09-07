@@ -36,11 +36,13 @@ class Orders extends AbstractApi
     /**
      * Edits and saves an order using the specified entity id within the body.
      *
-     * @param array $body
+     * @param array $entity
      * @return array
      */
-    public function edit($body = [])
+    public function edit($entity = [])
     {
-        return $this->post('/orders', $body);
+        return $this->post('/orders', [
+            'entity' => $entity
+        ]);
     }
 }
