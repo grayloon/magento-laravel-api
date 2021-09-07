@@ -48,4 +48,15 @@ class OrdersTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_edit_and_save_order()
+    {
+        Http::fake([
+            '*rest/all/V1/orders' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('orders')->edit([]);
+
+        $this->assertTrue($api->ok());
+    }
 }

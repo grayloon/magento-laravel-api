@@ -355,6 +355,19 @@ List a specified order:
 Magento::api('orders')->show($orderId);
 ```
 
+`/V1/orders`
+
+Updates an order specified by the entity id within the $body:
+```php
+$body = [
+    'entity' => [
+        'entity_id' => '', // required
+        // ... attributes to update
+    ]
+];
+Magento::api('orders')->edit($body);
+```
+
 
 
 
