@@ -360,8 +360,8 @@ Magento::api('orders')->show($orderId);
 Updates an order specified by the entity id within the $body:
 ```php
 $body = [
-        'entity_id' => '', // required
-        // ... attributes to update
+    'entity_id' => '', // required
+    // ... attributes to update
 ];
 Magento::api('orders')->edit($body);
 ```
