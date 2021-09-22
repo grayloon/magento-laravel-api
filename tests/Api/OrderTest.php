@@ -30,7 +30,7 @@ class OrderTest extends TestCase
             '*rest/all/V1/order/1/invoice' => Http::response([], 200),
         ]);
 
-        $api = MagentoFacade::api('order')->invoice(1,true,true,true,'','',0);
+        $api = MagentoFacade::api('order')->invoice(1, true, true, true, '', '', 0);
 
         $this->assertTrue($api->ok());
     }
