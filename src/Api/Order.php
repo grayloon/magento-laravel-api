@@ -6,7 +6,6 @@ use Illuminate\Http\Client\Response;
 
 class Order extends AbstractApi
 {
-
     /**
      * Creates invoice for order.
      *
