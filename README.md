@@ -355,6 +355,13 @@ List a specified order:
 Magento::api('orders')->show($orderId);
 ```
 
+`/V1/orders`
+https://magento.redoc.ly/2.4.3-admin/tag/orders#operation/salesOrderRepositoryV1SavePost
+Performs persist operations for a specified order.
+```php
+Magento::api('orders')->edit($entity = []);
+```
+
 
 
 
