@@ -34,7 +34,8 @@ class Orders extends AbstractApi
     }
 
     /**
-     * Edits and saves an order using the specified entity id within the body.
+     * Performs persist operations for a specified order.
+     * @see https://magento.redoc.ly/2.4.3-admin/tag/orders/#operation/salesOrderRepositoryV1SavePost
      *
      * @param array $entity
      * @return array

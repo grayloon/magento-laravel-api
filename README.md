@@ -356,14 +356,10 @@ Magento::api('orders')->show($orderId);
 ```
 
 `/V1/orders`
-
-Updates an order specified by the entity id within the $body:
+https://magento.redoc.ly/2.4.3-admin/tag/orders#operation/salesOrderRepositoryV1SavePost
+Performs persist operations for a specified order.
 ```php
-$body = [
-    'entity_id' => '', // required
-    // ... attributes to update
-];
-Magento::api('orders')->edit($body);
+Magento::api('orders')->edit($entity = []);
 ```
 
 
