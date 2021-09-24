@@ -40,7 +40,7 @@ class CartItems extends AbstractApi
     /**
      * Update the specified cart item.
      *
-     * @param  int    $itemId
+     * @param  int  $itemId
      * @param  array  $body
      * @return array
      */

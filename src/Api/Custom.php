@@ -16,7 +16,7 @@ class Custom extends AbstractApi
     /**
      * Custom constructor.
      *
-     * @param string $endpoint
+     * @param  string  $endpoint
      */
     public function __construct(string $endpoint, Magento $magento)
     {
@@ -28,8 +28,8 @@ class Custom extends AbstractApi
     /**
      * Dynamic call to passthrough.
      *
-     * @param string $method
-     * @param array $args
+     * @param  string  $method
+     * @param  array  $args
      * @return mixed
      */
     public function __call($method, $args)

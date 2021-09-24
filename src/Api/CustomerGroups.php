@@ -55,7 +55,6 @@ class CustomerGroups extends AbstractApi
      * @param  int  $pageSize
      * @param  int  $currentPage
      * @param  array  $filters
-     *
      * @return array
      */
     public function search($pageSize = 50, $currentPage = 1, $filters = [])

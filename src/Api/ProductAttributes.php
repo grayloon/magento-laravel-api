@@ -18,10 +18,9 @@ class ProductAttributes extends AbstractApi
     /**
      * The list of Product Attributes.
      *
-     * @param int $pageSize
-     * @param int $currentPage
-     *
-     * @return  array
+     * @param  int  $pageSize
+     * @param  int  $currentPage
+     * @return array
      */
     public function all($pageSize = 50, $currentPage = 1)
     {

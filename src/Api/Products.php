@@ -7,10 +7,9 @@ class Products extends AbstractApi
     /**
      * The list of Products.
      *
-     * @param int $pageSize
-     * @param int $currentPage
-     *
-     * @return  array
+     * @param  int  $pageSize
+     * @param  int  $currentPage
+     * @return array
      */
     public function all($pageSize = 50, $currentPage = 1, $filters = [])
     {
@@ -23,8 +22,7 @@ class Products extends AbstractApi
     /**
      * Get info about product by product SKU.
      *
-     * @param string $sku
-     *
+     * @param  string  $sku
      * @return array
      */
     public function show($sku)

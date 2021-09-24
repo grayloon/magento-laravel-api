@@ -7,10 +7,9 @@ class Categories extends AbstractApi
     /**
      * The list of categories.
      *
-     * @param int $pageSize
-     * @param int $currentPage
-     *
-     * @return  array
+     * @param  int  $pageSize
+     * @param  int  $currentPage
+     * @return array
      */
     public function all($pageSize = 50, $currentPage = 1)
     {
@@ -23,8 +22,7 @@ class Categories extends AbstractApi
     /**
      * Get products assigned to category.
      *
-     * @param int $categoryId
-     *
+     * @param  int  $categoryId
      * @return array
      */
     public function products($categoryId)

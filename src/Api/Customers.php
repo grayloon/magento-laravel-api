@@ -10,8 +10,7 @@ class Customers extends AbstractApi
      * @param  int  $pageSize
      * @param  int  $currentPage
      * @param  array  $filters
-     *
-     * @return  array
+     * @return array
      */
     public function all($pageSize = 50, $currentPage = 1, $filters = [])
     {
@@ -35,9 +34,9 @@ class Customers extends AbstractApi
     /**
      * Send an email to the customer with a password reset link.
      *
-     * @param string $email
-     * @param string $template
-     * @param id     $websiteId
+     * @param  string  $email
+     * @param  string  $template
+     * @param  id  $websiteId
      * @return array
      */
     public function password($email, $template, $websiteId)

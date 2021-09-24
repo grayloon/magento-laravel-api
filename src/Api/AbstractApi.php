@@ -50,9 +50,8 @@ abstract class AbstractApi
     /**
      * Send a GET request with query parameters.
      *
-     * @param string $path
-     * @param string $parameters
-     *
+     * @param  string  $path
+     * @param  string  $parameters
      * @return \Illuminate\Http\Client\Response
      */
     protected function get($path, $parameters = [])
@@ -64,9 +63,8 @@ abstract class AbstractApi
     /**
      * Send a POST request with query parameters.
      *
-     * @param string $path
-     * @param string $parameters
-     *
+     * @param  string  $path
+     * @param  string  $parameters
      * @return \Illuminate\Http\Client\Response
      */
     protected function post($path, $parameters = [])
@@ -79,8 +77,7 @@ abstract class AbstractApi
      * Send a PUT request.
      *
      * @param $path
-     * @param array $parameters
-     *
+     * @param  array  $parameters
      * @return \Illuminate\Http\Client\Response|void
      */
     protected function put($path, $parameters = [])
@@ -93,8 +90,7 @@ abstract class AbstractApi
      * Send a DELETE request.
      *
      * @param $path
-     * @param array $parameters
-     *
+     * @param  array  $parameters
      * @return \Illuminate\Http\Client\Response|void
      */
     protected function delete($path, $parameters = [])
@@ -106,8 +102,9 @@ abstract class AbstractApi
     /**
      * Check for any type of invalid API Responses.
      *
-     * @param \Illuminate\Http\Client\Response $response
+     * @param  \Illuminate\Http\Client\Response  $response
      * @return void
+     *
      * @throws \Exception
      */
     protected function checkExceptions($response, $endpoint, $parameters)
@@ -129,6 +126,7 @@ abstract class AbstractApi
      * Validates the usage of the store code as needed.
      *
      * @return void
+     *
      * @throws \Exception
      */
     protected function validateSingleStoreCode()

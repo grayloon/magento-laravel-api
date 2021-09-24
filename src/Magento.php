@@ -53,8 +53,8 @@ class Magento
     /**
      * Magento constructor.
      *
-     * @param string $baseUrl
-     * @param string $token
+     * @param  string  $baseUrl
+     * @param  string  $token
      */
     public function __construct($baseUrl = null, $token = null, $version = null, $basePath = null, $storeCode = null)
     {
@@ -69,9 +69,9 @@ class Magento
      * The API method to be called on the Magento 2 API.
      *
      * @param  string  $name
+     * @return \Grayloon\Magento\Api\AbstractApi
      *
      * @throws InvalidArgumentException
-     * @return \Grayloon\Magento\Api\AbstractApi
      */
     public function api($name)
     {
@@ -87,7 +87,6 @@ class Magento
 
     /**
      * @param  string  $baseUrl
-     *
      * @return Magento
      */
     public function setBaseUrl(string $baseUrl): Magento
@@ -99,7 +98,6 @@ class Magento
 
     /**
      * @param  string|null  $token
-     *
      * @return Magento
      */
     public function setToken(?string $token): Magento
@@ -111,7 +109,6 @@ class Magento
 
     /**
      * @param  bool  $versionIncluded
-     *
      * @return Magento
      */
     public function setVersionIncluded(bool $versionIncluded): Magento
@@ -123,7 +120,6 @@ class Magento
 
     /**
      * @param  string  $version
-     *
      * @return Magento
      */
     public function setVersion(string $version): Magento
@@ -135,7 +131,6 @@ class Magento
 
     /**
      * @param  string  $basePath
-     *
      * @return Magento
      */
     public function setBasePath(string $basePath): Magento
@@ -147,7 +142,6 @@ class Magento
 
     /**
      * @param  string  $storeCode
-     *
      * @return Magento
      */
     public function setStoreCode(string $storeCode): Magento

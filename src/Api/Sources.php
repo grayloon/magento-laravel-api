@@ -11,7 +11,6 @@ class Sources extends AbstractApi
      * @param  int  $pageSize
      * @param  int  $currentPage
      * @param  array  $filters
-     *
      * @return array
      */
     public function all($pageSize = 50, $currentPage = 1, $filters = [])
@@ -27,7 +26,6 @@ class Sources extends AbstractApi
      * Return Specific Source by name.
      *
      * @param  string  $name
-     *
      * @return array
      */
     public function bySourceName($name = 'default')

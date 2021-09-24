@@ -57,8 +57,8 @@ class GuestCarts extends AbstractApi
      * Add/update the specified cart item.
      *
      * @param  string  $cartId
-     * @param  int     $itemId
-     * @param  array   $body
+     * @param  int  $itemId
+     * @param  array  $body
      * @return array
      */
     public function editItem($cartId, $itemId, $body = [])
@@ -79,7 +79,7 @@ class GuestCarts extends AbstractApi
     /**
      * Estimate shipping by address and return list of available shipping methods.
      *
-     * @param  string $cartId
+     * @param  string  $cartId
      * @param  array  $body
      * @return array
      */
@@ -91,7 +91,7 @@ class GuestCarts extends AbstractApi
     /**
      * Calculate quote totals based on address and shipping method.
      *
-     * @param  string $cartId
+     * @param  string  $cartId
      * @param  array  $body
      * @return array
      */
@@ -103,7 +103,7 @@ class GuestCarts extends AbstractApi
     /**
      * Save the total shipping information.
      *
-     * @param  string $cartId
+     * @param  string  $cartId
      * @param  array  $body
      * @return array
      */
@@ -115,7 +115,7 @@ class GuestCarts extends AbstractApi
     /**
      * List available payment methods for a specified shopping cart. This call returns an array of objects, but detailed information about each object’s attributes might not be included.
      *
-     * @param  string $cartId
+     * @param  string  $cartId
      * @return array
      */
     public function paymentMethods($cartId)
@@ -126,7 +126,7 @@ class GuestCarts extends AbstractApi
     /**
      * Set payment information and place order for a specified cart.
      *
-     * @param  string $cartId
+     * @param  string  $cartId
      * @param  array  $body
      * @return array
      */
@@ -172,7 +172,7 @@ class GuestCarts extends AbstractApi
     /**
      * Assign a specified customer to a specified shopping cart.
      *
-     * @param  string   $cartId
+     * @param  string  $cartId
      * @param  int  $customerId
      * @param  int  $storeId
      * @return array

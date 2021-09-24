@@ -11,7 +11,6 @@ class SourceItems extends AbstractApi
      * @param  int  $pageSize
      * @param  int  $currentPage
      * @param  array  $filters
-     *
      * @return array
      */
     public function all($pageSize = 50, $currentPage = 1, $filters = [])
