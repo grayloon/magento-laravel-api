@@ -10,7 +10,6 @@ class Orders extends AbstractApi
      * @param  int  $pageSize
      * @param  int  $currentPage
      * @param  array  $filters
-     *
      * @return array
      */
     public function all($pageSize = 50, $currentPage = 1, $filters = [])
@@ -25,7 +24,6 @@ class Orders extends AbstractApi
      * Loads a specified order.
      *
      * @param  int  $orderId
-     *
      * @return array
      */
     public function show($orderId)
@@ -38,7 +36,7 @@ class Orders extends AbstractApi
      *
      * @see https://magento.redoc.ly/2.4.3-admin/tag/orders/#operation/salesOrderRepositoryV1SavePost
      *
-     * @param array $entity
+     * @param  array  $entity
      * @return array
      */
     public function edit($entity = [])
