@@ -356,14 +356,12 @@ Magento::api('orders')->show($orderId);
 ```
 
 `/V1/orders`
-https://magento.redoc.ly/2.4.3-admin/tag/orders#operation/salesOrderRepositoryV1SavePost
-Performs persist operations for a specified order.
+
+[Performs persist operations for a specified order.](https://magento.redoc.ly/2.4.3-admin/tag/orders#operation/salesOrderRepositoryV1SavePost)
+
 ```php
 Magento::api('orders')->edit($entity = []);
 ```
-
-
-
 
 <a id="product-attributes"></a>
 ### Product Attributes (catalogProductAttributeRepositoryV1)
