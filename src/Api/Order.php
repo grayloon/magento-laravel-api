@@ -21,7 +21,7 @@ class Order extends AbstractApi
      */
     public function invoice(int $orderId, bool $capture = true, bool $notify = true, bool $appendComment = true,
                             string $extension_attributes = '', string $comment = '', int $is_visible_on_front = 0,
-                            array $items=[]): Response
+                            array $items = []): Response
     {
         return $this->post('/order/'.$orderId.'/invoice', [
             'capture' => $capture,
