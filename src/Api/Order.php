@@ -15,14 +15,17 @@ class Order extends AbstractApi
      * @param  bool  $appendComment
      * @param  string  $extension_attributes
      * @param  string  $comment
+     * @param  array  $items
      * @param  int  $is_visible_on_front
      * @return Response
      */
     public function invoice(int $orderId, bool $capture = true, bool $notify = true, bool $appendComment = true,
-                            string $extension_attributes = '', string $comment = '', int $is_visible_on_front = 0): Response
+                            string $extension_attributes = '', string $comment = '', int $is_visible_on_front = 0,
+                            array $items=[]): Response
     {
         return $this->post('/order/'.$orderId.'/invoice', [
             'capture' => $capture,
+            empty($items) ?: 'items' => $items,
             'notify' => $notify,
             'appendComment' => $appendComment,
             'comment'=>[
