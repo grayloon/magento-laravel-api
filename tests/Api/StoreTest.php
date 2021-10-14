@@ -23,4 +23,15 @@ class StoreTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_call_stores_websites()
+    {
+        Http::fake([
+            '*rest/all/V1/store/websites*' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('store')->websites();
+
+        $this->assertTrue($api->ok());
+    }
 }
