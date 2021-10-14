@@ -13,4 +13,14 @@ class Store extends AbstractApi
     {
         return $this->get('/store/storeConfigs');
     }
+
+    /**
+     * Retrieve list of all websites.
+     *
+     * @return array
+     */
+    public function websites()
+    {
+        return $this->get('/store/websites');
+    }
 }
