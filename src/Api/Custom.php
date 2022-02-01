@@ -1,8 +1,8 @@
 <?php
 
-namespace Grayloon\Magento\Api;
+namespace Interiordefine\Magento\Api;
 
-use Grayloon\Magento\Magento;
+use Interiordefine\Magento\Magento;
 
 class Custom extends AbstractApi
 {

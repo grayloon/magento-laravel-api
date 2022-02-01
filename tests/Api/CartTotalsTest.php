@@ -1,10 +1,10 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\Api\CartTotals;
-use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
+use Interiordefine\Magento\Api\CartTotals;
+use Interiordefine\Magento\MagentoFacade;
 
 class CartTotalsTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Grayloon\Magento;
+namespace Interiordefine\Magento;
 
-use Grayloon\Magento\Api\Custom;
 use Illuminate\Support\Str;
+use Interiordefine\Magento\Api\Custom;
 use InvalidArgumentException;
 
 class Magento
@@ -69,7 +69,7 @@ class Magento
      * The API method to be called on the Magento 2 API.
      *
      * @param  string  $name
-     * @return \Grayloon\Magento\Api\AbstractApi
+     * @return \Interiordefine\Magento\Api\AbstractApi
      *
      * @throws InvalidArgumentException
      */

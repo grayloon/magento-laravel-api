@@ -1,12 +1,12 @@
 <?php
 
-namespace Grayloon\Magento\Api;
+namespace Interiordefine\Magento\Api;
 
 use Exception;
-use Grayloon\Magento\Magento;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Interiordefine\Magento\Magento;
 
 abstract class AbstractApi
 {

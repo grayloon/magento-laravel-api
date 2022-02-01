@@ -1,5 +1,5 @@
 {
-    "name": "interiordefine/laravel-magento-api",
+    "name": "interiordefine/laravel-magento-2",
     "description": "Magento 2 REST API Wrapper to export Magento data to use in your Laravel application.",
     "license": "MIT",
     "type": "library",
@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Grayloon\\Magento\\": "src"
+            "Interiordefine\\Magento\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Grayloon\\Magento\\Tests\\": "tests"
+            "Interiordefine\\Magento\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,10 +47,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Grayloon\\Magento\\MagentoServiceProvider"
+                "Interiordefine\\Magento\\MagentoServiceProvider"
             ],
             "aliases": {
-                "Magento": "Grayloon\\Magento\\MagentoFacade"
+                "Magento": "Interiordefine\\Magento\\MagentoFacade"
             }
         }
     }

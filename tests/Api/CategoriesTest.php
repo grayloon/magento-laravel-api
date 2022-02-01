@@ -1,10 +1,10 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\Api\Categories;
-use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
+use Interiordefine\Magento\Api\Categories;
+use Interiordefine\Magento\MagentoFacade;
 
 class CategoriesTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Grayloon\Magento\Api;
+namespace Interiordefine\Magento\Api;
 
 class BundleProducts extends AbstractApi
 {

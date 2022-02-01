@@ -1,10 +1,10 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\Api\CustomerGroups;
-use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
+use Interiordefine\Magento\Api\CustomerGroups;
+use Interiordefine\Magento\MagentoFacade;
 
 class CustomerGroupsTest extends TestCase
 {

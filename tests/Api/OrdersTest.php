@@ -1,10 +1,10 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\Api\Orders;
-use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
+use Interiordefine\Magento\Api\Orders;
+use Interiordefine\Magento\MagentoFacade;
 
 class OrdersTest extends TestCase
 {

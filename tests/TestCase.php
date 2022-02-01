@@ -1,9 +1,9 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\MagentoServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Interiordefine\Magento\MagentoServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase

@@ -1,9 +1,9 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\Magento;
 use Illuminate\Support\Facades\Config;
+use Interiordefine\Magento\Magento;
 
 class MagentoTest extends TestCase
 {

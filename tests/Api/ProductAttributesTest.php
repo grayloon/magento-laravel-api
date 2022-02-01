@@ -1,10 +1,10 @@
 <?php
 
-namespace Grayloon\Magento\Tests;
+namespace Interiordefine\Magento\Tests;
 
-use Grayloon\Magento\Api\ProductAttributes;
-use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
+use Interiordefine\Magento\Api\ProductAttributes;
+use Interiordefine\Magento\MagentoFacade;
 
 class ProductAttributesTest extends TestCase
 {
