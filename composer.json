@@ -1,11 +1,6 @@
 {
-    "name": "grayloon/laravel-magento-api",
+    "name": "interiordefine/laravel-magento-api",
     "description": "Magento 2 REST API Wrapper to export Magento data to use in your Laravel application.",
-    "keywords": [
-        "grayloon",
-        "laravel-magento-api"
-    ],
-    "homepage": "https://github.com/grayloon/laravel-magento-api",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -13,10 +8,16 @@
             "name": "Gray Loon Marketing Group",
             "email": "webmaster@grayloon.com",
             "role": "Developer"
+        },
+        {
+            "name": "Qusai Farraj",
+            "email": "qusai.farraj@interiordefine.com",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "ext-json": "*",
         "guzzlehttp/guzzle": "^6.0|^7.0",
         "illuminate/support": "^7.0|^8.0"
     },
