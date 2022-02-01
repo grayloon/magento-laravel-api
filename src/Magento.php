@@ -3,6 +3,7 @@
 namespace Interiordefine\Magento;
 
 use Illuminate\Support\Str;
+use Interiordefine\Magento\Api\AbstractApi;
 use Interiordefine\Magento\Api\Custom;
 use InvalidArgumentException;
 
@@ -68,15 +69,15 @@ class Magento
     /**
      * The API method to be called on the Magento 2 API.
      *
-     * @param  string  $name
-     * @return \Interiordefine\Magento\Api\AbstractApi
+     * @param string $name
+     * @return AbstractApi
      *
      * @throws InvalidArgumentException
      */
-    public function api($name)
+    public function api(string $name)
     {
         $className = $name;
-        $apiMethodExists = class_exists($className = "\Grayloon\Magento\Api\\".Str::ucfirst($className));
+        $apiMethodExists = class_exists($className = "\Interiordefine\Magento\Api\\".Str::ucfirst($className));
 
         if (! $apiMethodExists) {
             return new Custom($name, $this);
