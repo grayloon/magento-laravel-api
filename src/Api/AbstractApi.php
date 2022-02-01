@@ -4,6 +4,7 @@ namespace Grayloon\Magento\Api;
 
 use Exception;
 use Grayloon\Magento\Magento;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -12,7 +13,7 @@ abstract class AbstractApi
     /**
      * The Magento Client instance.
      *
-     * @var \Grayloon\Magento\Magento
+     * @var Magento
      */
     public $magento;
 
@@ -34,7 +35,7 @@ abstract class AbstractApi
      *
      * @return string
      */
-    protected function constructRequest()
+    protected function constructRequest(): string
     {
         $request = $this->magento->baseUrl;
         $request .= '/'.$this->magento->basePath;
@@ -50,64 +51,66 @@ abstract class AbstractApi
     /**
      * Send a GET request with query parameters.
      *
-     * @param  string  $path
-     * @param  string  $parameters
-     * @return \Illuminate\Http\Client\Response
+     * @param string $path
+     * @param string $parameters
+     * @return Response
+     * @throws Exception
      */
-    protected function get($path, $parameters = [])
+    protected function get(string $path, $parameters = []): Response
     {
-        return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->get($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
+        return $this->call('get', $path, $parameters);
     }
 
     /**
      * Send a POST request with query parameters.
      *
-     * @param  string  $path
-     * @param  string  $parameters
-     * @return \Illuminate\Http\Client\Response
+     * @param string $path
+     * @param string $parameters
+     * @return Response
+     * @throws Exception
      */
-    protected function post($path, $parameters = [])
+    protected function post(string $path, $parameters = []): Response
     {
-        return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->post($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
+        return $this->call('post', $path, $parameters);
     }
 
     /**
      * Send a PUT request.
      *
      * @param $path
-     * @param  array  $parameters
-     * @return \Illuminate\Http\Client\Response|void
+     * @param array $parameters
+     * @return Response
+     * @throws Exception
      */
-    protected function put($path, $parameters = [])
+    protected function put($path, array $parameters = []): Response
     {
-        return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->put($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
+        return $this->call('put', $path, $parameters);
     }
 
     /**
      * Send a DELETE request.
      *
      * @param $path
-     * @param  array  $parameters
-     * @return \Illuminate\Http\Client\Response|void
+     * @param array $parameters
+     * @return Response
+     * @throws Exception
      */
-    protected function delete($path, $parameters = [])
+    protected function delete($path, array $parameters = []): Response
     {
-        return $this->checkExceptions(Http::withToken($this->magento->token)
-            ->delete($this->apiRequest.$path, $parameters), $this->apiRequest.$path, $parameters);
+        return $this->call('delete', $path, $parameters);
     }
 
     /**
      * Check for any type of invalid API Responses.
      *
-     * @param  \Illuminate\Http\Client\Response  $response
-     * @return void
+     * @param Response $response
+     * @param $endpoint
+     * @param $parameters
+     * @return Response
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function checkExceptions($response, $endpoint, $parameters)
+    protected function checkExceptions(Response $response, $endpoint, $parameters): Response
     {
         if ($response->serverError()) {
             throw new Exception($response['message'] ?? $response);
@@ -125,16 +128,37 @@ abstract class AbstractApi
     /**
      * Validates the usage of the store code as needed.
      *
-     * @return void
+     * @return AbstractApi
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function validateSingleStoreCode()
+    protected function validateSingleStoreCode(): AbstractApi
     {
         if ($this->magento->storeCode === 'all') {
             throw new Exception(__('You must pass a single store code. "all" cannot be used.'));
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $method
+     * @param string $path
+     * @param array $parameters
+     * @return Response
+     * @throws Exception
+     */
+    protected function call(string $method, string $path, array $parameters): Response
+    {
+        return $this->checkExceptions(
+            HTTP::withOptions([
+                'debug' => env('APP_DEBUG'),
+                //for non-production environments, don't worry about verifying ssl
+                'verify' => (bool)('production' === config('app.env')),
+            ])
+                ->withToken($this->magento->token)
+                ->$method($this->apiRequest.$path, $parameters),
+            $this->apiRequest.$path, $parameters
+        );
     }
 }
