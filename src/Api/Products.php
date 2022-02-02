@@ -85,6 +85,28 @@ class Products extends AbstractApi
         return $this->get('/products/'.$sku);
     }
 
+
+    /**
+     * Get info about product by product ID.
+     *
+     * @param  int  $id
+     * @return array
+     */
+    public function getById($id)
+    {
+        $query = array('searchCriteria' => []);
+        $query['searchCriteria']['filter_groups'] = array('0'=> []);
+        $query['searchCriteria']['filter_groups'][0]['filters'] = array('0'=>[]);
+        $query['searchCriteria']['filter_groups'][0]['filters'][0] =
+            array(
+                'field'=>'entity_id',
+                'value' => $id,
+                'condition_type' => 'eq'
+            );
+        return $this->get('/products',urldecode(http_build_query($query)));
+    }
+
+
     /**
      * Edit the product by the specified SKU.
      *
