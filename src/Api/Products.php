@@ -2,30 +2,85 @@
 
 namespace Interiordefine\Magento\Api;
 
+use Exception;
+use Illuminate\Http\Client\Response;
+
 class Products extends AbstractApi
 {
     /**
      * The list of Products.
      *
-     * @param  int  $pageSize
-     * @param  int  $currentPage
-     * @return array
+     * https://magento.redoc.ly/2.4.3-admin/tag/products#operation/catalogProductRepositoryV1SavePost
+     *
+     * @param array $filters
+     * @param int|null $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
      */
-    public function all($pageSize = 50, $currentPage = 1, $filters = [])
+    public function all(array $filters = [], int $pageSize = null, int $currentPage = 1): Response
     {
-        return $this->get('/products', array_merge($filters, [
+        $params = array_merge($filters, [
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
-        ]));
+        ]);
+
+        return $this->get('/products', $params);
+    }
+
+    /**
+     * Get a list of Products that were last modified by a given date.
+     *
+     * @param string $date (with format Y-m-d. e.g. 2022-02-01)
+     * @param int|null $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
+     */
+    public function lastModifiedByDate(string $date, int $pageSize = null, int $currentPage = 1): Response
+    {
+        $params = [
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'gteq',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'updated_at',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $date,
+            'searchCriteria[pageSize]'    => $pageSize,
+            'searchCriteria[currentPage]' => $currentPage,
+        ];
+
+        return $this->get('/products', $params);
+    }
+
+    /**
+     * Get a list of Product Skus what were last modified by a given date.
+     *
+     * @param string $date (with format Y-m-d. e.g. 2022-02-01)
+     * @param int|null $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
+     */
+    public function getSkusLastModifiedByDate(string $date, int $pageSize = null, int $currentPage = 1): Response
+    {
+        $params = [
+            'fields' => 'items[sku]',
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'gteq',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'updated_at',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $date,
+            'searchCriteria[pageSize]'    => $pageSize,
+            'searchCriteria[currentPage]' => $currentPage,
+        ];
+
+        return $this->get('/products', $params);
     }
 
     /**
      * Get info about product by product SKU.
      *
-     * @param  string  $sku
-     * @return array
+     * @param string $sku
+     * @return Response
+     * @throws Exception
      */
-    public function show($sku)
+    public function getBySku(string $sku): Response
     {
         return $this->get('/products/'.$sku);
     }
@@ -33,11 +88,12 @@ class Products extends AbstractApi
     /**
      * Edit the product by the specified SKU.
      *
-     * @param  string  $sku
-     * @param  array  $body
-     * @return array
+     * @param string $sku
+     * @param array $body
+     * @return Response
+     * @throws Exception
      */
-    public function edit($sku, $body = [])
+    public function edit(string $sku, array $body = []): Response
     {
         return $this->put('/products/'.$sku, $body);
     }
