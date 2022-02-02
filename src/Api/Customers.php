@@ -2,6 +2,9 @@
 
 namespace Interiordefine\Magento\Api;
 
+use Exception;
+use Illuminate\Http\Client\Response;
+
 class Customers extends AbstractApi
 {
     /**
@@ -23,10 +26,11 @@ class Customers extends AbstractApi
     /**
      * Create customer account. Perform necessary business operations like sending email.
      *
-     * @param  array  $body
-     * @return array
+     * @param array $body
+     * @return Response
+     * @throws Exception
      */
-    public function create($body)
+    public function create(array $body): Response
     {
         return $this->post('/customers', $body);
     }
@@ -34,12 +38,13 @@ class Customers extends AbstractApi
     /**
      * Send an email to the customer with a password reset link.
      *
-     * @param  string  $email
-     * @param  string  $template
-     * @param  id  $websiteId
-     * @return array
+     * @param string $email
+     * @param string $template
+     * @param int $websiteId
+     * @return Response
+     * @throws Exception
      */
-    public function password($email, $template, $websiteId)
+    public function password(string $email, string $template, int $websiteId): Response
     {
         return $this->put('/customers/password', [
             'email'     => $email,
@@ -51,12 +56,13 @@ class Customers extends AbstractApi
     /**
      * Reset customer password.
      *
-     * @param  string  $email
-     * @param  string  $resetToken
-     * @param  string  $newPassword
-     * @return void
+     * @param string $email
+     * @param string $resetToken
+     * @param string $newPassword
+     * @return Response
+     * @throws Exception
      */
-    public function resetPassword($email, $resetToken, $newPassword)
+    public function resetPassword(string $email, string $resetToken, string $newPassword): Response
     {
         return $this->post('/customers/resetPassword', [
             'email'       => $email,
@@ -68,11 +74,32 @@ class Customers extends AbstractApi
     /**
      * Get the customer by Customer ID.
      *
-     * @param  int  $id
-     * @return array
+     * @param int $id
+     * @return Response
+     * @throws Exception
      */
-    public function show($id)
+    public function show(int $id): Response
     {
         return $this->get('/customers/'.$id);
+    }
+
+    /**
+     * Update the Customer by Customer ID.
+     * Or create a new customer with Email, First and Last Name
+     *
+     * https://magento.redoc.ly/2.4.3-admin/tag/customerscustomerId#operation/customerCustomerRepositoryV1SavePut
+     *
+     * @param int $id
+     * @param string $params
+     * @return Response
+     * @throws Exception
+     */
+    public function edit(int $id, string $params): Response
+    {
+        $data = [
+            'customer' => $params,
+        ];
+
+        return $this->put('/customers/'.$id, $data);
     }
 }
