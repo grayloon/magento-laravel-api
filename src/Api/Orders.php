@@ -32,6 +32,27 @@ class Orders extends AbstractApi
     }
 
     /**
+     * Loads a specified order.
+     *
+     * @param  string $incrementId
+     * @return array
+     */
+    public function showByIncrementId($incrementId) {
+
+        $query = array('searchCriteria' => []);
+        $query['searchCriteria']['filter_groups'] = array('0'=> []);
+        $query['searchCriteria']['filter_groups'][0]['filters'] = array('0'=>[]);
+        $query['searchCriteria']['filter_groups'][0]['filters'][0] =
+            array(
+                'field'=>'increment_id',
+                'value' => $incrementId,
+                'condition_type' => 'eq'
+            );
+        $result = $this->get('/orders',urldecode(http_build_query($query)));
+        return $result;
+    }
+
+    /**
      * Performs persist operations for a specified order.
      *
      * @see https://magento.redoc.ly/2.4.3-admin/tag/orders/#operation/salesOrderRepositoryV1SavePost
