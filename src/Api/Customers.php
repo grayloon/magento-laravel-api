@@ -116,10 +116,23 @@ class Customers extends AbstractApi
      */
     public function edit(int $id, string $params): Response
     {
-        $data = [
-            'customer' => $params,
-        ];
+        return $this->put('/customers/'.$id, [
+            'customer' => $params
+        ]);
+    }
 
-        return $this->put('/customers/'.$id, $data);
+    /**
+     * Check if a customer exists by email
+     *
+     * @param string $email
+     * @return Response
+     * @throws Exception
+     */
+    public function isCustomerAvailable(string $email): Response
+    {
+        return $this->post('/customers/isEmailAvailable', [
+            'customerEmail' => $email,
+            'websiteId' => self::WEBSITE_ID,
+        ]);
     }
 }
