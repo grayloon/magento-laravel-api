@@ -2,6 +2,8 @@
 
 namespace Interiordefine\Magento\Api;
 
+use Illuminate\Http\Client\Response;
+
 class ProductAttributes extends AbstractApi
 {
     /**
