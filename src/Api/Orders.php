@@ -2,17 +2,21 @@
 
 namespace Interiordefine\Magento\Api;
 
+use Exception;
+use Illuminate\Http\Client\Response;
+
 class Orders extends AbstractApi
 {
     /**
      * Lists orders that match specified search criteria.
      *
-     * @param  int  $pageSize
-     * @param  int  $currentPage
-     * @param  array  $filters
-     * @return array
+     * @param array $filters
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
      */
-    public function all($pageSize = 50, $currentPage = 1, $filters = [])
+    public function all(array $filters = [], int $pageSize = 50, int $currentPage = 1): Response
     {
         return $this->get('/orders', array_merge($filters, [
             'searchCriteria[pageSize]'    => $pageSize,
