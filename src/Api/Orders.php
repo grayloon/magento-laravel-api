@@ -25,14 +25,44 @@ class Orders extends AbstractApi
     }
 
     /**
-     * Loads a specified order.
+     * Lists orders that match specified search criteria.
      *
-     * @param  int  $orderId
-     * @return array
+     * @param string $email
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
      */
-    public function show($orderId)
+    public function getOrdersByEmail(string $email, int $pageSize = 50, int $currentPage = 1): Response
     {
-        return $this->get('/orders/'.$orderId);
+        return $this->get('/orders', [
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'eq',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'email',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $email,
+            'searchCriteria[pageSize]'    => $pageSize,
+            'searchCriteria[currentPage]' => $currentPage,
+        ]);
+    }
+
+    /**
+     * Lists orders that match specified search criteria.
+     *
+     * @param string $email
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
+     */
+    public function getOrderEntityIdsByEmail(string $email, int $pageSize = 50, int $currentPage = 1): Response
+    {
+        return $this->get('/orders', [
+            'fields' => 'items[entity_id]',
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'eq',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'customer_email',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $email,
+            'searchCriteria[pageSize]'    => $pageSize,
+            'searchCriteria[currentPage]' => $currentPage,
+        ]);
     }
 
     /**
