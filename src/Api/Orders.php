@@ -34,11 +34,24 @@ class Orders extends AbstractApi
     /**
      * Loads a specified order.
      *
-     * @param  string $incrementId
-     * @return array
+     * @param int $orderId
+     * @return Response
+     * @throws Exception
      */
-    public function showByIncrementId($incrementId) {
+    public function show(int $orderId): Response
+    {
+        return $this->get('/orders/'.$orderId);
+    }
 
+    /**
+     * Loads a specified order by Increment ID.
+     *
+     * @param string $incrementId
+     * @return Response
+     * @throws Exception
+     */
+    public function showByIncrementId(string $incrementId): Response
+    {
         $query = array('searchCriteria' => []);
         $query['searchCriteria']['filter_groups'] = array('0'=> []);
         $query['searchCriteria']['filter_groups'][0]['filters'] = array('0'=>[]);
@@ -48,8 +61,8 @@ class Orders extends AbstractApi
                 'value' => $incrementId,
                 'condition_type' => 'eq'
             );
-        $result = $this->get('/orders',urldecode(http_build_query($query)));
-        return $result;
+
+        return $this->get('/orders',urldecode(http_build_query($query)));
     }
 
     /**
@@ -57,10 +70,11 @@ class Orders extends AbstractApi
      *
      * @see https://magento.redoc.ly/2.4.3-admin/tag/orders/#operation/salesOrderRepositoryV1SavePost
      *
-     * @param  array  $entity
-     * @return array
+     * @param array $entity
+     * @return Response
+     * @throws Exception
      */
-    public function edit($entity = [])
+    public function edit(array $entity = []): Response
     {
         return $this->post('/orders', [
             'entity' => $entity,
