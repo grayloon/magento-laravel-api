@@ -4,12 +4,17 @@ namespace Interiordefine\Magento\Api;
 
 use Exception;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Interiordefine\Magento\Exceptions\LaravelMagentoTwoException;
 use Interiordefine\Magento\Magento;
 
 abstract class AbstractApi
 {
+
+    const WEBSITE_ID = 1;
+
     /**
      * The Magento Client instance.
      *
@@ -104,21 +109,21 @@ abstract class AbstractApi
      * Check for any type of invalid API Responses.
      *
      * @param Response $response
-     * @param $endpoint
-     * @param $parameters
+     * @param string $endpoint
+     * @param array $parameters
      * @return Response
      *
-     * @throws Exception
+     * @throws LaravelMagentoTwoException
      */
-    protected function checkExceptions(Response $response, $endpoint, $parameters): Response
+    protected function checkExceptions(Response $response, string $endpoint, array $parameters): Response
     {
         if ($response->serverError()) {
-            throw new Exception($response['message'] ?? $response);
+            throw new LaravelMagentoTwoException($response['message'] ?? $response);
         }
 
         if (! $response->successful()) {
             if (config('magento.log_failed_requests')) {
-                Log::info('[MAGENTO API][STATUS] '.$response->status().' [ENDPOINT] '.$endpoint.' [PARAMETERS]  '.json_encode($parameters).' [RESPONSE] '.json_encode($response->json()));
+                Log::debug('[MAGENTO API][STATUS] '.$response->status().' [ENDPOINT] '.$endpoint.' [PARAMETERS]  '.json_encode($parameters).' [RESPONSE] '.json_encode($response->json()));
             }
         }
 
@@ -157,8 +162,11 @@ abstract class AbstractApi
                 'verify' => (bool)('production' === config('app.env')),
             ])
                 ->withToken($this->magento->token)
+                ->asJson()
+                ->acceptJson()
                 ->$method($this->apiRequest.$path, $parameters),
-            $this->apiRequest.$path, $parameters
+            $this->apiRequest.$path,
+            $parameters
         );
     }
 }
