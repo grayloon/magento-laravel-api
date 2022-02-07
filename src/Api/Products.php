@@ -89,10 +89,11 @@ class Products extends AbstractApi
     /**
      * Get info about product by product ID.
      *
-     * @param  int  $id
-     * @return array
+     * @param int $id
+     * @return Response
+     * @throws Exception
      */
-    public function getById($id)
+    public function getById(int $id): Response
     {
         $query = array('searchCriteria' => []);
         $query['searchCriteria']['filter_groups'] = array('0'=> []);
