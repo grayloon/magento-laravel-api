@@ -29,4 +29,40 @@ class ProductAttributes extends AbstractApi
             'searchCriteria[currentPage]' => $currentPage,
         ]);
     }
+
+    /**
+     * Fetches all Product attributes specified by $attribute_codes.
+     * $attribute_code is optional and can be an array or a string (or null).
+     * Believe it or don't, specifying the return type causes an exception.
+     *
+     * @param string|array|null $attribute_codes
+     * @return \Illuminate\Http\Client\Response
+     * @throws \Exception
+     */
+    public function getByAttributeCode($attribute_codes = null)
+    {
+        $filters = [];
+        if (!empty($attribute_codes)) {
+            if (is_array($attribute_codes)) {
+                $attribute_codes = implode(',', $attribute_codes);
+            }
+
+            $filters = [
+                'searchCriteria' => [
+                    'filter_groups' => [
+                        [
+                            'filters' => [
+                                [
+                                    'field' => 'attribute_code',
+                                    'condition_type' => 'in',
+                                    'value' => $attribute_codes,
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+        return $this->get('/products/attributes', $filters);
+    }
 }
