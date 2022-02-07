@@ -46,17 +46,23 @@ class Customers extends AbstractApi
     /**
      * Create customer account. Perform necessary business operations like sending email.
      *
-     * @param array $body
+     * @param array $customer
+     * @param string|null $password
      * @return Response
      * @throws Exception
      */
-    public function create(array $body): Response
+    public function create(array $customer, string $password = null): Response
     {
-        return $this->post('/customers', $body);
+        return $this->post('/customers', [
+            'customer' => array_merge($customer, [
+                'website_id' => self::WEBSITE_ID,
+            ]),
+            'password' => $password,
+        ]);
     }
 
     /**
-     * Send an email to the customer with a password reset link.
+     * Email the customer with a password reset link.
      *
      * @param string $email
      * @param string $template
