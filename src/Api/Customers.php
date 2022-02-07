@@ -24,6 +24,26 @@ class Customers extends AbstractApi
     }
 
     /**
+     * Get customer info by Email
+     *
+     * @param string $email
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
+     */
+    public function showByEmail(string $email, int $pageSize = 50, int $currentPage = 1): Response
+    {
+        return $this->get('/customers/search', [
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'eq',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'email',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $email,
+            'searchCriteria[pageSize]'    => $pageSize,
+            'searchCriteria[currentPage]' => $currentPage,
+        ]);
+    }
+
+    /**
      * Create customer account. Perform necessary business operations like sending email.
      *
      * @param array $body
