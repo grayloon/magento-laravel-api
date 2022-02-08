@@ -78,14 +78,13 @@ class Orders extends AbstractApi
     }
 
     /**
-     * Loads a specified order by Increment ID.
+     * Loads a specified order.
      *
-     * @param string $incrementId
-     * @return Response
-     * @throws Exception
+     * @param  string $incrementId
+     * @return array
      */
-    public function showByIncrementId(string $incrementId): Response
-    {
+    public function showByIncrementId($incrementId) {
+
         $query = array('searchCriteria' => []);
         $query['searchCriteria']['filter_groups'] = array('0'=> []);
         $query['searchCriteria']['filter_groups'][0]['filters'] = array('0'=>[]);
@@ -95,8 +94,13 @@ class Orders extends AbstractApi
                 'value' => $incrementId,
                 'condition_type' => 'eq'
             );
-
-        return $this->get('/orders',urldecode(http_build_query($query)));
+#        $result = $this->get('/orders',urldecode(http_build_query($query)));
+        $result = $this->get('/orders',$query);
+        $items = $result->json();
+        if (isset($items['items'])) {
+            return reset($items['items']);
+        }
+        return $result;
     }
 
     /**

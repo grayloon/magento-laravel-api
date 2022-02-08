@@ -89,11 +89,10 @@ class Products extends AbstractApi
     /**
      * Get info about product by product ID.
      *
-     * @param int $id
-     * @return Response
-     * @throws Exception
+     * @param  int  $id
+     * @return array
      */
-    public function getById(int $id): Response
+    public function getById($id)
     {
         $query = array('searchCriteria' => []);
         $query['searchCriteria']['filter_groups'] = array('0'=> []);
@@ -104,9 +103,13 @@ class Products extends AbstractApi
                 'value' => $id,
                 'condition_type' => 'eq'
             );
-        return $this->get('/products',urldecode(http_build_query($query)));
+        $result = $this->get('/products',$query);
+        $items = $result->json();
+        if (isset($items['items'])) {
+            return reset($items['items']);
+        }
+        return $result;
     }
-
 
     /**
      * Edit the product by the specified SKU.
