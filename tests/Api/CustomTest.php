@@ -24,7 +24,7 @@ class CustomTest extends TestCase
             '*rest/all/V1/foo' => Http::response([], 200),
         ]);
 
-        $customApi = MagentoFacade::api('foo')->get();
+        $customApi = MagentoFacade::api('foo')->get('');
 
         $this->assertTrue($customApi->ok());
     }
