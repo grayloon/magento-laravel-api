@@ -3,7 +3,14 @@
 namespace Grayloon\Magento\Api;
 
 use Grayloon\Magento\Magento;
+use Illuminate\Http\Client\Response;
 
+/**
+ * @method Response get($path, $parameters = [])
+ * @method Response post($path, $parameters = [])
+ * @method Response|void put($path, $parameters = [])
+ * @method Response|void delete($path, $parameters = [])
+ */
 class Custom extends AbstractApi
 {
     const HTTP_METHODS = ['get', 'post', 'put', 'delete'];
