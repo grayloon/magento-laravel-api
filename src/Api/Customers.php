@@ -147,7 +147,7 @@ class Customers extends AbstractApi
      * Get customer id by email address.
      *
      * @param  string  $email
-     * @return array
+     * @return object
      */
     public function getCustomerID(string $email): Response
     {
@@ -172,6 +172,43 @@ class Customers extends AbstractApi
                 'group_id' => $CustomerGroupID
             ]
         ]);
+    }
+
+     /**
+     * Update customer Subscription with customer ID.
+     *
+     * @param  int  $customerID
+     * @return array
+     */
+    public function updateCustomerSubscription(int $customerID): Response
+    {
+        return $this->put('/customers/' . $customerID, [
+            "customer" => [
+                'extension_attributes' => [
+                    'is_subscribed' => false
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * Unsubscribe customer via email if it exists.
+     *
+     * @param  string  $email
+     * @return array
+     */
+    public function unsubscribe(string $email)
+    {
+        $customerExists = $this->isCustomerAvailable($email);
+        $customerExists = $customerExists->body();
+        if ($customerExists == "false") {
+            $customerID = $this->getCustomerID($email);
+            $customerID = $customerID->json('items');
+            $customerID = $customerID[0]['id'];
+            return $this->updateCustomerSubscription($customerID);
+        }
+
+        return "Email does not exist in M2.";
     }
 
 }
