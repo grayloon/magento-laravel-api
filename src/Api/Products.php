@@ -123,4 +123,27 @@ class Products extends AbstractApi
     {
         return $this->put('/products/'.$sku, $body);
     }
+
+    /**
+     * Update the Product inventory level
+     *
+     * @param string $sku
+     * @param int $qty
+     * @return Response
+     * @throws Exception
+     */
+    public function updateInventoryLevel(string $sku, int $qty): Response
+    {
+        $data = [
+            'product' => [
+                'extension_attributes' => [
+                    'stock_item' => [
+                        'qty' => $qty,
+                    ]
+                ]
+            ]
+        ];
+
+        return $this->put('/products/'.$sku, $data);
+    }
 }
