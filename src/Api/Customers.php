@@ -142,4 +142,36 @@ class Customers extends AbstractApi
             'websiteId' => self::WEBSITE_ID,
         ]);
     }
+
+    /**
+     * Get customer id by email address.
+     *
+     * @param  string  $email
+     * @return array
+     */
+    public function getCustomerID(string $email): Response
+    {
+        return $this->get('/customers/search', [
+            'searchCriteria[filter_groups][0][filters][0][field]' => 'email',
+            'searchCriteria[filter_groups][0][filters][0][value]' => $email,
+            'searchCriteria[filter_groups][0][filters][0][condition_type]' => 'eq'
+        ]);
+    }
+
+    /**
+     * Update customer by customer ID.
+     *
+     * @param  int  $customerID
+     * @param  array  $customerGroupUpdateBody
+     * @return array
+     */
+    public function updateCustomerByID(int $customerID, int $CustomerGroupID): Response
+    {
+        return $this->put('/customers/' . $customerID, [
+            'customer' => [
+                'group_id' => $CustomerGroupID
+            ]
+        ]);
+    }
+
 }
