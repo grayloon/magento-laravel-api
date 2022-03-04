@@ -146,4 +146,12 @@ class Products extends AbstractApi
 
         return $this->put('/products/'.$sku, $data);
     }
+
+    /**
+     * Get full product option data for the given sku
+     */
+    public function getOptionsBySku(string $sku): Response
+    {
+        return $this->get('/products/' . $sku . '/options');
+    }
 }
