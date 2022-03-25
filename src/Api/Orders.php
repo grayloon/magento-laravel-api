@@ -45,4 +45,25 @@ class Orders extends AbstractApi
             'entity' => $entity,
         ]);
     }
+
+
+    /**
+     * Creates new Shipment for given Order.
+     *
+     * @see https://magento.redoc.ly/2.4.3-admin/tag/orderorderIdship#operation/salesShipOrderV1ExecutePost
+     *
+     * @param  array  $entity
+     * @return array
+     */
+    public function shipOrder($orderId, $arguments = null, $comment = null, $items = [], $notify = false, $packages = [], $tracks = [])
+    {
+        return $this->post('/order/' . $orderId . '/ship', [
+            'arguments' => $arguments,
+            'comment' => $comment,
+            'items' => $items,
+            'notify' => $notify,
+            'packages' => $packages,
+            'tracks' => $tracks
+        ]);
+    }
 }
