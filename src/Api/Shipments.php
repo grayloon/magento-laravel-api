@@ -5,7 +5,7 @@ namespace Grayloon\Magento\Api;
 class Shipments extends AbstractApi
 {
     /**
-     * Lists credit memos that match specified search criteria.
+     * Lists Shipment that match specified search criteria.
      *
      * @param  int  $pageSize
      * @param  int  $currentPage
@@ -21,9 +21,9 @@ class Shipments extends AbstractApi
     }
 
     /**
-     * Loads a specified credit memo.
+     * Loads a specified shipment
      *
-     * @param  int  $creditMemoId
+     * @param  int  $shipmentId
      * @return array
      */
     public function show($shipmentId)

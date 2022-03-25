@@ -48,7 +48,7 @@ class Orders extends AbstractApi
 
 
     /**
-     * Creates new Shipment for given Order.
+     * Ship the Order.
      *
      * @see https://magento.redoc.ly/2.4.3-admin/tag/orderorderIdship#operation/salesShipOrderV1ExecutePost
      *
