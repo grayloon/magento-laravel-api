@@ -104,4 +104,36 @@ class ProductAttributes extends AbstractApi
         }
         return $this->get('/products/attributes', $filters);
     }
+
+    /**
+     * Fetches all Product Custom Attributes with lookup values (frontend_input boolean, select, and multiselect)
+     * @return \Illuminate\Http\Client\Response
+     * @throws \Exception
+     */
+    public function getAttributesWithLookupValues()
+    {
+        $filters = [
+            'searchCriteria' => [
+                'filter_groups' => [
+                    [
+                        'filters' => [
+                            [
+                                'field' => 'frontend_input',
+                                'condition_type' => 'in',
+                                'value' => 'boolean,select,multiselect',
+                            ],
+                        ],
+                    ],
+                ],
+                'sortOrders' => [
+                    [
+                        'field' => 'attribute_code',
+                        'direction' => 'ASC',
+                    ],
+                ],
+            ],
+            'fields' => 'items[attribute_code,options]',
+        ];
+        return $this->get('/products/attributes', $filters);
+    }
 }
