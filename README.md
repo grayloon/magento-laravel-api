@@ -374,6 +374,30 @@ Retrieve specific product attribute information:
 Magento::api('productAttributes')->show($attributeCode);
 ```
 
+`/V1/products/attributes`
+
+Fetches all Product attributes specified by `$attribute_ids`.
+`$attribute_ids` is optional and can be an array or a string (or null).
+```php
+Magento::api('productAttributes')->getByAttributeId($attribute_ids = null);
+```
+
+`/V1/products/attributes`
+
+Fetches all Product attributes specified by `$attribute_codes`.
+`$attribute_codes` is optional and can be an array or a string (or null).
+```php
+Magento::api('productAttributes')->getByAttributeCode($attribute_codes = null);
+```
+
+`/V1/products/attributes`
+
+Fetches all Product Custom Attributes with lookup values (i.e., attributes with `frontend_input` = `boolean` or `select`
+or `multiselect`).
+```php
+Magento::api('productAttributes')->getAttributesWithLookupValues();
+```
+
 <a id="product-link-types"></a>
 ### Product Link Types (catalogProductLinkTypeListV1)
 
