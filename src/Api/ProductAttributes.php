@@ -37,7 +37,7 @@ class ProductAttributes extends AbstractApi
      * $attribute_ids is optional and can be an array or a string (or null).
      * Believe it or don't, specifying the return type causes an exception.
      *
-     * @param string|array|null $attribute_codes
+     * @param string|array|null $attribute_ids
      * @return \Illuminate\Http\Client\Response
      * @throws \Exception
      */
@@ -68,10 +68,9 @@ class ProductAttributes extends AbstractApi
         return $this->get('/products/attributes', $filters);
     }
 
-
     /**
      * Fetches all Product attributes specified by $attribute_codes.
-     * $attribute_code is optional and can be an array or a string (or null).
+     * $attribute_codes is optional and can be an array or a string (or null).
      * Believe it or don't, specifying the return type causes an exception.
      *
      * @param string|array|null $attribute_codes
@@ -102,6 +101,39 @@ class ProductAttributes extends AbstractApi
                 ]
             ];
         }
+        return $this->get('/products/attributes', $filters);
+    }
+
+    /**
+     * Fetches all Product Custom Attributes with lookup values.
+     * I.e., attributes with frontend_input = boolean|select|multiselect.
+     * @return \Illuminate\Http\Client\Response
+     * @throws \Exception
+     */
+    public function getAttributesWithLookupValues()
+    {
+        $filters = [
+            'searchCriteria' => [
+                'filter_groups' => [
+                    [
+                        'filters' => [
+                            [
+                                'field' => 'frontend_input',
+                                'condition_type' => 'in',
+                                'value' => 'boolean,select,multiselect',
+                            ],
+                        ],
+                    ],
+                ],
+                'sortOrders' => [
+                    [
+                        'field' => 'attribute_code',
+                        'direction' => 'ASC',
+                    ],
+                ],
+            ],
+            'fields' => 'items[attribute_code,options]',
+        ];
         return $this->get('/products/attributes', $filters);
     }
 }
