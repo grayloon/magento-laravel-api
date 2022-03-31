@@ -62,7 +62,7 @@ class Products extends AbstractApi
     public function getSkusLastModifiedByDate(string $date, int $pageSize = null, int $currentPage = 1): Response
     {
         $params = [
-            'fields' => 'items[sku]',
+            'fields' => 'items[sku,search_criteria,total_count]',
             'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'gteq',
             'searchCriteria[filterGroups][0][filters][0][field]' => 'updated_at',
             'searchCriteria[filterGroups][0][filters][0][value]' => $date,
