@@ -55,7 +55,7 @@ class Orders extends AbstractApi
      * @param  array  $entity
      * @return array
      */
-    public function ship($orderId, $body)
+    public function ship($orderId, $body = [])
     {
         return $this->post('/order/' . $orderId . '/ship', $body);
     }
