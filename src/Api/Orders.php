@@ -50,20 +50,13 @@ class Orders extends AbstractApi
     /**
      * Ship the Order.
      *
-     * @see https://magento.redoc.ly/2.4.3-admin/tag/orderorderIdship#operation/salesShipOrderV1ExecutePost
+     * @see https://magento.redoc.ly/2.3.7-admin/tag/orderorderIdship/#operation/salesShipOrderV1ExecutePost
      *
      * @param  array  $entity
      * @return array
      */
-    public function shipOrder($orderId, $arguments = null, $comment = null, $items = [], $notify = false, $packages = [], $tracks = [])
+    public function ship($orderId, $body)
     {
-        return $this->post('/order/' . $orderId . '/ship', [
-            'arguments' => $arguments,
-            'comment' => $comment,
-            'items' => $items,
-            'notify' => $notify,
-            'packages' => $packages,
-            'tracks' => $tracks
-        ]);
+        return $this->post('/order/' . $orderId . '/ship', $body);
     }
 }
