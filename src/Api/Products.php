@@ -20,6 +20,16 @@ class Products extends AbstractApi
      */
     public function all(array $filters = [], int $pageSize = null, int $currentPage = 1): Response
     {
+        /**
+         * Arguably, the filters we pass should supercede the pageSize and currentPage values.
+         * In any case, this package has a significant limitation but we may not care about it.
+         * The fact that it treats query string arguments as a flat array is problematic because the package uses
+         * array_merge() to apply "filters" even though many entities (filterGroups, filters, sort groups, et al), are
+         * numerically indexed in the query string arguments.
+         *
+         * The above issue makes it somewhat questionable to add `sku is not null` as an always-on condition.
+         * Therefore I am omitting it.
+         */
         $params = array_merge($filters, [
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
@@ -43,6 +53,13 @@ class Products extends AbstractApi
             'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'gteq',
             'searchCriteria[filterGroups][0][filters][0][field]' => 'updated_at',
             'searchCriteria[filterGroups][0][filters][0][value]' => $date,
+
+            /**
+             * AND conditions require a separate filterGroup
+             */
+            'searchCriteria[filterGroups][1][filters][0][field]' => 'sku',
+            'searchCriteria[filterGroups][1][filters][0][conditionType]' => 'notnull',
+
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
         ];
@@ -66,6 +83,13 @@ class Products extends AbstractApi
             'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'gteq',
             'searchCriteria[filterGroups][0][filters][0][field]' => 'updated_at',
             'searchCriteria[filterGroups][0][filters][0][value]' => $date,
+
+            /**
+             * AND conditions require a separate filterGroup
+             */
+            'searchCriteria[filterGroups][1][filters][0][field]' => 'sku',
+            'searchCriteria[filterGroups][1][filters][0][conditionType]' => 'notnull',
+
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
         ];
@@ -153,5 +177,36 @@ class Products extends AbstractApi
     public function getOptionsBySku(string $sku): Response
     {
         return $this->get('/products/' . $sku . '/options');
+    }
+
+    /**
+     * Returns the total count of products updated since the given date.
+     *
+     * @param string $date
+     * @return Response
+     * @throws Exception
+     */
+    public function totalCountModifiedSince(string $date): Response
+    {
+        $params = [
+            'fields' => 'total_count',
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'gteq',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'updated_at',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $date,
+
+            /**
+             * AND conditions require a separate filterGroup
+             */
+            'searchCriteria[filterGroups][1][filters][0][field]' => 'sku',
+            'searchCriteria[filterGroups][1][filters][0][conditionType]' => 'notnull',
+
+            /**
+             * Using pageSize 1 makes the request comparatively fast
+             */
+            'searchCriteria[pageSize]'    => 1,
+            'searchCriteria[currentPage]' => 1,
+        ];
+
+        return $this->get('/products', $params);
     }
 }
