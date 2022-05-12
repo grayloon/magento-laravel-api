@@ -26,7 +26,7 @@ class ProductTest extends TestCase
     {
         Http::fake();
 
-        $api = MagentoFacade::api('products')->show('foo');
+        $api = MagentoFacade::api('products')->getBySku('foo');
 
         $this->assertTrue($api->ok());
     }

@@ -26,10 +26,10 @@ class CustomersTest extends TestCase
     {
         Http::fake();
 
-        $api = MagentoFacade::api('customers')->all(1, 1, [
+        $api = MagentoFacade::api('customers')->all([
             'searchCriteria[filterGroups][0][filters][0][field]' => 'email',
             'searchCriteria[filterGroups][0][filters][0][value]' => 'foo@bar.com',
-        ]);
+        ], 1, 1);
 
         $this->assertTrue($api->ok());
     }
