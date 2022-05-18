@@ -10,18 +10,38 @@ class Orders extends AbstractApi
     /**
      * Lists orders that match specified search criteria.
      *
-     * @param array $filters
      * @param int $pageSize
      * @param int $currentPage
+     * @param array $filters
      * @return Response
      * @throws Exception
      */
-    public function all(array $filters = [], int $pageSize = 50, int $currentPage = 1): Response
+    public function all(int $pageSize = 50, int $currentPage = 1, array $filters = []): Response
     {
         return $this->get('/orders', array_merge($filters, [
             'searchCriteria[pageSize]'    => $pageSize,
             'searchCriteria[currentPage]' => $currentPage,
         ]));
+    }
+
+    /**
+     * Fetches Orders created since $dateTime
+     *
+     * @param string $dateTime
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
+     */
+    public function getSince(string $dateTime, int $pageSize = 50, int $currentPage = 1): Response
+    {
+        $filter= [
+            'searchCriteria[filterGroups][0][filters][0][conditionType]' => 'from',
+            'searchCriteria[filterGroups][0][filters][0][field]' => 'created_at',
+            'searchCriteria[filterGroups][0][filters][0][value]' => $dateTime,
+        ];
+
+        return $this->all($pageSize, $currentPage, $filter);
     }
 
     /**
@@ -80,10 +100,11 @@ class Orders extends AbstractApi
     /**
      * Loads a specified order.
      *
-     * @param  string $incrementId
-     * @return array
+     * @param string $incrementId
+     * @return Response|array
+     * @throws Exception
      */
-    public function showByIncrementId($incrementId) {
+    public function showByIncrementId(string $incrementId) {
 
         $query = array('searchCriteria' => []);
         $query['searchCriteria']['filter_groups'] = array('0'=> []);
@@ -94,7 +115,7 @@ class Orders extends AbstractApi
                 'value' => $incrementId,
                 'condition_type' => 'eq'
             );
-#        $result = $this->get('/orders',urldecode(http_build_query($query)));
+
         $result = $this->get('/orders',$query);
         $items = $result->json();
         if (isset($items['items'])) {
