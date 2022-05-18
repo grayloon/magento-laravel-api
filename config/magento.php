@@ -72,4 +72,14 @@ return [
     |  Laravel Log file.
     */
     'log_failed_requests' => env('MAGENTO_API_LOG_FAILED_REQUESTS', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Magento API Website ID
+    |--------------------------------------------------------------------------
+    |
+    |  Default website_id value to use with customer requests, et al.
+    |
+    */
+    'website_id' => env('MAGENTO_API_WEBSITE_ID', 1),
 ];

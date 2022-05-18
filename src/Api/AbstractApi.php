@@ -13,6 +13,12 @@ use Interiordefine\Magento\Magento;
 abstract class AbstractApi
 {
 
+    /**
+     * This is not in the original package.
+     * At present, the value should be 1 for almost all ID purposes because we only have the one store.
+     * This seems like it should be a config, though, rather than a class constant.
+     * Per response from `/rest/default/V1/store/websites`, website_id 0 is Magento admin, 1 is storefront.
+     */
     const WEBSITE_ID = 1;
 
     /**
