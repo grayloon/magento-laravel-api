@@ -2,6 +2,7 @@
 
 namespace Interiordefine\Magento\Api;
 
+use Exception;
 use Illuminate\Http\Client\Response;
 
 class ProductAttributes extends AbstractApi
@@ -9,10 +10,11 @@ class ProductAttributes extends AbstractApi
     /**
      * Retrieve specific product attribute information.
      *
-     * @param  string  $attribute
-     * @return array
+     * @param string $attribute
+     * @return Response
+     * @throws Exception
      */
-    public function show($attribute)
+    public function show(string $attribute): Response
     {
         return $this->get('/products/attributes/'.$attribute);
     }
@@ -20,11 +22,12 @@ class ProductAttributes extends AbstractApi
     /**
      * The list of Product Attributes.
      *
-     * @param  int  $pageSize
-     * @param  int  $currentPage
-     * @return array
+     * @param int $pageSize
+     * @param int $currentPage
+     * @return Response
+     * @throws Exception
      */
-    public function all($pageSize = 50, $currentPage = 1)
+    public function all(int $pageSize = 50, int $currentPage = 1): Response
     {
         return $this->get('/products/attributes', [
             'searchCriteria[pageSize]'    => $pageSize,
@@ -35,13 +38,12 @@ class ProductAttributes extends AbstractApi
     /**
      * Fetches all Product attributes specified by $attribute_ids.
      * $attribute_ids is optional and can be an array or a string (or null).
-     * Believe it or don't, specifying the return type causes an exception.
      *
      * @param string|array|null $attribute_ids
-     * @return \Illuminate\Http\Client\Response
-     * @throws \Exception
+     * @return Response
+     * @throws Exception
      */
-    public function getByAttributeId($attribute_ids = null)
+    public function getByAttributeId($attribute_ids = null): Response
     {
         $filters = [];
         if (!empty($attribute_ids)) {
@@ -74,10 +76,10 @@ class ProductAttributes extends AbstractApi
      * Believe it or don't, specifying the return type causes an exception.
      *
      * @param string|array|null $attribute_codes
-     * @return \Illuminate\Http\Client\Response
-     * @throws \Exception
+     * @return Response
+     * @throws Exception
      */
-    public function getByAttributeCode($attribute_codes = null)
+    public function getByAttributeCode($attribute_codes = null): Response
     {
         $filters = [];
         if (!empty($attribute_codes)) {
@@ -107,10 +109,10 @@ class ProductAttributes extends AbstractApi
     /**
      * Fetches all Product Custom Attributes with lookup values.
      * I.e., attributes with frontend_input = boolean|select|multiselect.
-     * @return \Illuminate\Http\Client\Response
-     * @throws \Exception
+     * @return Response
+     * @throws Exception
      */
-    public function getAttributesWithLookupValues()
+    public function getAttributesWithLookupValues(): Response
     {
         $filters = [
             'searchCriteria' => [
