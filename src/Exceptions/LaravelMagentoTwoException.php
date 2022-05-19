@@ -1,6 +1,6 @@
 <?php
 
-namespace Interiordefine\Magento\Exceptions;
+namespace Grayloon\Magento\Exceptions;
 
 use Exception;
 

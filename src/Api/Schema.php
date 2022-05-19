@@ -1,6 +1,6 @@
 <?php
 
-namespace Interiordefine\Magento\Api;
+namespace Grayloon\Magento\Api;
 
 class Schema extends AbstractApi
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Interiordefine\Magento;
+namespace Grayloon\Magento;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Interiordefine\Magento\Skeleton\SkeletonClass
+ * @see \Grayloon\Magento\Skeleton\SkeletonClass
  */
 class MagentoFacade extends Facade
 {

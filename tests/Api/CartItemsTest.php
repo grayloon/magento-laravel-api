@@ -1,10 +1,10 @@
 <?php
 
-namespace Interiordefine\Magento\Tests;
+namespace Grayloon\Magento\Tests;
 
+use Grayloon\Magento\Api\CartItems;
+use Grayloon\Magento\MagentoFacade;
 use Illuminate\Support\Facades\Http;
-use Interiordefine\Magento\Api\CartItems;
-use Interiordefine\Magento\MagentoFacade;
 
 class CartItemsTest extends TestCase
 {

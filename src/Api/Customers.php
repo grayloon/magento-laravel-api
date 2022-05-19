@@ -1,6 +1,6 @@
 <?php
 
-namespace Interiordefine\Magento\Api;
+namespace Grayloon\Magento\Api;
 
 use Exception;
 use Illuminate\Http\Client\Response;
