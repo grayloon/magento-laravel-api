@@ -117,11 +117,11 @@ class Customers extends AbstractApi
      * https://magento.redoc.ly/2.4.3-admin/tag/customerscustomerId#operation/customerCustomerRepositoryV1SavePut
      *
      * @param int $id
-     * @param string $params
+     * @param array $params
      * @return Response
      * @throws Exception
      */
-    public function edit(int $id, string $params): Response
+    public function edit(int $id, array $params): Response
     {
         return $this->put('/customers/'.$id, [
             'customer' => $params
