@@ -66,7 +66,7 @@ MAGENTO_API_VERSION="V1"
 Example:
 
 ```php
-use Interiordefine\Magento\Magento;
+use Grayloon\Magento\Magento;
 
 $magento = new Magento();
 $response = $magento->api('products')->all();
@@ -82,7 +82,7 @@ $response->ok() : bool;
 You may also utilize the constructor directly without having to configure environment variables:
 
 ```php
-use Interiordefine\Magento\Magento;
+use Grayloon\Magento\Magento;
 
 $magento = new Magento(
     $baseUrl = 'https://my-magento-shop.com',

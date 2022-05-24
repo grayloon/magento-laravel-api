@@ -1,6 +1,6 @@
 <?php
 
-namespace Interiordefine\Magento\Api;
+namespace Grayloon\Magento\Api;
 
 use Exception;
 use Illuminate\Http\Client\Response;
@@ -12,17 +12,17 @@ class Products extends AbstractApi
      *
      * https://magento.redoc.ly/2.4.3-admin/tag/products#operation/catalogProductRepositoryV1SavePost
      *
-     * @param array $filters
      * @param int|null $pageSize
      * @param int $currentPage
+     * @param array $filters
      * @return Response
      * @throws Exception
      */
-    public function all(array $filters = [], int $pageSize = null, int $currentPage = 1): Response
+    public function all(int $pageSize = 50, int $currentPage = 1, array $filters = []): Response
     {
         /**
-         * Arguably, the filters we pass should supercede the pageSize and currentPage values.
-         * In any case, this package has a significant limitation but we may not care about it.
+         * Arguably, the filters we pass should supersede the pageSize and currentPage values.
+         * In any case, this package has a significant limitation, but we may not care about it.
          * The fact that it treats query string arguments as a flat array is problematic because the package uses
          * array_merge() to apply "filters" even though many entities (filterGroups, filters, sort groups, et al), are
          * numerically indexed in the query string arguments.
@@ -104,19 +104,32 @@ class Products extends AbstractApi
      * @return Response
      * @throws Exception
      */
-    public function getBySku(string $sku): Response
+    public function show(string $sku): Response
     {
         return $this->get('/products/'.$sku);
+    }
+
+    /**
+     * Make redundant wrapper functions instead of renaming functions from the original package.
+     *
+     * @param string $sku
+     * @return Response
+     * @throws Exception
+     */
+    public function getBySku(string $sku): Response
+    {
+        return $this->show($sku);
     }
 
 
     /**
      * Get info about product by product ID.
      *
-     * @param  int  $id
-     * @return array
+     * @param int $id
+     * @return Response|array
+     * @throws Exception
      */
-    public function getById($id)
+    public function getById(int $id)
     {
         $query = array('searchCriteria' => []);
         $query['searchCriteria']['filter_groups'] = array('0'=> []);

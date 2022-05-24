@@ -1,6 +1,6 @@
 <?php
 
-namespace Interiordefine\Magento\Api;
+namespace Grayloon\Magento\Api;
 
 use Exception;
 use Illuminate\Http\Client\Response;
@@ -16,7 +16,7 @@ class Customers extends AbstractApi
      * @return Response
      * @throws Exception
      */
-    public function all(array $filters = [], int $pageSize = 50, int $currentPage = 1): Response
+    public function all(int $pageSize = 50, int $currentPage = 1, array $filters = []): Response
     {
         return $this->get('/customers/search', array_merge($filters, [
             'searchCriteria[pageSize]'    => $pageSize,
@@ -47,17 +47,32 @@ class Customers extends AbstractApi
     /**
      * Create customer account. Perform necessary business operations like sending email.
      *
+     * @param array $body
+     * @return Response
+     * @throws Exception
+     */
+    public function create(array $body): Response
+    {
+        return $this->post('/customers', $body);
+    }
+
+    /**
+     * Create customer account on storefront. Perform necessary business operations like sending email.
+     *
      * @param array $customer
      * @param string|null $password
      * @return Response
      * @throws Exception
      */
-    public function create(array $customer, string $password = null): Response
+    public function idCreate(array $customer, string $password = null): Response
     {
-        return $this->post('/customers', [
-            'customer' => array_merge($customer, [
-                'website_id' => self::WEBSITE_ID,
-            ]),
+        /**
+         * Added config for website_id.
+         * This also allows specifying a different website.
+         */
+        $customer['website_id'] = !empty($customer['website_id']) ? $customer['website_id'] : config('magento.website_id');
+        return $this->create([
+            'customer' => $customer,
             'password' => $password,
         ]);
     }
@@ -139,15 +154,16 @@ class Customers extends AbstractApi
     {
         return $this->post('/customers/isEmailAvailable', [
             'customerEmail' => $email,
-            'websiteId' => self::WEBSITE_ID,
+            'websiteId' => config('magento.website_id'),
         ]);
     }
 
     /**
      * Get customer id by email address.
      *
-     * @param  string  $email
-     * @return object
+     * @param string $email
+     * @return Response
+     * @throws Exception
      */
     public function getCustomerID(string $email): Response
     {
@@ -161,24 +177,26 @@ class Customers extends AbstractApi
     /**
      * Update customer by customer ID.
      *
-     * @param  int  $customerID
-     * @param  array  $customerGroupUpdateBody
-     * @return array
+     * @param int $customerID
+     * @param int $customerGroupID
+     * @return Response
+     * @throws Exception
      */
-    public function updateCustomerByID(int $customerID, int $CustomerGroupID): Response
+    public function updateCustomerByID(int $customerID, int $customerGroupID): Response
     {
         return $this->put('/customers/' . $customerID, [
             'customer' => [
-                'group_id' => $CustomerGroupID
+                'group_id' => $customerGroupID,
             ]
         ]);
     }
 
-     /**
+    /**
      * Update customer Subscription with customer ID.
      *
-     * @param  int  $customerID
-     * @return array
+     * @param int $customerID
+     * @return Response
+     * @throws Exception
      */
     public function updateCustomerSubscription(int $customerID): Response
     {
@@ -194,8 +212,9 @@ class Customers extends AbstractApi
     /**
      * Unsubscribe customer via email if it exists.
      *
-     * @param  string  $email
-     * @return array
+     * @param string $email
+     * @return Response|string
+     * @throws Exception
      */
     public function unsubscribe(string $email)
     {

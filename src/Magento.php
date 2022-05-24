@@ -1,10 +1,10 @@
 <?php
 
-namespace Interiordefine\Magento;
+namespace Grayloon\Magento;
 
+use Grayloon\Magento\Api\AbstractApi;
+use Grayloon\Magento\Api\Custom;
 use Illuminate\Support\Str;
-use Interiordefine\Magento\Api\AbstractApi;
-use Interiordefine\Magento\Api\Custom;
 use InvalidArgumentException;
 
 class Magento
@@ -77,7 +77,7 @@ class Magento
     public function api(string $name)
     {
         $className = $name;
-        $apiMethodExists = class_exists($className = "\Interiordefine\Magento\Api\\".Str::ucfirst($className));
+        $apiMethodExists = class_exists($className = "\Grayloon\Magento\Api\\".Str::ucfirst($className));
 
         if (! $apiMethodExists) {
             return new Custom($name, $this);

@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Interiordefine\\Magento\\": "src"
+            "Grayloon\\Magento\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Interiordefine\\Magento\\Tests\\": "tests"
+            "Grayloon\\Magento\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,10 +47,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Interiordefine\\Magento\\MagentoServiceProvider"
+                "Grayloon\\Magento\\MagentoServiceProvider"
             ],
             "aliases": {
-                "Magento": "Interiordefine\\Magento\\MagentoFacade"
+                "Magento": "Grayloon\\Magento\\MagentoFacade"
             }
         }
     }

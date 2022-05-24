@@ -1,18 +1,24 @@
 <?php
 
-namespace Interiordefine\Magento\Api;
+namespace Grayloon\Magento\Api;
 
 use Exception;
+use Grayloon\Magento\Exceptions\LaravelMagentoTwoException;
+use Grayloon\Magento\Magento;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Interiordefine\Magento\Exceptions\LaravelMagentoTwoException;
-use Interiordefine\Magento\Magento;
 
 abstract class AbstractApi
 {
 
+    /**
+     * This is not in the original package.
+     * At present, the value should be 1 for almost all ID purposes because we only have the one store.
+     * This seems like it should be a config, though, rather than a class constant.
+     * Per response from `/rest/default/V1/store/websites`, website_id 0 is Magento admin, 1 is storefront.
+     */
     const WEBSITE_ID = 1;
 
     /**
