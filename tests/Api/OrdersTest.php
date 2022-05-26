@@ -30,10 +30,10 @@ class OrdersTest extends TestCase
             '*rest/all/V1/orders*' => Http::response([], 200),
         ]);
 
-        $api = MagentoFacade::api('orders')->all([
+        $api = MagentoFacade::api('orders')->all(1, 1, [
             'searchCriteria[filterGroups][0][filters][0][field]' => 'customer_email',
             'searchCriteria[filterGroups][0][filters][0][value]' => 'foo@bar.com',
-        ], 1, 1);
+        ]);
 
         $this->assertTrue($api->ok());
     }
