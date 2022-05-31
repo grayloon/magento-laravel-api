@@ -144,6 +144,24 @@ class Customers extends AbstractApi
     }
 
     /**
+     * Update the Customer by Customer ID.
+     * Or create a new customer with Email, First and Last Name
+     *
+     * https://magento.redoc.ly/2.4.3-admin/tag/customerscustomerId#operation/customerCustomerRepositoryV1SavePut
+     *
+     * @param int $id
+     * @param array $params
+     * @return Response
+     * @throws Exception
+     */
+    public function update(int $id, array $params): Response
+    {
+        return $this->put('/customers/'.$id, [
+            'customer' => $params
+        ]);
+    }
+
+    /**
      * Check if a customer exists by email
      *
      * @param string $email
