@@ -21,7 +21,7 @@ class GuestCarts extends AbstractApi
      */
     public function cart($cartId)
     {
-        return $this->get('/guest-carts/'.$cartId);
+        return $this->get('/guest-carts/' . $cartId);
     }
 
     /**
@@ -31,7 +31,7 @@ class GuestCarts extends AbstractApi
      */
     public function items($cartId)
     {
-        return $this->get('/guest-carts/'.$cartId.'/items');
+        return $this->get('/guest-carts/' . $cartId . '/items');
     }
 
     /**
@@ -44,14 +44,28 @@ class GuestCarts extends AbstractApi
      */
     public function addItem($cartId, $sku, $quantity)
     {
-        return $this->post('/guest-carts/'.$cartId.'/items', [
+        return $this->post('/guest-carts/' . $cartId . '/items', [
             'cartItem' => [
                 'quote_id' => $cartId,
                 'sku'      => $sku,
-                'qty'      => $quantity,
+                'qty'      => $quantity
             ],
         ]);
     }
+
+    /**
+     * Add/update the specified cart item with product options.
+     * https://magento.redoc.ly/2.4.4-customer/tag/guest-cartscartIditems#operation/quoteGuestCartItemRepositoryV1SavePost
+     *
+     * @param  string  $cartId
+     * @param  array   $array
+     * @return array
+     */
+    public function addItemWithOptions($cartId, $body = [])
+    {
+        return $this->post('/guest-carts/' . $cartId . '/items', $body);
+    }
+
 
     /**
      * Add/update the specified cart item.
@@ -63,7 +77,7 @@ class GuestCarts extends AbstractApi
      */
     public function editItem($cartId, $itemId, $body = [])
     {
-        return $this->put('/guest-carts/'.$cartId.'/items/'.$itemId, $body);
+        return $this->put('/guest-carts/' . $cartId . '/items/' . $itemId, $body);
     }
 
     /**
@@ -73,7 +87,7 @@ class GuestCarts extends AbstractApi
      */
     public function totals($cartId)
     {
-        return $this->get('/guest-carts/'.$cartId.'/totals');
+        return $this->get('/guest-carts/' . $cartId . '/totals');
     }
 
     /**
@@ -85,7 +99,7 @@ class GuestCarts extends AbstractApi
      */
     public function estimateShippingMethods($cartId, $body = [])
     {
-        return $this->post('/guest-carts/'.$cartId.'/estimate-shipping-methods', $body);
+        return $this->post('/guest-carts/' . $cartId . '/estimate-shipping-methods', $body);
     }
 
     /**
@@ -97,7 +111,7 @@ class GuestCarts extends AbstractApi
      */
     public function totalsInformation($cartId, $body = [])
     {
-        return $this->post('/guest-carts/'.$cartId.'/totals-information', $body);
+        return $this->post('/guest-carts/' . $cartId . '/totals-information', $body);
     }
 
     /**
@@ -109,7 +123,7 @@ class GuestCarts extends AbstractApi
      */
     public function shippingInformation($cartId, $body = [])
     {
-        return $this->post('/guest-carts/'.$cartId.'/shipping-information', $body);
+        return $this->post('/guest-carts/' . $cartId . '/shipping-information', $body);
     }
 
     /**
@@ -120,7 +134,7 @@ class GuestCarts extends AbstractApi
      */
     public function paymentMethods($cartId)
     {
-        return $this->get('/guest-carts/'.$cartId.'/payment-methods');
+        return $this->get('/guest-carts/' . $cartId . '/payment-methods');
     }
 
     /**
@@ -132,7 +146,7 @@ class GuestCarts extends AbstractApi
      */
     public function paymentInformation($cartId, $body = [])
     {
-        return $this->post('/guest-carts/'.$cartId.'/payment-information', $body);
+        return $this->post('/guest-carts/' . $cartId . '/payment-information', $body);
     }
 
     /**
@@ -144,7 +158,7 @@ class GuestCarts extends AbstractApi
      */
     public function removeItem($cartId, $itemId)
     {
-        return $this->delete('/guest-carts/'.$cartId.'/items/'.$itemId);
+        return $this->delete('/guest-carts/' . $cartId . '/items/' . $itemId);
     }
 
     /**
@@ -156,7 +170,7 @@ class GuestCarts extends AbstractApi
      */
     public function couponCode($cartId, $couponCode)
     {
-        return $this->put('/guest-carts/'.$cartId.'/coupons/'.$couponCode);
+        return $this->put('/guest-carts/' . $cartId . '/coupons/' . $couponCode);
     }
 
     /**
@@ -166,7 +180,7 @@ class GuestCarts extends AbstractApi
      */
     public function removeCoupons($cartId)
     {
-        return $this->delete('/guest-carts/'.$cartId.'/coupons');
+        return $this->delete('/guest-carts/' . $cartId . '/coupons');
     }
 
     /**
@@ -179,7 +193,7 @@ class GuestCarts extends AbstractApi
      */
     public function assignCustomer($cartId, $customerId, $storeId)
     {
-        return $this->put('/guest-carts/'.$cartId, [
+        return $this->put('/guest-carts/' . $cartId, [
             'customerId' => $customerId,
             'storeId' => $storeId,
         ]);
