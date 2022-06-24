@@ -171,10 +171,12 @@ class Products extends AbstractApi
      */
     public function updateInventoryLevel(string $sku, int $qty): Response
     {
+        $inStock = $qty > 0 ?: 0;
         $data = [
             'product' => [
                 'extension_attributes' => [
                     'stock_item' => [
+                        'is_in_stock' => $inStock,
                         'qty' => $qty,
                     ]
                 ]
