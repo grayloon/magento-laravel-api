@@ -103,6 +103,18 @@ class GuestCarts extends AbstractApi
     }
 
     /**
+     * Estimate shipping by address and return list of available shipping methods.
+     *
+     * @param  string  $cartId
+     * @param  array  $body
+     * @return array
+     */
+    public function shippingMethods($cartId)
+    {
+        return $this->get('/guest-carts/' . $cartId . '/shipping-methods');
+    }
+
+    /**
      * Calculate quote totals based on address and shipping method.
      *
      * @param  string  $cartId
