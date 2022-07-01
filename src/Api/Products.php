@@ -224,4 +224,16 @@ class Products extends AbstractApi
 
         return $this->get('/products', $params);
     }
+
+    /**
+     * Create product using correct payload
+     *
+     * @param array $array
+     * @return Response
+     * @throws Exception
+     */
+    public function create(array $array): Response
+    {
+        return $this->post('/products', $array);
+    }
 }
