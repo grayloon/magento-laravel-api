@@ -236,4 +236,17 @@ class Products extends AbstractApi
     {
         return $this->post('/products', $array);
     }
+
+    /**
+     * Add a media gallery entry for the product specified by $sku.
+     *
+     * @param string $sku
+     * @param array $payload
+     * @return Response
+     * @throws Exception
+     */
+    public function addMedia(string $sku, array $payload): Response
+    {
+        return $this->post('/products/' . $sku . '/media', $payload);
+    }
 }
