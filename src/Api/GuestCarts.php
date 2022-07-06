@@ -2,6 +2,9 @@
 
 namespace Grayloon\Magento\Api;
 
+use Exception;
+use Illuminate\Http\Client\Response;
+
 class GuestCarts extends AbstractApi
 {
     /**
@@ -100,6 +103,32 @@ class GuestCarts extends AbstractApi
     public function estimateShippingMethods($cartId, $body = [])
     {
         return $this->post('/guest-carts/' . $cartId . '/estimate-shipping-methods', $body);
+    }
+
+    /**
+     * Estimate shipping by address and return list of available shipping methods.
+     *
+     * @param  string  $cartId
+     * @param  array  $body
+     * @return array
+     */
+    public function shippingMethods($cartId)
+    {
+        return $this->get('/guest-carts/' . $cartId . '/shipping-methods');
+    }
+
+
+    /**
+     * Set billing address for cart.
+     *
+     * @param $cartId
+     * @param array $body
+     * @return Response
+     * @throws Exception
+     */
+    public function billingAddress($cartId, array $body = []): Response
+    {
+        return $this->post('/guest-carts/' . $cartId . '/billing-address', $body);
     }
 
     /**
