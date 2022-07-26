@@ -163,7 +163,7 @@ abstract class AbstractApi
     {
         return $this->checkExceptions(
             HTTP::withOptions([
-                'debug' => env('APP_DEBUG'),
+                'debug' => config('magento.debug', true),
                 //for non-production environments, don't worry about verifying ssl
                 'verify' => (bool)('production' === config('app.env')),
             ])
