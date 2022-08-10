@@ -191,6 +191,21 @@ class GuestCarts extends AbstractApi
     }
 
     /**
+     * Get view quote link
+     *
+     * @param  string  $cartId
+     * @param  string  $adminEmail
+     * @return Response
+     */
+    public function quoteLink($cartId, $adminEmail)
+    {
+        return $this->post('/guest-carts/quoteLink',[
+            'cartId'=>$cartId,
+            'adminUserEmail'=>$adminEmail,
+        ]);
+    }
+
+    /**
      * Apply a coupon to a specified cart.
      *
      * @param  string  $cartId
