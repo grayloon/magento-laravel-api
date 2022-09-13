@@ -32,6 +32,18 @@ class Customers extends AbstractApi
     }
 
     /**
+     * Update customer account.
+     *
+     * @param  string  $id
+     * @param  array   $parameters
+     * @return array
+     */
+    public function update($id, $parameters = [])
+    {
+        return $this->put('/customers/' . $id, $parameters);
+    }
+
+    /**
      * Send an email to the customer with a password reset link.
      *
      * @param  string  $email
