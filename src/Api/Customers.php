@@ -35,12 +35,12 @@ class Customers extends AbstractApi
      * Update customer account.
      *
      * @param  string  $id
-     * @param  array   $parameters
+     * @param  array  $parameters
      * @return array
      */
     public function update($id, $parameters = [])
     {
-        return $this->put('/customers/' . $id, $parameters);
+        return $this->put('/customers/'.$id, $parameters);
     }
 
     /**
