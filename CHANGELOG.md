@@ -2,6 +2,10 @@
 
 All notable changes to `grayloon/magento-laravel-api` will be documented in this file
 
+# 0.16.0 - September 14, 2022
+
+- Add Customer Update Endpoint
+
 # 0.13.0 - May 21, 2021
 - Adds Customer Group Endpoints: [#66](https://github.com/grayloon/magento-laravel-api/pull/66)
 GET /V1/customerGroups/{id} - Show the customer group by the provided ID.
