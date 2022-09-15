@@ -88,4 +88,16 @@ class CustomersTest extends TestCase
 
         $this->assertTrue($api->ok());
     }
+
+    public function test_can_customer_delete()
+    {
+        Http::fake([
+            '*rest/all/V1/customers/1' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('customers')->remove(1);
+
+        $this->assertTrue($api->ok());
+    }
 }
+vv
