@@ -100,4 +100,3 @@ class CustomersTest extends TestCase
         $this->assertTrue($api->ok());
     }
 }
-vv
