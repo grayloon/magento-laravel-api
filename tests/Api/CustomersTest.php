@@ -45,6 +45,17 @@ class CustomersTest extends TestCase
         $this->assertTrue($api->ok());
     }
 
+    public function test_can_update_customer()
+    {
+        Http::fake([
+            '*rest/all/V1/customers/1' => Http::response([], 200),
+        ]);
+
+        $api = MagentoFacade::api('customers')->update(1, ['foo' => 'bar']);
+
+        $this->assertTrue($api->ok());
+    }
+
     public function test_can_request_password_reset_link()
     {
         Http::fake([
