@@ -99,4 +99,3 @@ class Customers extends AbstractApi
         return $this->delete('/customers/'.$id);
     }
 }
-vv
