@@ -94,7 +94,7 @@ class Customers extends AbstractApi
      * @param  int  $id
      * @return array
      */
-    public function removeCustomer($id)
+    public function remove($id)
     {
         return $this->delete('/customers/'.$id);
     }

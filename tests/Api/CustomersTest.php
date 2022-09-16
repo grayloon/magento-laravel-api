@@ -95,7 +95,7 @@ class CustomersTest extends TestCase
             '*rest/all/V1/customers/1' => Http::response([], 200),
         ]);
 
-        $api = MagentoFacade::api('customers')->removeCustomer(1);
+        $api = MagentoFacade::api('customers')->remove(1);
 
         $this->assertTrue($api->ok());
     }
