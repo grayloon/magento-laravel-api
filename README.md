@@ -13,6 +13,12 @@
 
 # Laravel - Magento API
 
+> **Note**
+>
+> We are looking for [maintainers for this package](https://github.com/grayloon/magento-laravel-api/issues/93).
+
+## About
+
 A Magento 2 API Object Oriented wrapper for a Laravel application.
 
 - [Installation](#installation)
