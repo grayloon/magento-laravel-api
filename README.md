@@ -1,4 +1,8 @@
 
+##  Note: This package is [no longer maintained](https://github.com/grayloon/magento-laravel-api/issues/93). Please use the [justbetter/laravel-magento-client](https://github.com/justbetter/laravel-magento-client) package.
+
+
+
 <p align="center">
   <img src="logo.png">
 </p>
@@ -13,9 +17,6 @@
 
 # Laravel - Magento API
 
-> **Note**
->
-> We are looking for [maintainers for this package](https://github.com/grayloon/magento-laravel-api/issues/93).
 
 ## About
 
